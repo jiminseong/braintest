@@ -3,8 +3,11 @@ import backgroundUrl from '../../assets/images/homeBackgroundImage.png';
 import Logo from '../../assets/icons/Logo.svg?react';
 import GreenContainer from './ui/GreenContainer';
 import testStartButtonUrl from '../../assets/images/TestStartButton.png';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+    const navigate = useNavigate();
+
     return (
         <HomePageWrapper>
             <StyledLogo />
@@ -36,7 +39,7 @@ const HomePage = () => {
                     <br />
                     망설이지 마세요.
                 </ContentText>
-                <ButtonWrapper>
+                <ButtonWrapper onClick={() => navigate('/test/content')}>
                     <Image src={testStartButtonUrl} alt="테스트시작버튼" />
                 </ButtonWrapper>
             </GreenContainer>
@@ -78,6 +81,7 @@ const Image = styled.img`
 `;
 
 const ButtonWrapper = styled.div`
+    cursor: pointer;
     margin-top: 5%;
     background: #070707;
     width: fit-content;
