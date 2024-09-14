@@ -8,6 +8,12 @@ const HomePage = () => {
     return (
         <HomePageWrapper>
             <StyledLogo />
+            <GreenContainer width="25%" height="80%" left="40%" top="15%">
+                <ContentText>brain cell 99%</ContentText>
+            </GreenContainer>
+            <GreenContainer width="15%" height="20%" left="60%" top="5%">
+                <ContentText>dendritic spines 99%</ContentText>
+            </GreenContainer>
             <GreenContainer width="fit-content" height="auto" left="5%" top="35%">
                 <Title>brain type test 100%</Title>
                 <ContentText>
@@ -58,8 +64,8 @@ const HomePageWrapper = styled.div`
 
 const StyledLogo = styled(Logo)`
     position: absolute;
-    top: 3em;
-    right: 3em;
+    top: 1.5em;
+    right: 2em;
 `;
 
 const Title = styled.div`
@@ -75,4 +81,5 @@ const ButtonWrapper = styled.div`
     margin-top: 5%;
     background: #070707;
     width: fit-content;
+    backdrop-filter: blur(10px);
 `;
