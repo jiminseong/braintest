@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import StatusBar from './ui/StatusBar';
+import styled from 'styled-components';
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0);
@@ -14,10 +15,14 @@ const TestContentPage = () => {
         }
     });
     return (
-        <div className="bg-black">
+        <PageWrapper>
             <StatusBar status={currentProgress} />
-        </div>
+        </PageWrapper>
     );
 };
 
 export default TestContentPage;
+
+const PageWrapper = styled.div`
+    background-color: #070707;
+`;

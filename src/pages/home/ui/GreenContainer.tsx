@@ -1,0 +1,39 @@
+import styled from 'styled-components';
+import React from 'react';
+
+interface GreenContainerProps {
+    width: string;
+    height: string;
+    top: string;
+    left: string;
+    children: React.ReactNode;
+}
+
+const GreenContainer: React.FC<GreenContainerProps> = ({ width, height, top, left, children }) => {
+    return (
+        <GreenWrapper width={width} height={height} top={top} left={left}>
+            {children}
+        </GreenWrapper>
+    );
+};
+
+export default GreenContainer;
+
+interface GreenWrapperProps {
+    width: string;
+    height: string;
+    top: string;
+    left: string;
+}
+
+const GreenWrapper = styled.div<GreenWrapperProps>`
+    position: absolute;
+    color: #ffffff;
+    line-height: 2em;
+    border: 3px solid #7aff77;
+    box-shadow: 0px 0px 8.5px 1px #77ceff;
+    width: ${({ width }) => width};
+    height: ${({ height }) => height};
+    top: ${({ top }) => top};
+    left: ${({ left }) => left};
+`;
