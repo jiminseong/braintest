@@ -82,7 +82,10 @@ const TestContentPage = () => {
                         <QuestionText>{questionsData.questions[questionIndex]}</QuestionText>
 
                         {questionIndex === 40 ? (
-                            <TextContentButton onClick={() => handleContent()}>완료</TextContentButton>
+                            <>
+                                <QuestionText>평가가 완료되었습니다</QuestionText>
+                                <TextContentButton onClick={() => handleContent()}>완료</TextContentButton>
+                            </>
                         ) : (
                             <SelectButton
                                 onClickOne={() => handleAnswer(1)}
