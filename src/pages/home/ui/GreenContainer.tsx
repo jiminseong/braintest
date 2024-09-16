@@ -2,16 +2,17 @@ import styled from 'styled-components';
 import React from 'react';
 
 interface GreenContainerProps {
-    width: string;
+    minWidth: string;
+    maxWidth: string;
     height: string;
     top: string;
     left: string;
     children: React.ReactNode;
 }
 
-const GreenContainer: React.FC<GreenContainerProps> = ({ width, height, top, left, children }) => {
+const GreenContainer: React.FC<GreenContainerProps> = ({ minWidth, maxWidth, height, top, left, children }) => {
     return (
-        <GreenWrapper width={width} height={height} top={top} left={left}>
+        <GreenWrapper minWidth={minWidth} maxWidth={maxWidth} height={height} top={top} left={left}>
             {children}
         </GreenWrapper>
     );
@@ -20,10 +21,11 @@ const GreenContainer: React.FC<GreenContainerProps> = ({ width, height, top, lef
 export default GreenContainer;
 
 interface GreenWrapperProps {
-    width: string;
+    minWidth: string;
     height: string;
     top: string;
     left: string;
+    maxWidth: string;
 }
 
 const GreenWrapper = styled.div<GreenWrapperProps>`
@@ -32,7 +34,9 @@ const GreenWrapper = styled.div<GreenWrapperProps>`
     line-height: 2em;
     border: 3px solid #7aff77;
     box-shadow: 0px 0px 8.5px 1px #77ceff;
-    width: ${({ width }) => width};
+    min-width: ${({ minWidth }) => minWidth};
+    max-width: ${({ maxWidth }) => maxWidth};
+    min-height: ${({ height }) => height};
     height: ${({ height }) => height};
     top: ${({ top }) => top};
     left: ${({ left }) => left};
