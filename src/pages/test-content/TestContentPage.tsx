@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import StatusBar from './ui/StatusBar';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { Input } from './ui/Input';
 import { Button } from '../../component/button/Button';
 import questionsData from './data/question.json';
@@ -18,6 +18,7 @@ const TestContentPage = () => {
     const [questionIndex, setQuestionIndex] = useState(1);
     const [page, setPage] = useState(0); //현재 페이지
     const [modal, setModal] = useState(false);
+    const [animate, setAnimate] = useState(false);
     const navigate = useNavigate();
 
     const submitName = () => {
@@ -46,6 +47,9 @@ const TestContentPage = () => {
     };
 
     const handleAnswer = (answer: number) => {
+        setAnimate(true); // 애니메이션 시작
+        setTimeout(() => setAnimate(false), 600); // 애니메이션 종료, 600ms 정도로 설정
+
         if (questionIndex === 9 || questionIndex === 21) {
             setPage(questionIndex === 9 ? 1 : 2);
             console.log(questionIndex);
@@ -70,7 +74,7 @@ const TestContentPage = () => {
             <Column>
                 {nameCheck === false && (
                     <ContentColumn>
-                        <QuestionText>당신의 이름은 무엇인가요?</QuestionText>
+                        <Text>당신의 이름은 무엇인가요?</Text>
                         <Input value={name || ''} onChange={(e) => setName(e.target.value)} />
                         <TextContentButton onClick={() => submitName()}>다음</TextContentButton>
                     </ContentColumn>
@@ -79,12 +83,18 @@ const TestContentPage = () => {
                     <ContentColumn>
                         {currentProgress > 0 && <BacKButton onClick={() => goBack()} />}
                         <PageLogo page={page} />
-                        <QuestionText>{questionsData.questions[questionIndex]}</QuestionText>
+                        <AnimationQuestionText animate={animate}>
+                            {questionsData.questions[questionIndex]}
+                        </AnimationQuestionText>
 
                         {questionIndex === 40 ? (
                             <>
-                                <QuestionText>평가가 완료되었습니다</QuestionText>
-                                <TextContentButton onClick={() => handleContent()}>완료</TextContentButton>
+                                <Modal2 animate={animate} onClick={() => handleModal()}>
+                                    <PageLogo big={true} page={page} />
+                                    <TextContentButton onClick={() => handleContent()}>
+                                        검사 결과 확인하기
+                                    </TextContentButton>
+                                </Modal2>
                             </>
                         ) : (
                             <SelectButton
@@ -99,7 +109,7 @@ const TestContentPage = () => {
                 )}
 
                 {page >= 1 && modal && (
-                    <Modal onClick={() => handleModal()}>
+                    <Modal animate={animate} onClick={() => handleModal()}>
                         <PageLogo big={true} page={page} />
                         <PageIndexText>
                             {page == 1 ? '당신의 생활에 대해서 알려주세요.' : '당신의 요즘 기분에 대해서 알려주세요.'}
@@ -125,7 +135,18 @@ const PageWrapper = styled.div`
     overflow: hidden;
 `;
 
-const Modal = styled.div`
+const fade = keyframes`
+    0% {
+        opacity: 0;
+        
+    }
+    100% {
+        opacity: 1;
+        
+    }
+`;
+
+const Modal = styled.div<{ animate: boolean }>`
     width: 100%;
     height: 100%;
     position: absolute;
@@ -136,7 +157,14 @@ const Modal = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    animation: ${({ animate }) => (animate ? fade : 'none')} 0.6s ease-in-out;
 `;
+
+const Modal2 = styled(Modal)`
+    z-index: 100;
+    gap: 0em;
+`;
+
 const Column = styled.div`
     display: flex;
     flex-direction: column;
@@ -151,13 +179,31 @@ const ContentColumn = styled(Column)`
     gap: 4em;
 `;
 
-const QuestionText = styled.div`
+const fadeInUp = keyframes`
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+`;
+
+const AnimationQuestionText = styled.div<{ animate: boolean }>`
+    color: #fff;
+    text-align: center;
+    font-size: 2em;
+    font-weight: 700;
+    animation: ${({ animate }) => (animate ? fadeInUp : 'none')} 0.6s ease-in-out;
+`;
+
+const Text = styled.div`
     color: #fff;
     text-align: center;
     font-size: 2em;
     font-weight: 700;
 `;
-
 const TextContentButton = styled(Button)`
     margin-top: 10%;
 `;

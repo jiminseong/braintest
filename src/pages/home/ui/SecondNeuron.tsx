@@ -54,16 +54,16 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
 export default SecondNeuron;
 
 const MotionWrapper = styled.div`
-z-index: 2;
+    z-index: 2;
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100vh; 
-    position: absolute; 
+    height: 100vh;
+    position: absolute;
     top: 0;
     left: 0;
-    background: transparent;\
+    background: transparent;
 `;
 
 const Neuron = styled.img`
