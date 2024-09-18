@@ -58,4 +58,7 @@ const GreenWrapper = styled.div<GreenWrapperProps>`
     max-height: ${({ maxHeight }) => maxHeight};
     top: ${({ top }) => top};
     left: ${({ left }) => left};
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    box-sizing: border-box;
 `;

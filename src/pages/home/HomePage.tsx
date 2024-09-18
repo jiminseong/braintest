@@ -14,21 +14,23 @@ const HomePage = () => {
     const [buttonDisplay, setButtonDisplay] = useState(false);
     const [animationState, setAnimation] = useState(true);
     const [typedText, setTypedText] = useState('');
-    const content = `당신의 뇌 유형은 무엇입니까? 뇌 유형 테스트를 통해 또 다른 ‘나’를 발견하고 ‘나’의 감정을 마주해보세요.\n테스트 결과로 제공되는 16가지의 유형 중, 당신의 뇌가 어느 유형에 속하는지 확인해보세요.\n 1단계 | 뇌 유형 검사를 받습니다.\n  2단계 | 뇌 유형을 확인합니다.\n 3단계 | 개별화된 결과지를 받습니다.\n 4단계 | 건강을 개선합니다.\n 이 검사는 현재 당신의 상황이 어떻든 실시간으로 그리고 정확하게 뇌 건강을 증진할 수 있는 생활 습관과 영양소를 추천합니다.\n 언제나 더 좋은 ‘나’와 마주할 수 있는 방법이 있습니다.\n 망설이지 마세요. `;
+    const content = `당 신의 뇌 유형은 무엇입니까? 뇌 유형 테스트를 통해 또 다른 ‘나’를 발견하고 ‘나’의 감정을 마주해보세요.\n테스트 결과로 제공되는 16가지의 유형 중, 당신의 뇌가 어느 유형에 속하는지 확인해보세요.\n 1단계 | 뇌 유형 검사를 받습니다.\n  2단계 | 뇌 유형을 확인합니다.\n 3단계 | 개별화된 결과지를 받습니다.\n 4단계 | 건강을 개선합니다.\n 이 검사는 현재 당신의 상황이 어떻든 실시간으로 그리고 정확하게 뇌 건강을 증진할 수 있는 생활 습관과 영양소를 추천합니다.\n 언제나 더 좋은 ‘나’와 마주할 수 있는 방법이 있습니다.\n 망설이지 마세요.`;
 
     useEffect(() => {
         let i = 0;
-        const intervalId = setInterval(() => {
-            if (i < content.length) {
-                setTypedText((prev) => prev + (content[i] === '\n' ? '\n' : content[i]));
-                i++;
-            } else {
-                clearInterval(intervalId);
-                setButtonDisplay(true);
-            }
-        }, 50); // 50ms 지연 시간
+        if (!buttonDisplay) {
+            const intervalId = setInterval(() => {
+                if (i < content.length - 1) {
+                    setTypedText((prev) => prev + (content[i] === '\n' ? '\n' : content[i]));
+                    i++;
+                } else {
+                    clearInterval(intervalId);
+                    setButtonDisplay(true);
+                }
+            }, 50); // 50ms 지연 시간
 
-        return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 인터벌 클리어
+            return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 인터벌 클리어
+        }
     }, [content]);
 
     // 핸들러 추가
