@@ -42,7 +42,7 @@ const TestContentPage = () => {
 
     const handleContent = () => {
         if (questionIndex === 40) {
-            navigate('/');
+            navigate('/test/result');
         }
     };
 

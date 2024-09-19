@@ -61,7 +61,7 @@ const HomePage = () => {
                 <ContentText2 ref={contentRef}>{typedText}</ContentText2>
                 {buttonDisplay && (
                     <ButtonWrapper
-                        onClick={() => navigate('/test/content')}
+                        onClick={() => navigate('/caution')}
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                     >
