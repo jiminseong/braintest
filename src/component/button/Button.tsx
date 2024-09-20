@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const Button = styled.button`
     cursor: pointer;
-    min-width: 303px;
-    min-height: 58px;
+    width: 303px;
+    height: 58px;
     width: 20%;
     font-size: 1.125em;
     font-weight: 900;
@@ -23,7 +23,6 @@ export const BlueButton = styled(Button)`
     min-width: 250px;
     min-height: 48px;
     width: 20%;
-
     background: #fff;
 `;
 

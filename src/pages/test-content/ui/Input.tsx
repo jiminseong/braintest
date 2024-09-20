@@ -4,12 +4,14 @@ export const Input = styled.input`
     padding-left: 1.375em;
     box-sizing: border-box;
     width: 50%;
+    height: 2.725em;
     color: #fff;
     font-size: 1.375em;
-    min-height: 4.375rem;
     border-radius: 1.1875rem;
     background: transparent;
-    border: 2px solid #f9f3ff;
+    border: 2px solid;
+
+    // border-image-source: linear-gradient(90deg, #f9f3ff 0%, #959299 100%);
     &:focus {
         outline: none;
     }

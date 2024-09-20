@@ -66,7 +66,7 @@ const Icon = styled.div`
     align-items: center;
 `;
 const RowWrapper = styled.div`
-    margin-top: 5em;
+    margin-top: 6em;
     width: 100%;
     display: flex;
     gap: 10em;

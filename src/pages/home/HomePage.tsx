@@ -102,6 +102,7 @@ const ContentText = styled.p`
     width: fit-content;
     line-height: 2em;
     color: #ffffff;
+    font-size: 0.8125em;
     margin: 0.5em 0;
     white-space: pre-line;
 `;
@@ -113,7 +114,7 @@ const StyledLogo = styled(Logo)`
 `;
 
 const Title = styled.div`
-    font-size: 2em;
+    font-size: 1.25em;
     color: #fff;
 `;
 

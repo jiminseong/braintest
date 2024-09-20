@@ -76,12 +76,12 @@ const CautionPage = () => {
             <CautionText>{cautionText}</CautionText>
             {agreeState ? (
                 <CenterWrapper>
-                    <BlueButton>시작하기</BlueButton>
+                    <BlueButton onClick={() => navigate('/test/content')}>시작하기</BlueButton>
                 </CenterWrapper>
             ) : (
                 <RowWrapper>
                     <BlueButton onClick={() => handleCautionText()}>동의합니다</BlueButton>
-                    <RedButton>동의하지 않습니다</RedButton>
+                    <RedButton onClick={() => handleBackButton()}>동의하지 않습니다</RedButton>
                 </RowWrapper>
             )}
         </PageWrapper>
