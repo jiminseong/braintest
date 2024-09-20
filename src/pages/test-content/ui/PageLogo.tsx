@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import firstUrl from '../../../assets/images/firstLogo.png';
 import secondUrl from '../../../assets/images/secondLogo.png';
 import thirdUrl from '../../../assets/images/thirdLogo.png';
@@ -33,5 +33,10 @@ const rotateAnimation = keyframes`
 
 const Logo = styled.img<{ width: string; rotate: boolean }>`
     width: ${(props) => props.width};
-    animation: ${(props) => (props.rotate ? `${rotateAnimation} 5s linear infinite` : 'none')};
+    animation: ${(props) =>
+        props.rotate
+            ? css`
+                  ${rotateAnimation} 5s linear infinite
+              `
+            : 'none'};
 `;
