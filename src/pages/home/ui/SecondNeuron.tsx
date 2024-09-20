@@ -94,7 +94,7 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
                     animate="animate"
                     style={{ position: 'relative', width: '100%', height: '100%', zIndex: 5 }}
                 >
-                    <GreenContainer width="10%" height="15%" top="-75%" left="45%">
+                    <GreenContainer width="12.5%" height="15%" top="-75%" left="45%">
                         <ContentText>dendritic spines 99%</ContentText>
                     </GreenContainer>
                 </motion.div>
