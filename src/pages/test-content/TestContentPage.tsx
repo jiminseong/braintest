@@ -42,6 +42,7 @@ const TestContentPage = () => {
 
     const handleContent = () => {
         if (questionIndex === 40) {
+            //이후 결과페이지로 변경
             navigate('/');
         }
     };
@@ -82,7 +83,7 @@ const TestContentPage = () => {
                 {nameCheck === true && (
                     <ContentColumn>
                         {currentProgress > 0 && <BacKButton onClick={() => goBack()} />}
-                        <PageLogo page={page} />
+                        <PageLogo width="8%" page={page} />
                         <AnimationQuestionText animate={animate}>
                             {questionsData.questions[questionIndex]}
                         </AnimationQuestionText>
@@ -90,7 +91,7 @@ const TestContentPage = () => {
                         {questionIndex === 40 ? (
                             <>
                                 <Modal2 animate={animate} onClick={() => handleModal()}>
-                                    <PageLogo big={true} page={page} />
+                                    <PageLogo width="8%" page={page} />
                                     <TextContentButton onClick={() => handleContent()}>
                                         검사 결과 확인하기
                                     </TextContentButton>
@@ -110,10 +111,11 @@ const TestContentPage = () => {
 
                 {page >= 1 && modal && (
                     <Modal animate={animate} onClick={() => handleModal()}>
-                        <PageLogo big={true} page={page} />
+                        <StyledPageLogo rotate={true} width="25%" page={page} />
                         <PageIndexText>
                             {page == 1 ? '당신의 생활에 대해서 알려주세요.' : '당신의 요즘 기분에 대해서 알려주세요.'}
                         </PageIndexText>
+                        <LoadingText>loading...</LoadingText>
                     </Modal>
                 )}
             </Column>
@@ -123,10 +125,14 @@ const TestContentPage = () => {
 
 export default TestContentPage;
 
+const StyledPageLogo = styled(PageLogo)`
+    width: 30px;
+`;
+
 const PageIndexText = styled.div`
     color: #fff;
     text-align: center;
-    font-size: 2em;
+    font-size: 1.725em;
     font-weight: 700;
 `;
 const PageWrapper = styled.div`
@@ -146,7 +152,17 @@ const fade = keyframes`
     }
 `;
 
+const LoadingText = styled.div`
+    position: absolute;
+    bottom: 8em;
+    left: 3em;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #727272;
+`;
+
 const Modal = styled.div<{ animate: boolean }>`
+    box-sizing: border-box;
     width: 100%;
     height: 100%;
     position: absolute;
@@ -154,7 +170,6 @@ const Modal = styled.div<{ animate: boolean }>`
     display: flex;
     flex-direction: column;
     gap: 3em;
-    justify-content: center;
     align-items: center;
     cursor: pointer;
     animation: ${({ animate }) => (animate ? fade : 'none')} 0.6s ease-in-out;
@@ -169,8 +184,8 @@ const Column = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 80%;
+    padding-top: 3em;
+    height: 100%;
     position: relative;
 `;
 
@@ -193,7 +208,7 @@ const fadeInUp = keyframes`
 const AnimationQuestionText = styled.div<{ animate: boolean }>`
     color: #fff;
     text-align: center;
-    font-size: 2em;
+    font-size: 1.725em;
     font-weight: 700;
     animation: ${({ animate }) => (animate ? fadeInUp : 'none')} 0.6s ease-in-out;
 `;
@@ -201,9 +216,12 @@ const AnimationQuestionText = styled.div<{ animate: boolean }>`
 const Text = styled.div`
     color: #fff;
     text-align: center;
-    font-size: 2em;
+    font-size: 1.725em;
     font-weight: 700;
 `;
 const TextContentButton = styled(Button)`
     margin-top: 10%;
+    font-size: 1.125em;
+    height: 45px;
+    width: 253px;
 `;

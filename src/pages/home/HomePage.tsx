@@ -3,72 +3,87 @@ import FirstNeuron from './ui/FirstNeuron';
 import SecondNeuron from './ui/SecondNeuron';
 import ThirdNeuron from './ui/ThirdNeuron';
 import Logo from '../../assets/icons/Logo.svg?react';
-import GreenContainer from './ui/GreenContainer';
 import testStartButtonUrl from '../../assets/images/TestStartButton.png';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 const HomePage = () => {
     const navigate = useNavigate();
-    const contentRef = useRef<HTMLParagraphElement>(null);
     const [buttonDisplay, setButtonDisplay] = useState(false);
-    const [animationState, setAnimation] = useState(true);
-    const [typedText, setTypedText] = useState('');
-    const content = `당 신의 뇌 유형은 무엇입니까? 뇌 유형 테스트를 통해 또 다른 ‘나’를 발견하고 ‘나’의 감정을 마주해보세요.\n테스트 결과로 제공되는 16가지의 유형 중, 당신의 뇌가 어느 유형에 속하는지 확인해보세요.\n 1단계 | 뇌 유형 검사를 받습니다.\n  2단계 | 뇌 유형을 확인합니다.\n 3단계 | 개별화된 결과지를 받습니다.\n 4단계 | 건강을 개선합니다.\n 이 검사는 현재 당신의 상황이 어떻든 실시간으로 그리고 정확하게 뇌 건강을 증진할 수 있는 생활 습관과 영양소를 추천합니다.\n 언제나 더 좋은 ‘나’와 마주할 수 있는 방법이 있습니다.\n 망설이지 마세요.`;
+    const [animationStopState, setAnimationStop] = useState(false);
+    const [typedText, setTypedText] = useState<string[]>([]);
+    const content = [
+        '당신의 뇌 유형은 무엇입니까? 뇌 유형 테스트를 통해 또 다른 ‘나’를 발견하고 ‘나’의 감정을 마주해보세요.',
+        '테스트 결과로 제공되는 16가지의 유형 중, 당신의 뇌가 어느 유형에 속하는지 확인해보세요.',
+        '1단계 | 뇌 유형 검사를 받습니다.',
+        '2단계 | 뇌 유형을 확인합니다.',
+        '3단계 | 개별화된 결과지를 받습니다.',
+        '4단계 | 건강을 개선합니다.',
+        '이 검사는 현재 당신의 상황이 어떻든 실시간으로 그리고 정확하게 뇌 건강을 증진할 수 있는 생활 습관과 영양소를 추천합니다.',
+        '언제나 더 좋은 ‘나’와 마주할 수 있는 방법이 있습니다.',
+        '망설이지 마세요.',
+    ];
 
     useEffect(() => {
-        let i = 0;
-        if (!buttonDisplay) {
-            const intervalId = setInterval(() => {
-                if (i < content.length - 1) {
-                    setTypedText((prev) => prev + (content[i] === '\n' ? '\n' : content[i]));
-                    i++;
+        let i = 0; // 문장 인덱스
+        let j = 0; // 글자 인덱스
+        let currentText = ''; // 현재 타이핑 중인 문장
+
+        const intervalId = setInterval(() => {
+            if (i < content.length) {
+                if (j < content[i].length) {
+                    currentText += content[i][j]; // 한 글자씩 추가
+                    setTypedText((prev) => {
+                        const updatedText = [...prev];
+                        updatedText[i] = currentText; // 현재 문장 업데이트
+                        return updatedText;
+                    });
+                    j++;
                 } else {
-                    clearInterval(intervalId);
-                    setButtonDisplay(true);
+                    i++;
+                    j = 0;
+                    currentText = '';
+                    if (i === content.length) {
+                        clearInterval(intervalId); // 모든 문장이 출력되면 인터벌 종료
+                        setButtonDisplay(true);
+                    }
                 }
-            }, 50); // 50ms 지연 시간
+            }
+        }, 50); // 50ms 지연 시간
 
-            return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 인터벌 클리어
-        }
-    }, [content]);
+        return () => clearInterval(intervalId); // 컴포넌트 언마운트 시 인터벌 클리어
+    }, []);
 
-    // 핸들러 추가
-    const handleMouseEnter = () => setAnimation(false);
-    const handleMouseLeave = () => setAnimation(true);
+    const handleMouseEnter = () => setAnimationStop(true);
+    const handleMouseLeave = () => setAnimationStop(false);
 
     return (
         <HomePageWrapper>
-            <FirstNeuron stop={animationState} />
-            <SecondNeuron stop={animationState} />
-            <ThirdNeuron stop={animationState} />
+            <FirstNeuron stop={animationStopState} />
+            <SecondNeuron stop={animationStopState} />
+            <ThirdNeuron stop={animationStopState} />
             <StyledLogo />
-            <GreenContainer maxWidth="auto" minWidth="25%" minHeight="80%" maxHeight="fit-content" left="40%" top="15%">
-                <ContentText>brain cell 99%</ContentText>
-            </GreenContainer>
-            <GreenContainer maxWidth="auto" minWidth="15%" minHeight="20%" maxHeight="fit-content" left="60%" top="5%">
-                <ContentText>dendritic spines 99%</ContentText>
-            </GreenContainer>
-            <GreenContainer
-                maxWidth="fit-content"
-                minWidth="50%"
-                minHeight="50%"
-                maxHeight="fit-content"
-                left="5%"
-                top="35%"
-            >
+
+            <FirstGreenContainer>
                 <Title>brain type test 100%</Title>
-                <ContentText2 ref={contentRef}>{typedText}</ContentText2>
+
+                {typedText.map((text, index) => (
+                    <ContentText key={index}>
+                        {text}
+                        <br />
+                    </ContentText> // 각각의 문장을 span으로 출력
+                ))}
+
                 {buttonDisplay && (
                     <ButtonWrapper
-                        onClick={() => navigate('/test/content')}
+                        onClick={() => navigate('/caution')}
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                     >
                         <Image src={testStartButtonUrl} alt="테스트시작버튼" />
                     </ButtonWrapper>
                 )}
-            </GreenContainer>
+            </FirstGreenContainer>
         </HomePageWrapper>
     );
 };
@@ -85,17 +100,9 @@ const HomePageWrapper = styled.div`
 const ContentText = styled.p`
     background-color: #070707;
     width: fit-content;
-    line-height: 1.5em;
-    color: #ffffff;
-    margin: 0.5em 0;
-    white-space: pre-line;
-`;
-
-const ContentText2 = styled.p`
-    background-color: #070707;
-    width: fit-content;
     line-height: 2em;
     color: #ffffff;
+    font-size: 0.8125em;
     margin: 0.5em 0;
     white-space: pre-line;
 `;
@@ -107,7 +114,7 @@ const StyledLogo = styled(Logo)`
 `;
 
 const Title = styled.div`
-    font-size: 2em;
+    font-size: 1.25em;
     color: #fff;
 `;
 
@@ -123,4 +130,17 @@ const ButtonWrapper = styled.button`
     width: fit-content;
     border: none;
     outline: none;
+`;
+
+const FirstGreenContainer = styled.span`
+    z-index: 10;
+    position: absolute;
+    color: #ffffff;
+    line-height: 2em;
+    border: 3px solid #7aff77;
+    box-shadow: 0px 0px 8.5px 1px #77ceff;
+    min-width: 45%;
+    min-height: 50%;
+    top: 35%;
+    left: 5%;
 `;

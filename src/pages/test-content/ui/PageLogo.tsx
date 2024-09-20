@@ -1,28 +1,37 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import firstUrl from '../../../assets/images/firstLogo.png';
 import secondUrl from '../../../assets/images/secondLogo.png';
 import thirdUrl from '../../../assets/images/thirdLogo.png';
 
 interface PageLogoProps {
     page: number;
-    big?: boolean; // big의 기본값을 false로 설정할 예정이므로 옵셔널로 만듭니다.
+    width: string;
+    rotate?: boolean; // rotate prop 추가, 기본값은 false
 }
 
-const PageLogo: React.FC<PageLogoProps> = ({ page, big = false }) => {
-    // big의 기본값을 false로 설정
+const PageLogo: React.FC<PageLogoProps> = ({ width, page, rotate = false }) => {
     return (
         <>
-            {page === 0 && <Logo big={big} src={firstUrl} />}
-            {page === 1 && <Logo big={big} src={secondUrl} />}
-            {page === 2 && <Logo big={big} src={thirdUrl} />}
+            {page === 0 && <Logo width={width} rotate={rotate} src={firstUrl} />}
+            {page === 1 && <Logo width={width} rotate={rotate} src={secondUrl} />}
+            {page === 2 && <Logo width={width} rotate={rotate} src={thirdUrl} />}
         </>
     );
 };
 
 export default PageLogo;
 
-const Logo = styled.img<{ big: boolean }>`
-    // big을 props로 받아서 처리
-    width: ${(props) => (props.big ? '25%' : '10%')};
+const rotateAnimation = keyframes`
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+`;
+
+const Logo = styled.img<{ width: string; rotate: boolean }>`
+    width: ${(props) => props.width};
+    animation: ${(props) => (props.rotate ? `${rotateAnimation} 5s linear infinite` : 'none')};
 `;
