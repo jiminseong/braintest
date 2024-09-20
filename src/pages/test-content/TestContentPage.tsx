@@ -42,7 +42,8 @@ const TestContentPage = () => {
 
     const handleContent = () => {
         if (questionIndex === 40) {
-            navigate('/test/result');
+            //이후 결과페이지로 변경
+            navigate('/');
         }
     };
 
