@@ -15,62 +15,82 @@ const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); //퍼센티지
     const [name, setName] = useState('');
     const [nameCheck, setNameCheck] = useState(false);
-    const [questionIndex, setQuestionIndex] = useState(1);
+    const [questionIndex, setQuestionIndex] = useState(0);
     const [page, setPage] = useState(0); //현재 페이지
-    const [modal, setModal] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [animate, setAnimate] = useState(false);
     const navigate = useNavigate();
 
+    const handleLoading = () => {
+        return new Promise<void>((resolve) => {
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+                resolve(); // Promise를 완료시켜 .then을 실행
+            }, 4400); // 4.4초 후에 resolve
+        });
+    };
+
+    const handleAnimate = () => {
+        return new Promise<void>((resolve) => {
+            setAnimate(true);
+            setTimeout(() => {
+                setAnimate(false);
+                resolve();
+            }, 600);
+        });
+    };
     const submitName = () => {
         if (name === '') {
             alert('이름을 입력해주세요');
         } else {
             setNameCheck(true);
-            setCurrentProgress((prev) => prev + 2.5); // 진행률 업데이트
+            handleLoading().then(() => {
+                setPage(1);
+            });
+            setCurrentProgress((prev) => prev + 2.5);
         }
     };
 
     const goBack = () => {
+        if (loading && page === 2) {
+            setLoading(false);
+            setPage(1);
+        } else if (loading && page === 3) {
+            setPage(2);
+            handleLoading();
+        }
         setQuestionIndex((prevIndex) => prevIndex - 1); // 질문 변경
         setCurrentProgress((prev) => prev - 2.5); // 진행률 업데이트
-        if (questionIndex === 9 || questionIndex === 21) {
-            setPage(questionIndex === 9 ? 1 : 2);
-            console.log(questionIndex);
-            setModal(true);
-        }
     };
 
     const handleContent = () => {
-        if (questionIndex === 40) {
+        if (questionIndex === 39) {
             //이후 결과페이지로 변경
             navigate('/');
         }
     };
 
     const handleAnswer = (answer: number) => {
-        setAnimate(true); // 애니메이션 시작
-        setTimeout(() => setAnimate(false), 600); // 애니메이션 종료, 600ms 정도로 설정
-
         if (questionIndex === 9 || questionIndex === 21) {
-            setPage(questionIndex === 9 ? 1 : 2);
-            console.log(questionIndex);
-            setModal(true);
-        }
-        if (questionIndex === 40) {
+            handleLoading();
+
+            setQuestionIndex((prevIndex) => prevIndex + 1); // 질문 변경
+            setCurrentProgress((prev) => prev + 2.5); // 진행률 업데이트
+            saveAnswer(questionIndex, answer);
+        } else if (questionIndex === 39) {
             navigate('/');
         } else {
+            handleAnimate();
             setQuestionIndex((prevIndex) => prevIndex + 1); // 질문 변경
             setCurrentProgress((prev) => prev + 2.5); // 진행률 업데이트
             saveAnswer(questionIndex, answer);
         }
     };
 
-    const handleModal = () => {
-        setModal(false);
-    };
     return (
         <PageWrapper>
-            <StatusBar status={currentProgress} />
+            <StatusBar status={currentProgress} loading={loading} />
 
             <Column>
                 {nameCheck === false && (
@@ -80,22 +100,31 @@ const TestContentPage = () => {
                         <TextContentButton onClick={() => submitName()}>다음</TextContentButton>
                     </ContentColumn>
                 )}
-                {nameCheck === true && (
+
+                {nameCheck === true && loading === true && (
+                    <LoadingWrapper animate={animate}>
+                        <StyledPageLogo rotate={true} width="25%" page={1} />
+                        <PageIndexText>당신의 특징에 대해서 알려주세요.</PageIndexText>
+                        <LoadingText>loading...</LoadingText>
+                    </LoadingWrapper>
+                )}
+
+                {page >= 1 && (
                     <ContentColumn>
-                        {currentProgress > 0 && <BacKButton onClick={() => goBack()} />}
+                        {currentProgress > 2.5 && !loading && <BacKButton onClick={() => goBack()} />}
                         <PageLogo width="8%" page={page} />
                         <AnimationQuestionText animate={animate}>
                             {questionsData.questions[questionIndex]}
                         </AnimationQuestionText>
 
-                        {questionIndex === 40 ? (
+                        {questionIndex === 39 ? (
                             <>
-                                <Modal2 animate={animate} onClick={() => handleModal()}>
+                                <LoadingWrapper2 animate={animate}>
                                     <PageLogo width="8%" page={page} />
                                     <TextContentButton onClick={() => handleContent()}>
                                         검사 결과 확인하기
                                     </TextContentButton>
-                                </Modal2>
+                                </LoadingWrapper2>
                             </>
                         ) : (
                             <SelectButton
@@ -109,14 +138,14 @@ const TestContentPage = () => {
                     </ContentColumn>
                 )}
 
-                {page >= 1 && modal && (
-                    <Modal animate={animate} onClick={() => handleModal()}>
+                {page >= 2 && loading && (
+                    <LoadingWrapper animate={animate}>
                         <StyledPageLogo rotate={true} width="25%" page={page} />
                         <PageIndexText>
-                            {page == 1 ? '당신의 생활에 대해서 알려주세요.' : '당신의 요즘 기분에 대해서 알려주세요.'}
+                            {page == 2 ? '당신의 생활에 대해서 알려주세요.' : '당신의 요즘 기분에 대해서 알려주세요.'}
                         </PageIndexText>
                         <LoadingText>loading...</LoadingText>
-                    </Modal>
+                    </LoadingWrapper>
                 )}
             </Column>
         </PageWrapper>
@@ -161,7 +190,7 @@ const LoadingText = styled.div`
     color: #727272;
 `;
 
-const Modal = styled.div<{ animate: boolean }>`
+const LoadingWrapper = styled.div<{ animate: boolean }>`
     box-sizing: border-box;
     width: 100%;
     height: 100%;
@@ -171,11 +200,10 @@ const Modal = styled.div<{ animate: boolean }>`
     flex-direction: column;
     gap: 3em;
     align-items: center;
-    cursor: pointer;
     animation: ${({ animate }) => (animate ? fade : 'none')} 0.6s ease-in-out;
 `;
 
-const Modal2 = styled(Modal)`
+const LoadingWrapper2 = styled(LoadingWrapper)`
     z-index: 100;
     gap: 0em;
 `;
