@@ -109,7 +109,7 @@ const Title = styled.div`
 
 const CautionText = styled.div`
     width: 40%;
-    height: 50%;
+    height: 45%;
     font-size: 0.8125em;
     text-align: center;
     color: #111;
