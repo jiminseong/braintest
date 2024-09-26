@@ -222,6 +222,4 @@ const Text = styled.div`
 const TextContentButton = styled(Button)`
     margin-top: 10%;
     font-size: 1.125em;
-    height: 45px;
-    width: 253px;
 `;
