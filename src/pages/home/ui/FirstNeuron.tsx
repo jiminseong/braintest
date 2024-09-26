@@ -45,7 +45,7 @@ const FirstNeuron: React.FC<FirstNeuronProps> = ({ stop }) => {
     };
 
     return (
-        <Wrapper>
+        <MotionWrapper>
             <motion.div
                 variants={variants}
                 initial={{ x: 0, y: 0 }}
@@ -55,20 +55,20 @@ const FirstNeuron: React.FC<FirstNeuronProps> = ({ stop }) => {
             >
                 <Neuron />
             </motion.div>
-        </Wrapper>
+        </MotionWrapper>
     );
 };
 
 export default FirstNeuron;
 
-const Wrapper = styled.div`
+const MotionWrapper = styled.div`
     width: 100%;
     height: 100%;
 `;
 
 const Neuron = styled.div`
     position: relative;
-    width: 50%;
+    width: 40%;
     height: 100%;
     background-image: url(${firstNeuronUrl});
     background-size: cover;

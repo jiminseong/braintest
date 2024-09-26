@@ -18,8 +18,8 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
             x: [0, '2.5vw', '5vw', '-7.5vw', '-15vw', '-2.5vw', '10vw', '-5vw', '-10vw', '2.5vw', '5vw', 0],
             y: ['0vh', '7.5vh', '15vh', '-2.5vh', '-5vh', '7.5vh', '15vh', '-7.5vh', '-15vh', '2.5vh', '5vh', 0],
             transition: {
-                x: { repeat: Infinity, repeatType: 'loop', duration: 100, ease: 'easeInOut' }, // 기존보다 더 느리게
-                y: { repeat: Infinity, repeatType: 'loop', duration: 90, ease: 'easeInOut' }, // 기존보다 더 느리게
+                x: { repeat: Infinity, repeatType: 'loop', duration: 120, ease: 'easeInOut' },
+                y: { repeat: Infinity, repeatType: 'loop', duration: 100, ease: 'easeInOut' },
             },
         },
     };
@@ -29,7 +29,7 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
         animate: {
             x: ['0vw', '1vw', '-1vw', '1vw', '0vw'],
             y: ['0vh', '1vh', '-1vh', '1vh', '0vh'],
-            transition: { repeat: Infinity, duration: 40, ease: 'easeInOut' }, // 기존보다 더 느리게
+            transition: { repeat: Infinity, duration: 30, ease: 'easeInOut' },
         },
     };
 
@@ -37,7 +37,7 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
         animate: {
             x: ['0vw', '-1vw', '1vw', '-1vw', '0vw'],
             y: ['0vh', '-1vh', '1vh', '-1vh', '0vh'],
-            transition: { repeat: Infinity, duration: 40, ease: 'easeInOut' }, // 기존보다 더 느리게
+            transition: { repeat: Infinity, duration: 30, ease: 'easeInOut' },
         },
     };
 
@@ -124,7 +124,7 @@ const Neuron = styled.img`
     position: absolute;
     top: 0;
     z-index: 2;
-    width: 100%;
+    width: 110%;
 `;
 
 const ContentText = styled.p`
