@@ -74,7 +74,6 @@ const TestContentPage = () => {
     const handleAnswer = (answer: number) => {
         if (questionIndex === 9 || questionIndex === 21) {
             handleLoading();
-
             setQuestionIndex((prevIndex) => prevIndex + 1); // 질문 변경
             setCurrentProgress((prev) => prev + 2.5); // 진행률 업데이트
             saveAnswer(questionIndex, answer);
@@ -102,14 +101,14 @@ const TestContentPage = () => {
                 )}
 
                 {nameCheck === true && loading === true && (
-                    <LoadingWrapper animate={animate}>
+                    <LoadingWrapper>
                         <StyledPageLogo rotate={true} width="25%" page={1} />
                         <PageIndexText>당신의 특징에 대해서 알려주세요.</PageIndexText>
                         <LoadingText>loading...</LoadingText>
                     </LoadingWrapper>
                 )}
 
-                {page >= 1 && (
+                {loading === false && page >= 1 && (
                     <ContentColumn>
                         {currentProgress > 2.5 && !loading && <BacKButton onClick={() => goBack()} />}
                         <PageLogo width="8%" page={page} />
@@ -119,7 +118,7 @@ const TestContentPage = () => {
 
                         {questionIndex === 39 ? (
                             <>
-                                <LoadingWrapper2 animate={animate}>
+                                <LoadingWrapper2>
                                     <PageLogo width="8%" page={page} />
                                     <TextContentButton onClick={() => handleContent()}>
                                         검사 결과 확인하기
@@ -139,7 +138,7 @@ const TestContentPage = () => {
                 )}
 
                 {page >= 2 && loading && (
-                    <LoadingWrapper animate={animate}>
+                    <LoadingWrapper>
                         <StyledPageLogo rotate={true} width="25%" page={page} />
                         <PageIndexText>
                             {page == 2 ? '당신의 생활에 대해서 알려주세요.' : '당신의 요즘 기분에 대해서 알려주세요.'}
@@ -190,7 +189,7 @@ const LoadingText = styled.div`
     color: #727272;
 `;
 
-const LoadingWrapper = styled.div<{ animate: boolean }>`
+const LoadingWrapper = styled.div`
     box-sizing: border-box;
     width: 100%;
     height: 100%;
@@ -200,7 +199,7 @@ const LoadingWrapper = styled.div<{ animate: boolean }>`
     flex-direction: column;
     gap: 3em;
     align-items: center;
-    animation: ${({ animate }) => (animate ? fade : 'none')} 0.6s ease-in-out;
+    animation: ${fade} 0.6s ease-in-out;
 `;
 
 const LoadingWrapper2 = styled(LoadingWrapper)`

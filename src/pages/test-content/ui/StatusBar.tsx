@@ -23,7 +23,7 @@ const StatusBar: React.FC<StatusBarProps> = ({ status, loading }) => {
                     loading={loading}
                 />
             </StatusBarContainer>
-            <CurrentPercentage>{status}%</CurrentPercentage>
+            {loading ? <></> : <CurrentPercentage>{status}%</CurrentPercentage>}
         </StatusBarWrapper>
     );
 };
@@ -58,29 +58,6 @@ const loadingFill = (prevStatus: number) => keyframes`
         width: 10%;
     }
 
-    12.5% {
-        width: 50%;
-    }
-
-    25% {
-        width: 48%;
-    }
-
-    37.5% {
-        width: 75%;
-    }
-
-    50% {
-        width: 70%;
-    }
-
-    62.5% {
-        width: 100%;
-    }
-
-    75% {
-        width: 95%;
-    }
 
     87.5% {
         width: 100%;
