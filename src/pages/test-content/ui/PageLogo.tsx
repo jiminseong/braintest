@@ -13,9 +13,9 @@ interface PageLogoProps {
 const PageLogo: React.FC<PageLogoProps> = ({ width, page, rotate = false }) => {
     return (
         <>
-            {page === 0 && <Logo width={width} rotate={rotate} src={firstUrl} />}
-            {page === 1 && <Logo width={width} rotate={rotate} src={secondUrl} />}
-            {page === 2 && <Logo width={width} rotate={rotate} src={thirdUrl} />}
+            {page === 1 && <Logo width={width} rotate={rotate} src={firstUrl} />}
+            {page === 2 && <Logo width={width} rotate={rotate} src={secondUrl} />}
+            {page === 3 && <Logo width={width} rotate={rotate} src={thirdUrl} />}
         </>
     );
 };
@@ -36,7 +36,7 @@ const Logo = styled.img<{ width: string; rotate: boolean }>`
     animation: ${(props) =>
         props.rotate
             ? css`
-                  ${rotateAnimation} 5s linear infinite
+                  ${rotateAnimation} 4s linear
               `
             : 'none'};
 `;

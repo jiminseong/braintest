@@ -15,11 +15,11 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
 
     const variants = {
         animate: {
-            x: [0, '5vw', '-15vw', '10vw', '-10vw', '5vw', 0],
-            y: ['0vh', '15vh', '-5vh', '15vh', '-15vh', '5vh', 0],
+            x: [0, '2.5vw', '5vw', '-7.5vw', '-15vw', '-2.5vw', '10vw', '-5vw', '-10vw', '2.5vw', '5vw', 0],
+            y: ['0vh', '7.5vh', '15vh', '-2.5vh', '-5vh', '7.5vh', '15vh', '-7.5vh', '-15vh', '2.5vh', '5vh', 0],
             transition: {
-                x: { repeat: Infinity, repeatType: 'loop', duration: 45, ease: 'easeInOut' },
-                y: { repeat: Infinity, repeatType: 'loop', duration: 40, ease: 'easeInOut' },
+                x: { repeat: Infinity, repeatType: 'loop', duration: 120, ease: 'easeInOut' },
+                y: { repeat: Infinity, repeatType: 'loop', duration: 100, ease: 'easeInOut' },
             },
         },
     };
@@ -29,7 +29,7 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
         animate: {
             x: ['0vw', '1vw', '-1vw', '1vw', '0vw'],
             y: ['0vh', '1vh', '-1vh', '1vh', '0vh'],
-            transition: { repeat: Infinity, duration: 5, ease: 'easeInOut' },
+            transition: { repeat: Infinity, duration: 30, ease: 'easeInOut' },
         },
     };
 
@@ -37,7 +37,7 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
         animate: {
             x: ['0vw', '-1vw', '1vw', '-1vw', '0vw'],
             y: ['0vh', '-1vh', '1vh', '-1vh', '0vh'],
-            transition: { repeat: Infinity, duration: 6, ease: 'easeInOut' },
+            transition: { repeat: Infinity, duration: 30, ease: 'easeInOut' },
         },
     };
 
@@ -46,11 +46,11 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
             controls.stop();
         } else {
             controls.start({
-                x: [currentX, '5vw', '-15vw', '10vw', '-10vw', '5vw', 0],
-                y: [currentY, '25vh', '-5vh', '15vh', '-15vh', '5vh', 0],
+                x: [currentX, '-10vw', '5vw', '-7.5vw', '10vw', '2.5vw', '-5vw', '-15vw', '5vw', '-2.5vw', '2.5vw', 0],
+                y: [currentY, '15vh', '-2.5vh', '7.5vh', '-7.5vh', '5vh', '-15vh', '2.5vh', '-5vh', '7.5vh', '15vh', 0],
                 transition: {
-                    x: { repeat: Infinity, repeatType: 'loop', duration: 45, ease: 'easeInOut' },
-                    y: { repeat: Infinity, repeatType: 'loop', duration: 40, ease: 'easeInOut' },
+                    x: { repeat: Infinity, repeatType: 'loop', duration: 90, ease: 'easeInOut' },
+                    y: { repeat: Infinity, repeatType: 'loop', duration: 80, ease: 'easeInOut' },
                 },
             });
         }
@@ -83,7 +83,7 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
                     animate="animate"
                     style={{ position: 'relative', width: '100%', height: '100%', zIndex: 5 }}
                 >
-                    <GreenContainer width="22.5%" height="80%" top="30%" left="25%">
+                    <GreenContainer width="22.5%" height="70%" top="35%" left="25%" borderOpacity="0.8">
                         <ContentText>brain cell 99%</ContentText>
                     </GreenContainer>
                 </motion.div>
@@ -92,9 +92,9 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
                     initial={{ x: 0, y: 0 }}
                     variants={greenContainerVariants2}
                     animate="animate"
-                    style={{ position: 'relative', width: '100%', height: '100%', zIndex: 5 }}
+                    style={{ position: 'relative', width: '100%', height: '100%', zIndex: 4 }}
                 >
-                    <GreenContainer width="12.5%" height="15%" top="-75%" left="45%">
+                    <GreenContainer width="12.5%" height="15%" top="-75%" left="45%" borderOpacity="0.7">
                         <ContentText>dendritic spines 99%</ContentText>
                     </GreenContainer>
                 </motion.div>
@@ -124,14 +124,17 @@ const Neuron = styled.img`
     position: absolute;
     top: 0;
     z-index: 2;
-    width: 100%;
+    width: 110%;
 `;
 
-const ContentText = styled.p`
+const ContentText = styled.span`
+    position: absolute;
     background-color: #070707;
     width: fit-content;
-    line-height: 1.5em;
+    font-size: 1em;
+    line-height: 1em;
+    box-sizing: border-box;
     color: #ffffff;
-    margin: 0.5em 0;
-    white-space: pre-line;
+    top: -0.25em;
+    left: -0.25em;
 `;
