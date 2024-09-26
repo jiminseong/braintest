@@ -83,7 +83,7 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
                     animate="animate"
                     style={{ position: 'relative', width: '100%', height: '100%', zIndex: 5 }}
                 >
-                    <GreenContainer width="22.5%" height="80%" top="30%" left="25%">
+                    <GreenContainer width="22.5%" height="70%" top="35%" left="25%" borderOpacity="0.8">
                         <ContentText>brain cell 99%</ContentText>
                     </GreenContainer>
                 </motion.div>
@@ -92,9 +92,9 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
                     initial={{ x: 0, y: 0 }}
                     variants={greenContainerVariants2}
                     animate="animate"
-                    style={{ position: 'relative', width: '100%', height: '100%', zIndex: 5 }}
+                    style={{ position: 'relative', width: '100%', height: '100%', zIndex: 4 }}
                 >
-                    <GreenContainer width="12.5%" height="15%" top="-75%" left="45%">
+                    <GreenContainer width="12.5%" height="15%" top="-75%" left="45%" borderOpacity="0.7">
                         <ContentText>dendritic spines 99%</ContentText>
                     </GreenContainer>
                 </motion.div>
@@ -127,11 +127,14 @@ const Neuron = styled.img`
     width: 110%;
 `;
 
-const ContentText = styled.p`
+const ContentText = styled.span`
+    position: absolute;
     background-color: #070707;
     width: fit-content;
-    line-height: 1.5em;
+    font-size: 1em;
+    line-height: 1em;
+    box-sizing: border-box;
     color: #ffffff;
-    margin: 0.5em 0;
-    white-space: pre-line;
+    top: -0.25em;
+    left: -0.25em;
 `;
