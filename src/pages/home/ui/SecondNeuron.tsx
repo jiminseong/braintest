@@ -15,11 +15,11 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
 
     const variants = {
         animate: {
-            x: [0, '5vw', '-15vw', '10vw', '-10vw', '5vw', 0],
-            y: ['0vh', '15vh', '-5vh', '15vh', '-15vh', '5vh', 0],
+            x: [0, '2.5vw', '5vw', '-7.5vw', '-15vw', '-2.5vw', '10vw', '-5vw', '-10vw', '2.5vw', '5vw', 0],
+            y: ['0vh', '7.5vh', '15vh', '-2.5vh', '-5vh', '7.5vh', '15vh', '-7.5vh', '-15vh', '2.5vh', '5vh', 0],
             transition: {
-                x: { repeat: Infinity, repeatType: 'loop', duration: 45, ease: 'easeInOut' },
-                y: { repeat: Infinity, repeatType: 'loop', duration: 40, ease: 'easeInOut' },
+                x: { repeat: Infinity, repeatType: 'loop', duration: 100, ease: 'easeInOut' }, // 기존보다 더 느리게
+                y: { repeat: Infinity, repeatType: 'loop', duration: 90, ease: 'easeInOut' }, // 기존보다 더 느리게
             },
         },
     };
@@ -29,7 +29,7 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
         animate: {
             x: ['0vw', '1vw', '-1vw', '1vw', '0vw'],
             y: ['0vh', '1vh', '-1vh', '1vh', '0vh'],
-            transition: { repeat: Infinity, duration: 5, ease: 'easeInOut' },
+            transition: { repeat: Infinity, duration: 40, ease: 'easeInOut' }, // 기존보다 더 느리게
         },
     };
 
@@ -37,7 +37,7 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
         animate: {
             x: ['0vw', '-1vw', '1vw', '-1vw', '0vw'],
             y: ['0vh', '-1vh', '1vh', '-1vh', '0vh'],
-            transition: { repeat: Infinity, duration: 6, ease: 'easeInOut' },
+            transition: { repeat: Infinity, duration: 40, ease: 'easeInOut' }, // 기존보다 더 느리게
         },
     };
 
@@ -46,11 +46,11 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
             controls.stop();
         } else {
             controls.start({
-                x: [currentX, '5vw', '-15vw', '10vw', '-10vw', '5vw', 0],
-                y: [currentY, '25vh', '-5vh', '15vh', '-15vh', '5vh', 0],
+                x: [currentX, '-10vw', '5vw', '-7.5vw', '10vw', '2.5vw', '-5vw', '-15vw', '5vw', '-2.5vw', '2.5vw', 0],
+                y: [currentY, '15vh', '-2.5vh', '7.5vh', '-7.5vh', '5vh', '-15vh', '2.5vh', '-5vh', '7.5vh', '15vh', 0],
                 transition: {
-                    x: { repeat: Infinity, repeatType: 'loop', duration: 45, ease: 'easeInOut' },
-                    y: { repeat: Infinity, repeatType: 'loop', duration: 40, ease: 'easeInOut' },
+                    x: { repeat: Infinity, repeatType: 'loop', duration: 90, ease: 'easeInOut' },
+                    y: { repeat: Infinity, repeatType: 'loop', duration: 80, ease: 'easeInOut' },
                 },
             });
         }

@@ -109,6 +109,7 @@ const ContentText = styled.p`
 
 const StyledLogo = styled(Logo)`
     position: absolute;
+    width: 10%;
     top: 1.5em;
     right: 2em;
 `;
