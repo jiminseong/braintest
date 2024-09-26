@@ -15,7 +15,7 @@ const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); //퍼센티지
     const [name, setName] = useState('');
     const [nameCheck, setNameCheck] = useState(false);
-    const [questionIndex, setQuestionIndex] = useState(1);
+    const [questionIndex, setQuestionIndex] = useState(0);
     const [page, setPage] = useState(0); //현재 페이지
     const [modal, setModal] = useState(false);
     const [animate, setAnimate] = useState(false);
@@ -26,6 +26,7 @@ const TestContentPage = () => {
             alert('이름을 입력해주세요');
         } else {
             setNameCheck(true);
+            setModal(true);
             setCurrentProgress((prev) => prev + 2.5); // 진행률 업데이트
         }
     };
@@ -34,14 +35,14 @@ const TestContentPage = () => {
         setQuestionIndex((prevIndex) => prevIndex - 1); // 질문 변경
         setCurrentProgress((prev) => prev - 2.5); // 진행률 업데이트
         if (questionIndex === 9 || questionIndex === 21) {
-            setPage(questionIndex === 9 ? 1 : 2);
+            setPage(questionIndex === 9 ? 2 : 3);
             console.log(questionIndex);
             setModal(true);
         }
     };
 
     const handleContent = () => {
-        if (questionIndex === 40) {
+        if (questionIndex === 39) {
             //이후 결과페이지로 변경
             navigate('/');
         }
@@ -52,11 +53,11 @@ const TestContentPage = () => {
         setTimeout(() => setAnimate(false), 600); // 애니메이션 종료, 600ms 정도로 설정
 
         if (questionIndex === 9 || questionIndex === 21) {
-            setPage(questionIndex === 9 ? 1 : 2);
+            setPage(questionIndex === 9 ? 2 : 3);
             console.log(questionIndex);
             setModal(true);
         }
-        if (questionIndex === 40) {
+        if (questionIndex === 39) {
             navigate('/');
         } else {
             setQuestionIndex((prevIndex) => prevIndex + 1); // 질문 변경
@@ -65,6 +66,10 @@ const TestContentPage = () => {
         }
     };
 
+    const firstModal = () => {
+        setModal(false);
+        setPage(1);
+    };
     const handleModal = () => {
         setModal(false);
     };
@@ -80,7 +85,16 @@ const TestContentPage = () => {
                         <TextContentButton onClick={() => submitName()}>다음</TextContentButton>
                     </ContentColumn>
                 )}
-                {nameCheck === true && (
+
+                {nameCheck === true && modal === true && (
+                    <Modal animate={animate} onClick={() => firstModal()}>
+                        <StyledPageLogo rotate={true} width="25%" page={1} />
+                        <PageIndexText>당신의 특징에 대해서 알려주세요.</PageIndexText>
+                        <LoadingText>loading...</LoadingText>
+                    </Modal>
+                )}
+
+                {page >= 1 && (
                     <ContentColumn>
                         {currentProgress > 0 && <BacKButton onClick={() => goBack()} />}
                         <PageLogo width="8%" page={page} />
@@ -88,7 +102,7 @@ const TestContentPage = () => {
                             {questionsData.questions[questionIndex]}
                         </AnimationQuestionText>
 
-                        {questionIndex === 40 ? (
+                        {questionIndex === 39 ? (
                             <>
                                 <Modal2 animate={animate} onClick={() => handleModal()}>
                                     <PageLogo width="8%" page={page} />
@@ -109,11 +123,11 @@ const TestContentPage = () => {
                     </ContentColumn>
                 )}
 
-                {page >= 1 && modal && (
+                {page >= 2 && modal && (
                     <Modal animate={animate} onClick={() => handleModal()}>
                         <StyledPageLogo rotate={true} width="25%" page={page} />
                         <PageIndexText>
-                            {page == 1 ? '당신의 생활에 대해서 알려주세요.' : '당신의 요즘 기분에 대해서 알려주세요.'}
+                            {page == 2 ? '당신의 생활에 대해서 알려주세요.' : '당신의 요즘 기분에 대해서 알려주세요.'}
                         </PageIndexText>
                         <LoadingText>loading...</LoadingText>
                     </Modal>
