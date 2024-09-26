@@ -77,6 +77,7 @@ const TestContentPage = () => {
             setQuestionIndex((prevIndex) => prevIndex + 1); // 질문 변경
             setCurrentProgress((prev) => prev + 2.5); // 진행률 업데이트
             saveAnswer(questionIndex, answer);
+            setPage(questionIndex === 9 ? 2 : 3);
         } else if (questionIndex === 39) {
             navigate('/');
         } else {
