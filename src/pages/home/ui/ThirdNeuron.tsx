@@ -14,10 +14,10 @@ const ThirdNeuron: React.FC<ThirdNeuronProps> = ({ stop }) => {
     const variants = {
         animate: {
             x: [0, '5vw', '-15vw', '5vw', '-25vw', '2vw', 0],
-            y: ['10vh', '15vh', '25vh', '-5vh', '15vh', '5vh', 0],
+            y: [0, '10vh', '15vh', '25vh', '-5vh', '10vh', '5vh', 0],
             transition: {
-                x: { repeat: Infinity, repeatType: 'loop', duration: 40, ease: 'easeInOut' },
-                y: { repeat: Infinity, repeatType: 'loop', duration: 30, ease: 'easeInOut' },
+                x: { repeat: Infinity, repeatType: 'loop', duration: 60, ease: 'easeInOut' },
+                y: { repeat: Infinity, repeatType: 'loop', duration: 50, ease: 'easeInOut' },
             },
         },
     };
@@ -36,8 +36,8 @@ const ThirdNeuron: React.FC<ThirdNeuronProps> = ({ stop }) => {
                 x: [currentX, '5vw', '-15vw', '5vw', '-25vw', '2vw', 0],
                 y: [currentY, '15vh', '25vh', '-5vh', '15vh', '5vh', 0],
                 transition: {
-                    x: { repeat: Infinity, repeatType: 'loop', duration: 30, ease: 'easeInOut' },
-                    y: { repeat: Infinity, repeatType: 'loop', duration: 30, ease: 'easeInOut' },
+                    x: { repeat: Infinity, repeatType: 'loop', duration: 50, ease: 'easeInOut' },
+                    y: { repeat: Infinity, repeatType: 'loop', duration: 50, ease: 'easeInOut' },
                 },
             });
         }
@@ -50,7 +50,7 @@ const ThirdNeuron: React.FC<ThirdNeuronProps> = ({ stop }) => {
                 initial="initial"
                 animate={controls}
                 onUpdate={handleUpdate}
-                style={{ marginRight: '-105%', marginBottom: '-170%' }} // 오른쪽 아래로 살짝 이동시키기
+                style={{ marginRight: '-125%', marginBottom: '-145%' }} // 오른쪽 아래로 살짝 이동시키기
             >
                 <Neuron src={thirdNeuronUrl} alt="세번째 뉴런" />
             </motion.div>
@@ -65,7 +65,7 @@ const MotionWrapper = styled.div`
     justify-content: flex-end;
     align-items: flex-end;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
@@ -73,5 +73,5 @@ const MotionWrapper = styled.div`
 `;
 
 const Neuron = styled.img`
-    width: 110%;
+    width: 90%;
 `;

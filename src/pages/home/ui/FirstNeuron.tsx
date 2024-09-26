@@ -14,11 +14,12 @@ const FirstNeuron: React.FC<FirstNeuronProps> = ({ stop }) => {
 
     const variants = {
         animate: {
-            x: [0, '5vw', '-15vw', '10vw', '-10vw', '5vw', 0],
-            y: ['0vh', '25vh', '-5vh', '15vh', '-15vh', '5vh', 0],
+            x: [0, '8vw', '-12vw', '3vw', '-5vw', '20vw', '-18vw', '6vw', '-7vw', '10vw', '-3vw', 0],
+            y: ['0vh', '10vh', '-8vh', '4vh', '-2vh', '18vh', '-15vh', '7vh', '-10vh', '12vh', '-5vh', 0],
+
             transition: {
-                x: { repeat: Infinity, repeatType: 'loop', duration: 30, ease: 'easeInOut' },
-                y: { repeat: Infinity, repeatType: 'loop', duration: 30, ease: 'easeInOut' },
+                x: { repeat: Infinity, repeatType: 'loop', duration: 80, ease: 'easeInOut' },
+                y: { repeat: Infinity, repeatType: 'loop', duration: 90, ease: 'easeInOut' },
             },
         },
     };
@@ -27,11 +28,11 @@ const FirstNeuron: React.FC<FirstNeuronProps> = ({ stop }) => {
             controls.stop();
         } else {
             controls.start({
-                x: [currentX, '5vw', '-15vw', '10vw', '-10vw', '5vw', 0],
-                y: [currentY, '25vh', '-5vh', '15vh', '-15vh', '5vh', 0],
+                x: [currentX, '8vw', '-12vw', '3vw', '-5vw', '20vw', '-18vw', '6vw', '-7vw', '10vw', '-3vw', 0],
+                y: [currentY, '0vh', '10vh', '-8vh', '4vh', '-2vh', '18vh', '-15vh', '7vh', '-10vh', '-5vh', 0],
                 transition: {
-                    x: { repeat: Infinity, repeatType: 'loop', duration: 30, ease: 'easeInOut' },
-                    y: { repeat: Infinity, repeatType: 'loop', duration: 30, ease: 'easeInOut' },
+                    x: { repeat: Infinity, repeatType: 'loop', duration: 90, ease: 'easeInOut' },
+                    y: { repeat: Infinity, repeatType: 'loop', duration: 80, ease: 'easeInOut' },
                 },
             });
         }
@@ -44,7 +45,7 @@ const FirstNeuron: React.FC<FirstNeuronProps> = ({ stop }) => {
     };
 
     return (
-        <Wrapper>
+        <MotionWrapper>
             <motion.div
                 variants={variants}
                 initial={{ x: 0, y: 0 }}
@@ -54,20 +55,20 @@ const FirstNeuron: React.FC<FirstNeuronProps> = ({ stop }) => {
             >
                 <Neuron />
             </motion.div>
-        </Wrapper>
+        </MotionWrapper>
     );
 };
 
 export default FirstNeuron;
 
-const Wrapper = styled.div`
+const MotionWrapper = styled.div`
     width: 100%;
     height: 100%;
 `;
 
 const Neuron = styled.div`
     position: relative;
-    width: 50%;
+    width: 40%;
     height: 100%;
     background-image: url(${firstNeuronUrl});
     background-size: cover;
