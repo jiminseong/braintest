@@ -36,7 +36,7 @@ const Logo = styled.img<{ width: string; rotate: boolean }>`
     animation: ${(props) =>
         props.rotate
             ? css`
-                  ${rotateAnimation} 5s linear infinite
+                  ${rotateAnimation} 4s linear
               `
             : 'none'};
 `;

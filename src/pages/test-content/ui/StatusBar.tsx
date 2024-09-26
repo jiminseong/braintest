@@ -1,11 +1,12 @@
 import React, { useRef, useEffect } from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 interface StatusBarProps {
     status: number;
+    loading: boolean;
 }
 
-const StatusBar: React.FC<StatusBarProps> = ({ status }) => {
+const StatusBar: React.FC<StatusBarProps> = ({ status, loading }) => {
     const prevStatusRef = useRef<number>(status);
 
     useEffect(() => {
@@ -15,7 +16,12 @@ const StatusBar: React.FC<StatusBarProps> = ({ status }) => {
     return (
         <StatusBarWrapper>
             <StatusBarContainer>
-                <CurrentStatusBar prevStatus={prevStatusRef.current} status={status} />
+                <CurrentStatusBar
+                    prevStatus={prevStatusRef.current}
+                    status={status}
+                    duration={Math.abs(status - prevStatusRef.current) * 0.25} // 변화량에 따라 duration 조절
+                    loading={loading}
+                />
             </StatusBarContainer>
             <CurrentPercentage>{status}%</CurrentPercentage>
         </StatusBarWrapper>
@@ -47,6 +53,44 @@ const fill = (prevStatus: number, status: number) => keyframes`
     }
 `;
 
+const loadingFill = (prevStatus: number) => keyframes`
+    0% {
+        width: 10%;
+    }
+
+    12.5% {
+        width: 50%;
+    }
+
+    25% {
+        width: 48%;
+    }
+
+    37.5% {
+        width: 75%;
+    }
+
+    50% {
+        width: 70%;
+    }
+
+    62.5% {
+        width: 100%;
+    }
+
+    75% {
+        width: 95%;
+    }
+
+    87.5% {
+        width: 100%;
+    }
+
+    100% {
+        width: ${prevStatus}%;
+    }
+`;
+
 const StatusBarContainer = styled.div`
     height: 5px;
     background: rgba(217, 217, 217, 0.4);
@@ -55,11 +99,20 @@ const StatusBarContainer = styled.div`
 interface CurrentStatusBarProps {
     prevStatus: number;
     status: number;
+    duration: number;
+    loading: boolean;
 }
 
 const CurrentStatusBar = styled.div<CurrentStatusBarProps>`
     background: #7795ff;
     width: ${({ status }) => `${status}%`};
     height: 100%;
-    animation: ${({ prevStatus, status }) => fill(prevStatus, status)} 1s linear forwards;
+    animation: ${({ prevStatus, status, loading, duration }) =>
+        loading
+            ? css`
+                  ${loadingFill(prevStatus)} 4.4s linear forwards
+              `
+            : css`
+                  ${fill(prevStatus, status)} ${duration}s linear forwards
+              `};
 `;
