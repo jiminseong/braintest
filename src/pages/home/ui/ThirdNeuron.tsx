@@ -50,7 +50,7 @@ const ThirdNeuron: React.FC<ThirdNeuronProps> = ({ stop }) => {
                 initial="initial"
                 animate={controls}
                 onUpdate={handleUpdate}
-                style={{ marginRight: '-125%', marginBottom: '-145%' }} // 오른쪽 아래로 살짝 이동시키기
+                style={{ marginRight: '-90%', marginBottom: '-135%' }} // 오른쪽 아래로 살짝 이동시키기
             >
                 <Neuron src={thirdNeuronUrl} alt="세번째 뉴런" />
             </motion.div>
@@ -73,5 +73,5 @@ const MotionWrapper = styled.div`
 `;
 
 const Neuron = styled.img`
-    width: 90%;
+    width: 100%;
 `;
