@@ -12,7 +12,7 @@ const TestResultPage = () => {
     });
     return (
         <PageWrapper>
-            <PrintButton onClick={handlePrint}>Print</PrintButton>
+            <PrintButton onClick={() => handlePrint()}>Print</PrintButton>
             <PrintContainer ref={componentRef}>
                 <img src={billUrl} alt="결과" />
             </PrintContainer>
@@ -33,6 +33,8 @@ const PageWrapper = styled.div`
     background: blue;
 `;
 const PrintContainer = styled.div`
+    position: absolute;
+    top: 10em;
     width: fit-content;
     height: fit-content;
     background: #ffffff;
@@ -40,6 +42,8 @@ const PrintContainer = styled.div`
 `;
 
 const PrintButton = styled.div`
+    position: absolute;
+    top: 1em;
     border-radius: 2em;
     border: 2px solid #000;
     background: #fff;
