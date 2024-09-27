@@ -63,6 +63,7 @@ const HomePage = () => {
             <SecondNeuron stop={animationStopState} />
             <ThirdNeuron stop={animationStopState} />
             <StyledLogo />
+            <TestNavigateButton onClick={() => navigate('/test/result')}>프린트 테스트 하러 가기</TestNavigateButton>
 
             <FirstGreenContainer>
                 <Title>brain type test 100%</Title>
@@ -147,4 +148,22 @@ const FirstGreenContainer = styled.div`
     top: 35%;
     left: 5%;
     box-shadow: 0 0 0 3px #7aff77 inset, 0px 0px 8.5px 1px #77ceff;
+`;
+
+const TestNavigateButton = styled.button`
+    z-index: 10;
+    width: 250px;
+    height: 40px;
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    border-radius: 2em;
+    border: 2px solid #000;
+    background: #fff;
+    font-size: 1.125em;
+    font-weight: 700;
+    text-align: center;
+    padding: 0.25em;
+    box-sizing: border-box;
+    cursor: pointer;
 `;
