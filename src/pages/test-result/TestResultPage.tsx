@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
+import billUrl from '../../assets/images/bill.png';
 
 const TestResultPage = () => {
     const componentRef = useRef<HTMLDivElement | null>(null);
@@ -12,7 +13,9 @@ const TestResultPage = () => {
     return (
         <PageWrapper>
             <PrintButton onClick={handlePrint}>Print</PrintButton>
-            <PrintContainer ref={componentRef}>프린트할 공간이에요</PrintContainer>;
+            <PrintContainer ref={componentRef}>
+                <img src={billUrl} alt="결과" />
+            </PrintContainer>
         </PageWrapper>
     );
 };
@@ -30,8 +33,8 @@ const PageWrapper = styled.div`
     background: blue;
 `;
 const PrintContainer = styled.div`
-    width: 1000px;
-    height: 300px;
+    width: fit-content;
+    height: fit-content;
     background: #ffffff;
     color: #070707;
 `;
