@@ -64,7 +64,7 @@ const HomePage = () => {
             <ThirdNeuron stop={animationStopState} />
             <StyledLogo />
 
-            <GreenContainerWraaper>
+            <FirstGreenContainer>
                 <Title>brain type test 100%</Title>
 
                 {typedText.map((text, index) => (
@@ -83,8 +83,7 @@ const HomePage = () => {
                         <Image src={testStartButtonUrl} alt="테스트시작버튼" />
                     </ButtonWrapper>
                 )}
-            </GreenContainerWraaper>
-            <FirstGreenContainer />
+            </FirstGreenContainer>
         </HomePageWrapper>
     );
 };
@@ -101,9 +100,9 @@ const HomePageWrapper = styled.div`
 const ContentText = styled.p`
     background-color: #070707;
     width: fit-content;
+    font-size: 1em;
     line-height: 1em;
     color: #ffffff;
-    font-size: 1em;
     margin: 0.5em 0;
     white-space: pre-line;
 `;
@@ -135,24 +134,17 @@ const ButtonWrapper = styled.button`
     outline: none;
 `;
 
-const GreenContainerWraaper = styled.div`
-    z-index: 10;
+const FirstGreenContainer = styled.div`
     position: absolute;
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0.25em;
+    z-index: 10;
     color: #ffffff;
-    line-height: 2em;
-    min-width: 55%;
+    min-width: 60%;
     min-height: 45%;
     top: 35%;
     left: 5%;
-`;
-const FirstGreenContainer = styled.div`
-    z-index: 5;
-    position: absolute;
-    width: 55%;
-    height: 50%;
-    top: 35%;
-    left: 5%;
-    border: 3px solid #7aff77;
-    box-shadow: 0px 0px 8.5px 1px #77ceff;
+    box-shadow: 0 0 0 3px #7aff77 inset, 0px 0px 8.5px 1px #77ceff;
 `;
