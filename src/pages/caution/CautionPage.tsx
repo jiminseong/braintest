@@ -72,25 +72,37 @@ const CautionPage = () => {
     return (
         <PageWrapper>
             <BacKButton top="3em" onClick={() => handleBackButton()} />
-            <Column>
-                <ContentColumn>
+            <ColumnWrapper>
+                <Column>
                     <Title>{cautionTitle}</Title>
                     <CautionText>{cautionText}</CautionText>
-                    {agreeState ? (
-                        <BlueButton onClick={() => navigate('/test/content')}>시작하기</BlueButton>
-                    ) : (
-                        <RowWrapper>
-                            <BlueButton onClick={() => handleCautionText()}>동의합니다</BlueButton>
-                            <RedButton onClick={() => handleBackButton()}>동의하지 않습니다</RedButton>
-                        </RowWrapper>
-                    )}
-                </ContentColumn>
-            </Column>
+                </Column>
+                {agreeState ? (
+                    <BlueButton onClick={() => navigate('/test/content')}>시작하기</BlueButton>
+                ) : (
+                    <RowWrapper>
+                        <BlueButton onClick={() => handleCautionText()}>동의합니다</BlueButton>
+                        <RedButton onClick={() => handleBackButton()}>동의하지 않습니다</RedButton>
+                    </RowWrapper>
+                )}
+            </ColumnWrapper>
         </PageWrapper>
     );
 };
 
 export default CautionPage;
+
+const Column = styled.div`
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const ColumnWrapper = styled(Column)`
+    height: 60%;
+    justify-content: space-between;
+`;
 
 const PageWrapper = styled.div`
     width: 100%;
@@ -102,30 +114,15 @@ const PageWrapper = styled.div`
     background: #ffffff;
 `;
 
-const Column = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 4.5em;
-    height: 100%;
-    position: relative;
-`;
-
-const ContentColumn = styled(Column)`
-    width: 100%;
-    gap: 4em;
-`;
-
 const Title = styled.div`
     color: #666666;
     font-size: 2em;
     font-weight: 700;
-    margin-bottom: 2ㄴem;
+    margin-bottom: 2em;
 `;
 
 const CautionText = styled.div`
     width: 100%;
-    height: 37.5%;
     font-size: 0.8125em;
     text-align: center;
     color: #111;
@@ -136,6 +133,6 @@ const CautionText = styled.div`
 const RowWrapper = styled.div`
     width: 100%;
     display: flex;
-    gap: 10em;
+    gap: 8em;
     justify-content: center;
 `;
