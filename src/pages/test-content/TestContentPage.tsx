@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import PageLogo from './ui/PageLogo';
 import { useSurveyStore } from '../../store/store';
 import BacKButton from '../../component/button/BacKButton';
+import ResultLoading from './ui/ResultLoading';
 
 const TestContentPage = () => {
     const { saveAnswer } = useSurveyStore();
@@ -22,6 +23,16 @@ const TestContentPage = () => {
     const navigate = useNavigate();
 
     const handleLoading = () => {
+        return new Promise<void>((resolve) => {
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+                resolve(); // Promise를 완료시켜 .then을 실행
+            }, 4400); // 4.4초 후에 resolve
+        });
+    };
+
+    const submitAnswer = () => {
         return new Promise<void>((resolve) => {
             setLoading(true);
             setTimeout(() => {
@@ -64,13 +75,6 @@ const TestContentPage = () => {
         setCurrentProgress((prev) => prev - 2.5); // 진행률 업데이트
     };
 
-    const handleContent = () => {
-        if (questionIndex === 39) {
-            //이후 결과페이지로 변경
-            navigate('/');
-        }
-    };
-
     const handleAnswer = (answer: number) => {
         if (questionIndex === 9 || questionIndex === 21) {
             handleLoading();
@@ -78,8 +82,10 @@ const TestContentPage = () => {
             setCurrentProgress((prev) => prev + 2.5); // 진행률 업데이트
             saveAnswer(questionIndex, answer);
             setPage(questionIndex === 9 ? 2 : 3);
-        } else if (questionIndex === 39) {
-            navigate('/');
+        } else if (questionIndex === 38) {
+            setQuestionIndex((prevIndex) => prevIndex + 1); // 질문 변경
+            setCurrentProgress((prev) => prev + 2.5); // 진행률 업데이트
+            submitAnswer().then(() => navigate('/test/result'));
         } else {
             handleAnimate();
             setQuestionIndex((prevIndex) => prevIndex + 1); // 질문 변경
@@ -103,7 +109,7 @@ const TestContentPage = () => {
                     </ContentColumn>
                 )}
 
-                {nameCheck === true && loading === true && page === 1 && (
+                {nameCheck === true && loading === true && page === 0 && (
                     <LoadingWrapper>
                         <PageLogo rotate={true} width="16%" page={1} />
                         <PageIndexText>당신의 특징에 대해서 알려주세요.</PageIndexText>
@@ -119,28 +125,17 @@ const TestContentPage = () => {
                             {questionsData.questions[questionIndex]}
                         </AnimationQuestionText>
 
-                        {questionIndex === 39 ? (
-                            <>
-                                <LoadingWrapper2>
-                                    <PageLogo width="8%" page={page} />
-                                    <TextContentButton onClick={() => handleContent()}>
-                                        검사 결과 확인하기
-                                    </TextContentButton>
-                                </LoadingWrapper2>
-                            </>
-                        ) : (
-                            <SelectButton
-                                onClickOne={() => handleAnswer(1)}
-                                onClickTwo={() => handleAnswer(2)}
-                                onClickThree={() => handleAnswer(3)}
-                                onClickFour={() => handleAnswer(4)}
-                                onClickFive={() => handleAnswer(5)}
-                            />
-                        )}
+                        <SelectButton
+                            onClickOne={() => handleAnswer(1)}
+                            onClickTwo={() => handleAnswer(2)}
+                            onClickThree={() => handleAnswer(3)}
+                            onClickFour={() => handleAnswer(4)}
+                            onClickFive={() => handleAnswer(5)}
+                        />
                     </ContentColumn>
                 )}
 
-                {page >= 2 && loading && (
+                {page >= 2 && loading && questionIndex < 39 && (
                     <LoadingWrapper>
                         <PageLogo rotate={true} width="16%" page={page} />
                         <PageIndexText>
@@ -148,6 +143,13 @@ const TestContentPage = () => {
                         </PageIndexText>
                         <LoadingText>loading...</LoadingText>
                     </LoadingWrapper>
+                )}
+
+                {questionIndex === 39 && loading && (
+                    <SubmitLoadingWrapper>
+                        <ResultLoading />
+                        <Text>당신의 뇌 유형을 분석 중입니다...</Text>
+                    </SubmitLoadingWrapper>
                 )}
             </Column>
         </PageWrapper>
@@ -191,6 +193,7 @@ const LoadingText = styled.div`
 
 const LoadingWrapper = styled.div`
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     margin-top: -10em;
@@ -201,9 +204,9 @@ const LoadingWrapper = styled.div`
     animation: ${fade} 0.6s ease-in-out;
 `;
 
-const LoadingWrapper2 = styled(LoadingWrapper)`
-    z-index: 100;
-    gap: 0em;
+const SubmitLoadingWrapper = styled(LoadingWrapper)`
+    margin-top: 0em;
+    gap: 5em;
 `;
 
 const Column = styled.div`
