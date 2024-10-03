@@ -11,8 +11,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/caution" element={<CautionPage />} />
             <Route path="/test/content" element={<TestContentPage />} />
-            <Route path="/test/result/:id/:name" element={<TestResultPage />} />
-            <Route path="/print/result" element={<PrintPage />} />
+            <Route path="/test/result/:type/:name" element={<TestResultPage />} />
+            <Route path="/print/:type/:name" element={<PrintPage />} />
         </Routes>
     );
 }
