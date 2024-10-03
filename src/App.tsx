@@ -11,6 +11,7 @@ function App() {
             <Route path="/caution" element={<CautionPage />} />
             <Route path="/test/content" element={<TestContentPage />} />
             <Route path="/test/result" element={<TestResultPage />} />
+            <Route path="/print/result" element={<TestResultPage />} />
         </Routes>
     );
 }
