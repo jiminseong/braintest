@@ -89,7 +89,7 @@ const TestContentPage = () => {
             setResult(resultType);
             console.log('타입결과 : ' + resultType);
             handleLoading().then(() => {
-                navigate('/test/result', { state: { resultType: result, name: name } });
+                navigate(`/test/result/${result}/${name}`);
             });
         } else {
             handleAnimate();

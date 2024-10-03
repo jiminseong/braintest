@@ -38,7 +38,7 @@ export default TypeLogo;
 
 const TypeLogoImage = styled.div<TypeLogoImageProps>`
     min-width: 30%; // 컨테이너 너비
-    min-height: 100%; // 컨테이너 높이
+    min-height: 90%; // 컨테이너 높이
     color: #ffffff;
     font-size: 5em;
     background-image: url(${(props) => props.logoUrl});
