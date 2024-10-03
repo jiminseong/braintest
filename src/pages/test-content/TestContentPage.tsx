@@ -1,38 +1,31 @@
 import { useState } from 'react';
-import StatusBar from './ui/StatusBar';
+import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { Input } from './ui/Input';
-import { Button } from '../../component/button/Button';
-import questionsData from './data/question.json';
+import StatusBar from './ui/StatusBar';
 import SelectButton from './ui/SelectButton';
-import { useNavigate } from 'react-router-dom';
-import PageLogo from './ui/PageLogo';
+import { Button } from '../../component/button/Button';
+import questionsData from './model/question.json';
 import { useSurveyStore } from '../../store/store';
+import PageLogo from './ui/PageLogo';
 import BacKButton from '../../component/button/BacKButton';
 import ResultLoading from './ui/ResultLoading';
+import calculateResultType from './model/calculateResultType';
 
 const TestContentPage = () => {
-    const { saveAnswer } = useSurveyStore();
-    const [currentProgress, setCurrentProgress] = useState(0); //퍼센티지
+    const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
     const [name, setName] = useState('');
     const [nameCheck, setNameCheck] = useState(false);
     const [questionIndex, setQuestionIndex] = useState(0);
-    const [page, setPage] = useState(0); //현재 페이지
+    const [page, setPage] = useState(0); // 현재 페이지
     const [loading, setLoading] = useState(false);
     const [animate, setAnimate] = useState(false);
     const navigate = useNavigate();
 
-    const handleLoading = () => {
-        return new Promise<void>((resolve) => {
-            setLoading(true);
-            setTimeout(() => {
-                setLoading(false);
-                resolve(); // Promise를 완료시켜 .then을 실행
-            }, 4400); // 4.4초 후에 resolve
-        });
-    };
+    // Zustand 상태 관리 함수
+    const { setName: setGlobalName, setResult, saveAnswer } = useSurveyStore();
 
-    const submitAnswer = () => {
+    const handleLoading = () => {
         return new Promise<void>((resolve) => {
             setLoading(true);
             setTimeout(() => {
@@ -51,10 +44,12 @@ const TestContentPage = () => {
             }, 600);
         });
     };
+
     const submitName = () => {
         if (name === '') {
             alert('이름을 입력해주세요');
         } else {
+            setGlobalName(name); // 이름을 전역 상태에 저장
             setNameCheck(true);
             handleLoading().then(() => {
                 setPage(1);
@@ -76,21 +71,29 @@ const TestContentPage = () => {
     };
 
     const handleAnswer = (answer: number) => {
+        if (0 <= questionIndex && questionIndex <= 37) saveAnswer(questionIndex, answer); // 답변을 상태에 저장
+
         if (questionIndex === 9 || questionIndex === 21) {
-            handleLoading();
-            setQuestionIndex((prevIndex) => prevIndex + 1); // 질문 변경
-            setCurrentProgress((prev) => prev + 2.5); // 진행률 업데이트
-            saveAnswer(questionIndex, answer);
             setPage(questionIndex === 9 ? 2 : 3);
+            handleLoading();
+            setQuestionIndex((prevIndex) => prevIndex + 1);
+            setCurrentProgress((prev) => prev + 2.5);
         } else if (questionIndex === 38) {
-            setQuestionIndex((prevIndex) => prevIndex + 1); // 질문 변경
-            setCurrentProgress((prev) => prev + 2.5); // 진행률 업데이트
-            submitAnswer().then(() => navigate('/test/result'));
+            setQuestionIndex((prevIndex) => prevIndex + 1);
+            setCurrentProgress((prev) => prev + 2.5);
+
+            // 결과 타입 계산 함수 호출
+            const resultType = calculateResultType();
+            // 결과를 상태에 저장하고 로딩 후 navigate
+            setResult(resultType);
+
+            handleLoading().then(() => {
+                navigate('/test/result');
+            });
         } else {
             handleAnimate();
-            setQuestionIndex((prevIndex) => prevIndex + 1); // 질문 변경
-            setCurrentProgress((prev) => prev + 2.5); // 진행률 업데이트
-            saveAnswer(questionIndex, answer);
+            setQuestionIndex((prevIndex) => prevIndex + 1);
+            setCurrentProgress((prev) => prev + 2.5);
         }
     };
 
@@ -158,18 +161,23 @@ const TestContentPage = () => {
 
 export default TestContentPage;
 
+// 스타일링은 그대로 유지
+
 const PageIndexText = styled.div`
     color: #fff;
     text-align: center;
     font-size: 1.725em;
     font-weight: 700;
 `;
+
 const PageWrapper = styled.div`
     background-color: #070707;
     height: 100%;
     overflow: hidden;
     position: relative;
 `;
+
+// 나머지 스타일 코드 유지...
 
 const fade = keyframes`
     0% {
