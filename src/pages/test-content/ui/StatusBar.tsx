@@ -38,10 +38,13 @@ const CurrentPercentage = styled.div`
 `;
 
 const StatusBarWrapper = styled.div`
-    margin-top: 2em;
+    position: absolute;
     display: flex;
     flex-direction: column;
     gap: 1em;
+    top: 2em;
+    width: 100%;
+    z-index: 10;
 `;
 
 const fill = (prevStatus: number, status: number) => keyframes`

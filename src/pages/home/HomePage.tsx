@@ -63,7 +63,9 @@ const HomePage = () => {
             <SecondNeuron stop={animationStopState} />
             <ThirdNeuron stop={animationStopState} />
             <StyledLogo />
-            <TestNavigateButton onClick={() => navigate('/test/result')}>프린트 테스트 하러 가기</TestNavigateButton>
+            <TestNavigateButton onClick={() => navigate('/test/result/2/김민지')}>
+                프린트 테스트 하러 가기
+            </TestNavigateButton>
 
             <FirstGreenContainer>
                 <Title>brain type test 100%</Title>
