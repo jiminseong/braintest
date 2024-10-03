@@ -212,7 +212,7 @@ const Column = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 3em;
+    padding-top: 4.5em;
     height: 100%;
     position: relative;
 `;
