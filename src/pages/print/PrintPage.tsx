@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { useReactToPrint } from 'react-to-print';
 import { useEffect, useRef, useState } from 'react';
+import styled, { keyframes } from 'styled-components';
+import { useReactToPrint } from 'react-to-print';
 import { useParams } from 'react-router-dom';
 import TypeLogo from './ui/TypeLogo';
 import TopNavigationBar from './ui/TopNavigationBar';
@@ -8,8 +8,9 @@ import UnderTriangleIcon from '../../assets/icons/triangleIcon.svg?react';
 import CloseIcon from '../../assets/icons/closeIcon.svg?react';
 
 const PrintPage = () => {
+    const [isWrapperVisible, setWrapperVisible] = useState(false);
     const [isPrintContainerVisible, setPrintContainerVisible] = useState(false);
-    const componentRef = useRef<HTMLDivElement | null>(null);
+    const componentRef = useRef(null);
     const { type, name = '' } = useParams();
     const resultType = Number(type);
 
@@ -21,26 +22,45 @@ const PrintPage = () => {
     console.log(name);
 
     useEffect(() => {
-        if (isPrintContainerVisible) {
+        if (isWrapperVisible && isPrintContainerVisible) {
             handlePrint();
         }
-    }, [isPrintContainerVisible]);
+    }, [isWrapperVisible, isPrintContainerVisible]);
+
+    const handleOpenPrint = () => {
+        setWrapperVisible(true);
+        setPrintContainerVisible(true);
+    };
+
+    const handleClosePrint = () => {
+        setPrintContainerVisible(false);
+    };
+
+    const handleAnimationEnd = () => {
+        if (!isPrintContainerVisible) {
+            setWrapperVisible(false);
+        }
+    };
 
     return (
         <PageWrapper>
             <TopNavigationBar />
             <RowWrapper>
                 <TypeLogo type={resultType} />
-                <PrintButton onClick={() => setPrintContainerVisible(true)}>
+                <PrintButton onClick={handleOpenPrint}>
                     PRINT
                     <UnderTriangleIcon />
                 </PrintButton>
             </RowWrapper>
 
-            {isPrintContainerVisible && (
-                <PrintContainerWrapper>
-                    <CloseButton onClick={() => setPrintContainerVisible(false)} />
-                    <PrintContainer ref={componentRef}>
+            {isWrapperVisible && (
+                <PrintContainerWrapper isWrapperVisible>
+                    <CloseButton onClick={handleClosePrint} />
+                    <PrintContainer
+                        isPrintContainerVisible={isPrintContainerVisible}
+                        onAnimationEnd={handleAnimationEnd}
+                        ref={componentRef}
+                    >
                         <TypeDescription>
                             <h2>Type 2는 뇌의 기능이 전체적으로 균등하게 활동하는 유형입니다.</h2>
                             <p>
@@ -101,6 +121,7 @@ const TypeDescription = styled.div`
         line-height: 1.5;
     }
 `;
+
 const HappinessTitle = styled.h2`
     font-size: 2em;
     font-weight: bold;
@@ -142,16 +163,39 @@ const RowWrapper = styled.div`
     gap: 5em;
 `;
 
-const PrintContainerWrapper = styled.div`
+const fadeIn = keyframes`
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+`;
+
+const fadeOut = keyframes`
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+`;
+
+const PrintContainerWrapper = styled.div<{ isWrapperVisible: boolean }>`
     position: absolute;
     width: 100%;
     height: 100%;
+    overflow-y: hidden;
     background: rgba(217, 217, 217, 0.3);
     backdrop-filter: blur(10px);
     z-index: 10;
     display: flex;
     justify-content: center;
     padding-top: 2em;
+    box-sizing: border-box;
+    transition: fade in;
+    animation: ${({ isWrapperVisible }) => (isWrapperVisible ? fadeIn : fadeOut)} 0.15s ease-out;
+    transition: visibility 0.15s ease-out;
 `;
 
 const CloseButton = styled(CloseIcon)`
@@ -161,7 +205,17 @@ const CloseButton = styled(CloseIcon)`
     cursor: pointer;
 `;
 
-const PrintContainer = styled.div`
+const fadeUp = keyframes`
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+`;
+
+const fadeDown = keyframes`
+    from { transform: translateY(0); }
+    to { transform: translateY(100%); }
+`;
+
+const PrintContainer = styled.div<{ isPrintContainerVisible: boolean }>`
     background: #fff;
     color: #070707;
     max-width: 523px;
@@ -172,14 +226,24 @@ const PrintContainer = styled.div`
     flex-direction: column;
     gap: 2em;
     padding: 2em;
-    box-sizig: border-box;
+    box-sizing: border-box;
+    animation: ${({ isPrintContainerVisible }) => (isPrintContainerVisible ? fadeUp : fadeDown)} 0.5s ease-in-out;
+    animation-fill-mode: forwards;
 
-    /* 인쇄 스타일 */
     @media print {
-        max-width: 523px;
-        max-height: none;
-        overflow-y: visible;
-        page-break-inside: avoid;
+        max-width: 100%;
+        width: 79mm;
+        height: 210mm;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        box-shadow: none;
+        animation: none;
+
+        @page {
+            size: 79mm 210mm;
+            margin: 0;
+        }
     }
 `;
 
