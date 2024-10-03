@@ -1,12 +1,13 @@
-import create from 'zustand';
+import { create } from 'zustand';
 
 interface SurveyState {
     name: string;
-    result: string | null; // 결과 값을 저장
+    result: number | null; // 결과 값을 저장
     answers: number[]; // 답변 저장 배열
     setName: (name: string) => void;
-    setResult: (result: string) => void;
+    setResult: (result: number) => void;
     saveAnswer: (questionIndex: number, answer: number) => void;
+    resetAnswers: () => void; // 답변 배열 초기화
 }
 
 export const useSurveyStore = create<SurveyState>((set) => ({
@@ -21,4 +22,5 @@ export const useSurveyStore = create<SurveyState>((set) => ({
             newAnswers[questionIndex] = answer;
             return { answers: newAnswers };
         }),
+    resetAnswers: () => set({ answers: [] }), // 답변 배열 초기화 함수
 }));

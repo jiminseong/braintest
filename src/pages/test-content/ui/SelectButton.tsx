@@ -40,7 +40,7 @@ const SelectButton: React.FC<SelectButtonProps> = ({
                 <AnimatedIcon>
                     <Three />
                 </AnimatedIcon>
-                <Text>간혹 그렇다</Text>
+                <Text>보통 그렇다</Text>
             </IconWrapper>
             <IconWrapper onClick={onClickFour}>
                 <AnimatedIcon>

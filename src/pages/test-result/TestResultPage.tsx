@@ -1,22 +1,29 @@
 import styled from 'styled-components';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import logoUrl from '../../assets/images/thirdLogo.png'; // 이 부분은 이미지 경로에 맞게 수정하세요
 import { useSurveyStore } from '../../store/store';
+import { useLocation } from 'react-router-dom';
 
 const TestResultPage = () => {
     const componentRef = useRef<HTMLDivElement | null>(null);
-    const { name, result } = useSurveyStore();
+    const { resetAnswers } = useSurveyStore();
+    const { state } = useLocation();
+    const { resultType, name } = state;
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
         documentTitle: '결과페이지',
     });
 
+    useEffect(() => {
+        resetAnswers();
+    }, []);
+
     return (
         <PageWrapper>
             <h1>{name}님의 결과</h1>
-            <p>결과 타입: {result}</p>
+            <p>결과 타입: {resultType}</p>
             <PrintButton onClick={handlePrint}>Print</PrintButton>
             <PrintContainer ref={componentRef}>
                 {/* 이미지 섹션 */}
