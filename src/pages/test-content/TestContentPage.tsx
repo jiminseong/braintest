@@ -95,15 +95,17 @@ const TestContentPage = () => {
             <Column>
                 {nameCheck === false && (
                     <ContentColumn>
-                        <Text>당신의 이름은 무엇인가요?</Text>
-                        <Input value={name || ''} onChange={(e) => setName(e.target.value)} />
+                        <Column2>
+                            <Text>당신의 이름은 무엇인가요?</Text>
+                            <Input value={name || ''} onChange={(e) => setName(e.target.value)} />
+                        </Column2>
                         <TextContentButton onClick={() => submitName()}>다음</TextContentButton>
                     </ContentColumn>
                 )}
 
-                {nameCheck === true && loading === true && (
+                {nameCheck === true && loading === true && page === 1 && (
                     <LoadingWrapper>
-                        <StyledPageLogo rotate={true} width="16%" page={1} />
+                        <PageLogo rotate={true} width="16%" page={1} />
                         <PageIndexText>당신의 특징에 대해서 알려주세요.</PageIndexText>
                         <LoadingText>loading...</LoadingText>
                     </LoadingWrapper>
@@ -140,7 +142,7 @@ const TestContentPage = () => {
 
                 {page >= 2 && loading && (
                     <LoadingWrapper>
-                        <StyledPageLogo rotate={true} width="16%" page={page} />
+                        <PageLogo rotate={true} width="16%" page={page} />
                         <PageIndexText>
                             {page == 2 ? '당신의 생활에 대해서 알려주세요.' : '당신의 요즘 기분에 대해서 알려주세요.'}
                         </PageIndexText>
@@ -154,10 +156,6 @@ const TestContentPage = () => {
 
 export default TestContentPage;
 
-const StyledPageLogo = styled(PageLogo)`
-    width: 30px;
-`;
-
 const PageIndexText = styled.div`
     color: #fff;
     text-align: center;
@@ -168,6 +166,7 @@ const PageWrapper = styled.div`
     background-color: #070707;
     height: 100%;
     overflow: hidden;
+    position: relative;
 `;
 
 const fade = keyframes`
@@ -183,7 +182,7 @@ const fade = keyframes`
 
 const LoadingText = styled.div`
     position: absolute;
-    bottom: 8em;
+    bottom: 7em;
     left: 3em;
     font-size: 1.5em;
     font-weight: 700;
@@ -191,15 +190,14 @@ const LoadingText = styled.div`
 `;
 
 const LoadingWrapper = styled.div`
-    box-sizing: border-box;
     width: 100%;
-    height: 100%;
-    position: absolute;
-    background-color: #070707;
     display: flex;
     flex-direction: column;
+    margin-top: -10em;
     gap: 3em;
     align-items: center;
+    justify-content: center;
+    background-color: #070707;
     animation: ${fade} 0.6s ease-in-out;
 `;
 
@@ -212,14 +210,20 @@ const Column = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 3em;
+    justify-content: center;
     height: 100%;
     position: relative;
 `;
 
-const ContentColumn = styled(Column)`
+const Column2 = styled(Column)`
+    height: 60%;
     width: 100%;
-    gap: 4em;
+`;
+const ContentColumn = styled(Column)`
+    box-sizing: border-box;
+    width: 100%;
+    height: 60%;
+    justify-content: space-between;
 `;
 
 const fadeInUp = keyframes`
@@ -246,6 +250,7 @@ const Text = styled.div`
     text-align: center;
     font-size: 1.725em;
     font-weight: 700;
+    margin-bottom: 2em;
 `;
 const TextContentButton = styled(Button)`
     margin-top: 10%;

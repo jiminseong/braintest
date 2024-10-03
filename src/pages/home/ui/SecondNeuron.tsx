@@ -15,8 +15,8 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
 
     const variants = {
         animate: {
-            x: [0, '2.5vw', '5vw', '-7.5vw', '-15vw', '-2.5vw', '10vw', '-5vw', '-10vw', '2.5vw', '5vw', 0],
-            y: ['0vh', '7.5vh', '15vh', '-2.5vh', '-5vh', '7.5vh', '15vh', '-7.5vh', '-15vh', '2.5vh', '5vh', 0],
+            x: [0, '2.5vw', '15vw', '-7.5vw', '-15vw', '-2.5vw', '10vw', '-5vw', '-10vw', '2.5vw', '5vw', 0],
+            y: ['0vh', '17.5vh', '25vh', '-2.5vh', '-5vh', '12.5vh', '15vh', '-7.5vh', '-15vh', '2.5vh', '5vh', 0],
             transition: {
                 x: { repeat: Infinity, repeatType: 'loop', duration: 120, ease: 'easeInOut' },
                 y: { repeat: Infinity, repeatType: 'loop', duration: 100, ease: 'easeInOut' },
@@ -47,7 +47,7 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
         } else {
             controls.start({
                 x: [currentX, '-10vw', '5vw', '-7.5vw', '10vw', '2.5vw', '-5vw', '-15vw', '5vw', '-2.5vw', '2.5vw', 0],
-                y: [currentY, '15vh', '-2.5vh', '7.5vh', '-7.5vh', '5vh', '-15vh', '2.5vh', '-5vh', '7.5vh', '15vh', 0],
+                y: [currentY, '25vh', '-2.5vh', '7.5vh', '-7.5vh', '5vh', '-15vh', '2.5vh', '-5vh', '7.5vh', '15vh', 0],
                 transition: {
                     x: { repeat: Infinity, repeatType: 'loop', duration: 90, ease: 'easeInOut' },
                     y: { repeat: Infinity, repeatType: 'loop', duration: 80, ease: 'easeInOut' },

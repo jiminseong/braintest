@@ -72,23 +72,37 @@ const CautionPage = () => {
     return (
         <PageWrapper>
             <BacKButton top="3em" onClick={() => handleBackButton()} />
-            <Title>{cautionTitle}</Title>
-            <CautionText>{cautionText}</CautionText>
-            {agreeState ? (
-                <CenterWrapper>
+            <ColumnWrapper>
+                <Column>
+                    <Title>{cautionTitle}</Title>
+                    <CautionText>{cautionText}</CautionText>
+                </Column>
+                {agreeState ? (
                     <BlueButton onClick={() => navigate('/test/content')}>시작하기</BlueButton>
-                </CenterWrapper>
-            ) : (
-                <RowWrapper>
-                    <BlueButton onClick={() => handleCautionText()}>동의합니다</BlueButton>
-                    <RedButton onClick={() => handleBackButton()}>동의하지 않습니다</RedButton>
-                </RowWrapper>
-            )}
+                ) : (
+                    <RowWrapper>
+                        <BlueButton onClick={() => handleCautionText()}>동의합니다</BlueButton>
+                        <RedButton onClick={() => handleBackButton()}>동의하지 않습니다</RedButton>
+                    </RowWrapper>
+                )}
+            </ColumnWrapper>
         </PageWrapper>
     );
 };
 
 export default CautionPage;
+
+const Column = styled.div`
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const ColumnWrapper = styled(Column)`
+    height: 60%;
+    justify-content: space-between;
+`;
 
 const PageWrapper = styled.div`
     width: 100%;
@@ -108,8 +122,7 @@ const Title = styled.div`
 `;
 
 const CautionText = styled.div`
-    width: 40%;
-    height: 45%;
+    width: 100%;
     font-size: 0.8125em;
     text-align: center;
     color: #111;
@@ -118,13 +131,8 @@ const CautionText = styled.div`
 `;
 
 const RowWrapper = styled.div`
-    width: 40%;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-`;
-
-const CenterWrapper = styled.div`
-    width: 40%;
-    display: flex;
+    gap: 8em;
     justify-content: center;
 `;
