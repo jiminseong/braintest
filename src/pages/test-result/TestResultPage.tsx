@@ -11,8 +11,8 @@ import MiddleNavigationBar from './ui/MiddleNavigationBar';
 import { useParams } from 'react-router-dom';
 
 const TestResultPage = () => {
-    const { id, name = '' } = useParams();
-    const resultType = Number(id);
+    const { type, name = '' } = useParams();
+    const resultType = Number(type);
 
     // 각 섹션의 ref를 생성
     const neuronSectionRef = useRef<HTMLDivElement>(null);
