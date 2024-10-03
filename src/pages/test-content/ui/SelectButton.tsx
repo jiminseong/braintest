@@ -74,18 +74,30 @@ const RowWrapper = styled.div`
 `;
 
 const IconWrapper = styled.div`
-    width: 6em;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    gap: 0.5em;
+    gap: 3em;
     cursor: pointer;
 `;
 
 const Text = styled.div`
+    border-radius: 53px;
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.8);
+
+    text-align: center;
+
+    font-family: SUIT;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+
     width: 100%;
     color: #444;
+    font-size: 1.375em;
     text-align: center;
     font-weight: 700;
 `;

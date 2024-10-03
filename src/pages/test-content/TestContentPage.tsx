@@ -103,7 +103,7 @@ const TestContentPage = () => {
 
                 {nameCheck === true && loading === true && (
                     <LoadingWrapper>
-                        <StyledPageLogo rotate={true} width="25%" page={1} />
+                        <StyledPageLogo rotate={true} width="16%" page={1} />
                         <PageIndexText>당신의 특징에 대해서 알려주세요.</PageIndexText>
                         <LoadingText>loading...</LoadingText>
                     </LoadingWrapper>
@@ -140,7 +140,7 @@ const TestContentPage = () => {
 
                 {page >= 2 && loading && (
                     <LoadingWrapper>
-                        <StyledPageLogo rotate={true} width="25%" page={page} />
+                        <StyledPageLogo rotate={true} width="16%" page={page} />
                         <PageIndexText>
                             {page == 2 ? '당신의 생활에 대해서 알려주세요.' : '당신의 요즘 기분에 대해서 알려주세요.'}
                         </PageIndexText>
