@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import One from '../../../assets/icons/1_selectIcon.svg?react';
 import Two from '../../../assets/icons/2_selectIcon.svg?react';
 import Three from '../../../assets/icons/3_selectIcon.svg?react';
@@ -25,33 +25,33 @@ const SelectButton: React.FC<SelectButtonProps> = ({
     return (
         <RowWrapper>
             <IconWrapper onClick={onClickOne}>
-                <Icon>
+                <AnimatedIcon>
                     <One />
-                </Icon>
+                </AnimatedIcon>
                 <Text>전혀 아니다</Text>
             </IconWrapper>
             <IconWrapper onClick={onClickTwo}>
-                <Icon>
+                <AnimatedIcon>
                     <Two />
-                </Icon>
+                </AnimatedIcon>
                 <Text>가끔 그렇다</Text>
             </IconWrapper>
             <IconWrapper onClick={onClickThree}>
-                <Icon>
+                <AnimatedIcon>
                     <Three />
-                </Icon>
-                <Text>간혹 그렇다</Text>
+                </AnimatedIcon>
+                <Text>보통 그렇다</Text>
             </IconWrapper>
             <IconWrapper onClick={onClickFour}>
-                <Icon>
+                <AnimatedIcon>
                     <Four />
-                </Icon>
+                </AnimatedIcon>
                 <Text>자주 그렇다</Text>
             </IconWrapper>
             <IconWrapper onClick={onClickFive}>
-                <Icon>
+                <AnimatedIcon>
                     <Five />
-                </Icon>
+                </AnimatedIcon>
                 <Text>대부분 그렇다</Text>
             </IconWrapper>
         </RowWrapper>
@@ -60,32 +60,68 @@ const SelectButton: React.FC<SelectButtonProps> = ({
 
 export default SelectButton;
 
-const Icon = styled.div`
-    display: flex;
-    height: 6em;
-    align-items: center;
-`;
-const RowWrapper = styled.div`
-    margin-top: 6em;
-    width: 100%;
-    display: flex;
-    gap: 10em;
-    justify-content: center;
-`;
-
 const IconWrapper = styled.div`
-    width: 6em;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    gap: 0.5em;
+    gap: 2em;
     cursor: pointer;
 `;
 
-const Text = styled.div`
+const rotateScaleAnimation = keyframes`
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.2);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+`;
+
+const AnimatedIcon = styled.div`
+    display: flex;
+    height: 6em;
+
+    align-items: center;
+
+    ${IconWrapper}:hover & {
+        animation: ${rotateScaleAnimation} 3s linear infinite;
+    }
+`;
+
+const RowWrapper = styled.div`
+    margin-top: 6em;
     width: 100%;
-    color: #444;
+    display: flex;
+    gap: 5em;
+    justify-content: center;
+`;
+
+const Text = styled.div`
+    border-radius: 53px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.8);
     text-align: center;
+    -webkit-text-stroke-color: #fff;
+    width: 100%;
+    padding: 0.6875em 2em;
+    box-sizing: border-box;
+    font-size: 1em;
     font-weight: 700;
+    transition: border 0.5s, background 1.5s, box-shadow 1.5s;
+
+    ${IconWrapper}:hover & {
+        border: 1px solid #f9f3ff;
+        background: linear-gradient(
+            0deg,
+            rgba(249, 243, 255, 0.15) 0%,
+            rgba(157, 153, 161, 0.15) 14%,
+            rgba(108, 105, 110, 0.16) 33%,
+            rgba(7, 7, 7, 0.16) 100%
+        );
+        box-shadow: 0px 0px 11.8px 1px rgba(255, 255, 255, 0.27);
+    }
 `;
