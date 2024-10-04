@@ -6,7 +6,9 @@ import TypeLogo from './ui/TypeLogo';
 import TopNavigationBar from './ui/TopNavigationBar';
 import UnderTriangleIcon from '../../assets/icons/triangleIcon.svg?react';
 import CloseIcon from '../../assets/icons/closeIcon.svg?react';
-import result5 from '../../assets/images/typeResult/5.png';
+// import result5 from '../../assets/images/typeResult/5.png';
+import ResultSvg from '../../assets/images/typeResult/5.svg?react';
+
 const PrintPage = () => {
     const [isWrapperVisible, setWrapperVisible] = useState(false);
     const [isPrintContainerVisible, setPrintContainerVisible] = useState(false);
@@ -54,15 +56,18 @@ const PrintPage = () => {
             </RowWrapper>
 
             {isWrapperVisible && (
-                <PrintContainerWrapper isWrapperVisible>
+                <>
                     <CloseButton onClick={handleClosePrint} />
-                    <PrintContainer
-                        imageUrl={result5}
-                        isPrintContainerVisible={isPrintContainerVisible}
-                        onAnimationEnd={handleAnimationEnd}
-                        ref={componentRef}
-                    ></PrintContainer>
-                </PrintContainerWrapper>
+                    <PrintContainerWrapper isWrapperVisible>
+                        <PrintContainer
+                            ref={componentRef}
+                            isPrintContainerVisible={isPrintContainerVisible}
+                            onAnimationEnd={handleAnimationEnd}
+                        >
+                            <StyledResultSvg />
+                        </PrintContainer>
+                    </PrintContainerWrapper>
+                </>
             )}
 
             <Text>
@@ -75,6 +80,10 @@ const PrintPage = () => {
 
 export default PrintPage;
 
+const StyledResultSvg = styled(ResultSvg)`
+    width: 100%;
+    height: auto;
+`;
 const PageWrapper = styled.div`
     position: relative;
     width: 100%;
@@ -118,7 +127,7 @@ const PrintContainerWrapper = styled.div<{ isWrapperVisible: boolean }>`
     position: absolute;
     width: 100%;
     height: 100%;
-    overflow-y: hidden;
+    overflow-y: scroll;
     background: rgba(217, 217, 217, 0.3);
     backdrop-filter: blur(10px);
     z-index: 10;
@@ -132,10 +141,11 @@ const PrintContainerWrapper = styled.div<{ isWrapperVisible: boolean }>`
 `;
 
 const CloseButton = styled(CloseIcon)`
-    position: absolute;
+    position: fixed;
     top: 2em;
     right: 2em;
     cursor: pointer;
+    z-index: 15;
 `;
 
 const fadeUp = keyframes`
@@ -148,35 +158,42 @@ const fadeDown = keyframes`
     to { transform: translateY(100%); }
 `;
 
-const PrintContainer = styled.div<{ isPrintContainerVisible: boolean; imageUrl: string }>`
+const PrintContainer = styled.div<{
+    isPrintContainerVisible: boolean;
+}>`
     background: #fff;
     color: #070707;
-    width: 523px;
-    height: 100%;
+    max-width: 523px;
+    height: fit-content;
     box-shadow: 0px 4px 12.5px 9px rgba(0, 0, 0, 0.16);
-    overflow-y: auto;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     animation: ${({ isPrintContainerVisible }) => (isPrintContainerVisible ? fadeUp : fadeDown)} 0.5s ease-in-out;
     animation-fill-mode: forwards;
-    background-image: url(${({ imageUrl }) => imageUrl});
-    background-size: cover;
 
     @media print {
-        max-width: 100%;
         width: 79mm;
         height: 297mm;
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
         box-shadow: none;
         animation: none;
 
         @page {
-            size: 79mm 210mm;
-            margin: 0;
+            size: 79mm 297mm;
         }
+    }
+`;
+
+const printButtonAnimation = keyframes`
+    0% {    
+        transform: rotate(0deg);
+    }
+    50% {    
+        transform: rotate(2deg);
+    }
+    100% {
+        transform: rotate(-2deg);
     }
 `;
 
@@ -193,6 +210,9 @@ const PrintButton = styled.div`
     padding: 1em 1.5em;
     box-sizing: border-box;
     cursor: pointer;
+    &:hover {
+        animation: ${printButtonAnimation} 0.2s infinite;
+    }
 `;
 
 const Text = styled.div`
