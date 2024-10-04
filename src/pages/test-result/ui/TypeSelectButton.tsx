@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import HamburgerIcon from '../../../assets/icons/hamburger.svg?react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -19,40 +19,52 @@ const TypeSelectButton = () => {
     };
 
     return (
-        <ButonWrapper onClick={handleSelect}>
-            <HamburgerIcon />
-            Types
-            {/* 타입 리스트 열기 */}
-            {typeListOpen && (
-                <ColumnWrapper>
-                    {Array.from({ length: 16 }, (_, index) => (
-                        <TypeItem key={index + 1} onClick={() => handleTypeClick(index + 1)}>
-                            Type {index + 1}
-                        </TypeItem>
-                    ))}
-                </ColumnWrapper>
-            )}
+        <ButonWrapper onMouseEnter={() => handleSelect()} onMouseLeave={() => handleSelect()} onClick={handleSelect}>
+            <Button>
+                <HamburgerIcon />
+                Types
+                {/* 타입 리스트 열기 */}
+                {typeListOpen && (
+                    <ColumnWrapper>
+                        {Array.from({ length: 16 }, (_, index) => (
+                            <TypeItem key={index + 1} onClick={() => handleTypeClick(index + 1)}>
+                                Type {index + 1}
+                            </TypeItem>
+                        ))}
+                    </ColumnWrapper>
+                )}
+            </Button>
         </ButonWrapper>
     );
 };
 
 export default TypeSelectButton;
 
+const fadeIn = keyframes`   
+    from { opacity: 0; transform: translateY(-10px); }     
+    to { opacity: 1; transform: translateY(0); } `;
+
 const ButonWrapper = styled.div`
+    box-sizing: border-box;
+    height: 120%;
+`;
+
+const Button = styled.div`
     display: flex;
     justify-content: center;
-    gap: 0.25em;
     align-items: center;
-    padding: 0.125em 1.25em;
+    gap: 0.25em;
     border-radius: 53px;
+    padding: 0.25em 0.8125em;
     box-sizing: border-box;
-    font-size: 1.8125rem;
+    font-size: 1.45rem;
     font-weight: 700;
     text-align: center;
-    cursor: pointer;
     position: relative;
     background: #ffffff;
-    &:hover {
+    cursor: pointer;
+    transition: background 0.3s ease;
+    ${ButonWrapper}:hover {
         background: #b3b3b3;
     }
 `;
@@ -66,11 +78,15 @@ const ColumnWrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.25em;
+    animation: ${fadeIn} 0.3s ease;
 `;
 
 const TypeItem = styled(ButonWrapper)`
-    border-radius: 53px;
+    width: 100%;
     background: #fff;
     text-align: center;
     cursor: pointer;
+    padding: 0.25em 0em;
+    border-radius: 53px;
+    box-sizing: border-box;
 `;

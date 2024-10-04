@@ -10,10 +10,11 @@ import { useSurveyStore } from '../../store/store';
 import PageLogo from './ui/PageLogo';
 import BacKButton from '../../component/button/BacKButton';
 import ResultLoading from './ui/ResultLoading';
-import calculateResultType from './model/calculateResultType';
+// import calculateResultType from './model/calculateResultType';
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
+    const [currentName, setCurrentName] = useState('');
     const [nameCheck, setNameCheck] = useState(false);
     const [questionIndex, setQuestionIndex] = useState(0);
     const [page, setPage] = useState(0); // 현재 페이지
@@ -22,7 +23,7 @@ const TestContentPage = () => {
     const navigate = useNavigate();
 
     // Zustand 상태 관리 함수
-    const { setName, setResult, saveAnswer, answers, result, name } = useSurveyStore();
+    const { setName, setResult, saveAnswer, answers, name } = useSurveyStore();
 
     const handleLoading = () => {
         return new Promise<void>((resolve) => {
@@ -30,7 +31,7 @@ const TestContentPage = () => {
             setTimeout(() => {
                 setLoading(false);
                 resolve(); // Promise를 완료시켜 .then을 실행
-            }, 0); // 4.4초 후에 resolve
+            }, 4400); // 4.4초 후에 resolve
         });
     };
 
@@ -45,10 +46,10 @@ const TestContentPage = () => {
     };
 
     const submitName = () => {
-        if (name === '') {
+        if (currentName === '') {
             alert('이름을 입력해주세요');
         } else {
-            setName(name); // 이름을 전역 상태에 저장
+            setName(currentName);
             setNameCheck(true);
             handleLoading().then(() => {
                 setPage(1);
@@ -84,12 +85,11 @@ const TestContentPage = () => {
             console.log(answers);
 
             // 결과 타입 계산 함수 호출
-            const resultType = calculateResultType();
-            // 결과를 상태에 저장하고 로딩 후 navigate
+            // const resultType = calculateResultType();
+            const resultType = 2;
             setResult(resultType);
-            console.log('타입결과 : ' + resultType);
             handleLoading().then(() => {
-                navigate(`/test/result/${result}/${name}`);
+                navigate(`/test/result/${resultType}/${name}`);
             });
         } else {
             handleAnimate();
@@ -107,7 +107,7 @@ const TestContentPage = () => {
                     <ContentColumn>
                         <Column2>
                             <Text>당신의 이름은 무엇인가요?</Text>
-                            <Input value={name || ''} onChange={(e) => setName(e.target.value)} />
+                            <Input value={currentName} onChange={(e) => setCurrentName(e.target.value)} />
                         </Column2>
                         <TextContentButton onClick={() => submitName()}>다음</TextContentButton>
                     </ContentColumn>
@@ -193,7 +193,7 @@ const fade = keyframes`
 
 const LoadingText = styled.div`
     position: absolute;
-    bottom: 7em;
+    bottom: 4em;
     left: 3em;
     font-size: 1.5em;
     font-weight: 700;

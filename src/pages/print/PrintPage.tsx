@@ -166,7 +166,7 @@ const PrintContainer = styled.div<{
     max-width: 523px;
     height: fit-content;
     box-shadow: 0px 4px 12.5px 9px rgba(0, 0, 0, 0.16);
-    overflow-y: scroll;
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
