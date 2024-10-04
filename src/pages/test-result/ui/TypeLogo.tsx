@@ -31,7 +31,7 @@ const TypeLogo = ({ type }: { type: number }) => {
 
     const logoUrl = logoMap[type] || type2; // 기본값으로 type1 사용
 
-    return <TypeLogoImage logoUrl={logoUrl}>TYPE {type}</TypeLogoImage>;
+    return <TypeLogoImage logoUrl={logoUrl} />;
 };
 
 export default TypeLogo;
