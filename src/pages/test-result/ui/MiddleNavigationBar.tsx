@@ -88,6 +88,7 @@ const printButtonAnimation = keyframes`
 
 const PrintNavigationButton = styled.div`
     background: #77ceff;
+    width: 50%;
     padding: 0.125em 1.25em;
     border-radius: 53px;
     box-sizing: border-box;
