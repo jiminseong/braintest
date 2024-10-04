@@ -35,8 +35,8 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
 
     const greenContainerVariants2 = {
         animate: {
-            x: ['0vw', '-1vw', '1vw', '-1vw', '0vw'],
-            y: ['0vh', '-1vh', '1vh', '-1vh', '0vh'],
+            x: ['2vw', '0w', '3vw', '0vw', '4vw'],
+            y: ['3vh', '4vh', '2vh', '3vh', '5vh'],
             transition: { repeat: Infinity, duration: 30, ease: 'easeInOut' },
         },
     };

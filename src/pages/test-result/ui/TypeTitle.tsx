@@ -34,7 +34,7 @@ const Title = styled.div`
     color: #fff;
     text-align: center;
     font-family: SUIT;
-    font-size: 4.375em;
+    font-size: 3.5em;
     font-style: normal;
     font-weight: 600;
 `;

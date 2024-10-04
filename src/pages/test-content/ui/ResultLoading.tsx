@@ -26,8 +26,8 @@ const LoadingWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 200px;
-    height: 200px;
+    width: 160px;
+    height: 160px;
     position: relative;
     animation: ${loadingAnimation} 4s infinite linear;
 `;

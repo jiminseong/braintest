@@ -20,7 +20,7 @@ const TextWrapper = styled.div`
 
 const Text = styled.div`
     color: #000;
-    font-size: 1.75em;
+    font-size: 1.4em;
     font-weight: 500;
     line-height: 2em;
 `;
