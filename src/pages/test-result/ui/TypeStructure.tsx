@@ -42,5 +42,5 @@ const ImageWrapper = styled.div`
 `;
 
 const NeuronImage = styled.img`
-    width: 60%;
+    width: 50%;
 `;

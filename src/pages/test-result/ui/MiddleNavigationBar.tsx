@@ -45,12 +45,11 @@ const MiddleNavigationBarWrapper = styled.div`
     display: flex;
     justify-content: center;
     padding: 1em 0em;
-    background: #070707;
     top: 0;
 `;
 
 const Wrapper = styled.div`
-    width: 80%;
+    width: 60%;
     display: flex;
     justify-content: space-between;
 `;
@@ -64,12 +63,14 @@ interface Props {
     isActive: boolean;
 }
 const NavigationButton = styled.div<Props>`
-    padding: 0.125em 1.25em;
-    border-radius: 53px;
+    padding: 0.25em 0.8125em;
     box-sizing: border-box;
-    font-size: 1.8125em;
+    border-radius: 53px;
+
+    font-size: 1.45em;
     font-weight: 700;
     text-align: center;
+
     cursor: pointer;
     background: ${({ isActive }) => (isActive ? '#b3b3b3' : '#fff')}; /* 활성화된 버튼 색상 변경 */
 `;
@@ -92,7 +93,7 @@ const PrintNavigationButton = styled.div`
     padding: 0.125em 1.25em;
     border-radius: 53px;
     box-sizing: border-box;
-    font-size: 1.8125em;
+    font-size: 1.45em;
     font-weight: 700;
     text-align: center;
     cursor: pointer;

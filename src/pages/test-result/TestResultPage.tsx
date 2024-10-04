@@ -63,6 +63,7 @@ const TestResultPage = () => {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
+        scrollToSection('Neuron'); // 처음 페이지 로드시 'Neuron' 섹션으로 스크롤 이동
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -74,15 +75,17 @@ const TestResultPage = () => {
             {/* 스크롤 이동과 activeButton 전달 */}
 
             {/* 각 섹션에 ref 할당 */}
-            <TypeIndexContent ref={neuronSectionRef}>
+            <TypeIndexContent>
                 <MiddleNavigationBar
                     scrollToSection={scrollToSection}
                     activeButton={activeButton}
                     name={name}
                     type={resultType}
                 />
-                <TypeNeuron type={resultType} />
-                <TypeTitle name={name} type={resultType} />
+                <NeuronSection ref={neuronSectionRef}>
+                    <TypeNeuron type={resultType} />
+                    <TypeTitle name={name} type={resultType} />
+                </NeuronSection>
                 <TypeStructure type={resultType} />
 
                 <div ref={infoSectionRef}>
@@ -103,6 +106,14 @@ const TestResultPage = () => {
 
 export default TestResultPage;
 
+const NeuronSection = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5em;
+    padding-top: 10em;
+`;
+
 const PageWrapper = styled.div`
     position: relative;
     width: 100%;
@@ -110,7 +121,6 @@ const PageWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: em;
     background-color: #ffffff;
     padding-top: 7em;
 `;
@@ -137,7 +147,7 @@ const TypeMainContent = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-    width: 80%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     gap: 10em;
@@ -149,6 +159,6 @@ const ContentWrapper = styled.div`
 
 const IndexText = styled.div`
     color: #070707;
-    font-size: 4.375em;
+    font-size: 3.5em;
     font-weight: 500;
 `;
