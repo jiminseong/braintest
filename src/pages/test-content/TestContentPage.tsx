@@ -30,7 +30,7 @@ const TestContentPage = () => {
             setTimeout(() => {
                 setLoading(false);
                 resolve(); // Promise를 완료시켜 .then을 실행
-            }, 0); // 4.4초 후에 resolve
+            }, 4400); // 4.4초 후에 resolve
         });
     };
 
