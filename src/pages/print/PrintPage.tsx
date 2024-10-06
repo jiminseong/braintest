@@ -73,7 +73,7 @@ const PrintPage = () => {
                             isPrintContainerVisible={isPrintContainerVisible}
                             onAnimationEnd={handleAnimationEnd}
                         >
-                            {ResultSvg && <ResultSvg />} {/* ResultSvg를 직접 렌더링 */}
+                            {ResultSvg && <StyledResultSvg as={ResultSvg} />}
                         </PrintContainer>
                     </PrintContainerWrapper>
                 </>
@@ -88,7 +88,10 @@ const PrintPage = () => {
 };
 
 export default PrintPage;
-
+const StyledResultSvg = styled.div`
+    width: 100%;
+    height: auto;
+`;
 const PageWrapper = styled.div`
     position: relative;
     width: 100%;
@@ -168,7 +171,7 @@ const PrintContainer = styled.div<{
 }>`
     background: #fff;
     color: #070707;
-    max-width: 523px;
+    width: 523px;
     height: fit-content;
     box-shadow: 0px 4px 12.5px 9px rgba(0, 0, 0, 0.16);
     overflow-y: auto;
