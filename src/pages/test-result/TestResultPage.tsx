@@ -93,7 +93,7 @@ const TestResultPage = () => {
                         <ContentWrapper>
                             <IndexText>'Type{resultType}'에 대하여</IndexText>
                             <TypeContentText type={resultType} />
-                        </ContentWrapper>{' '}
+                        </ContentWrapper>
                         <div ref={graphicsSectionRef} style={{ width: '100%' }}>
                             <GraphicContainer type={resultType} />
                         </div>

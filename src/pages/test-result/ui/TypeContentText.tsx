@@ -6,6 +6,7 @@ const TypeContentText = ({ type }: { type: number }) => {
         <TextWrapper>
             <Text>{typeResultData.result[type - 1].firstContent}</Text>
             <Text>{typeResultData.result[type - 1].secondContent}</Text>
+            <Text>{typeResultData.result[type - 1].thirdContent}</Text>
         </TextWrapper>
     );
 };
