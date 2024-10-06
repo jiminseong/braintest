@@ -3,7 +3,7 @@ import HamburgerIcon from '../../../assets/icons/hamburger.svg?react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const TypeSelectButton = () => {
+const TypeSelectButton = ({ name }: { name: string }) => {
     const [typeListOpen, setTypeListOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -13,8 +13,7 @@ const TypeSelectButton = () => {
     };
 
     // 타입 선택 시 해당 경로로 이동
-    const handleTypeClick = (type: number) => {
-        const name = 'exampleName'; // 이름을 필요한 값으로 변경하세요
+    const handleTypeClick = (type: number, name: string) => {
         navigate(`/test/result/${type}/${name}`);
     };
 
@@ -27,7 +26,7 @@ const TypeSelectButton = () => {
                 {typeListOpen && (
                     <ColumnWrapper>
                         {Array.from({ length: 16 }, (_, index) => (
-                            <TypeItem key={index + 1} onClick={() => handleTypeClick(index + 1)}>
+                            <TypeItem key={index + 1} onClick={() => handleTypeClick(index + 1, name)}>
                                 Type {index + 1}
                             </TypeItem>
                         ))}
