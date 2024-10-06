@@ -25,7 +25,7 @@ const RowWrapper = styled.div<{ top: string; right: string }>`
     display: flex;
     gap: 0.25em;
     align-items: center;
-    position: absolute;
+    position: fixed;
     right: ${(props) => props.right};
     top: ${(props) => props.top};
 `;

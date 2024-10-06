@@ -65,6 +65,9 @@ const TestContentPage = () => {
         } else if (loading && page === 3) {
             setPage(2);
             handleLoading();
+        } else if (currentProgress === 2.5) {
+            setNameCheck(false);
+            setPage(0);
         }
         setQuestionIndex((prevIndex) => prevIndex - 1); // 질문 변경
         setCurrentProgress((prev) => prev - 2.5); // 진행률 업데이트
@@ -123,7 +126,7 @@ const TestContentPage = () => {
 
                 {loading === false && page >= 1 && (
                     <ContentColumn>
-                        {currentProgress > 2.5 && !loading && <BacKButton onClick={() => goBack()} />}
+                        {currentProgress >= 2.5 && !loading && <BacKButton top="3.3125em" onClick={() => goBack()} />}
                         <PageLogo width="8%" page={page} />
                         <AnimationQuestionText animate={animate}>
                             {questionsData.questions[questionIndex]}
