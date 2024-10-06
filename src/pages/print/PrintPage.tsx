@@ -6,12 +6,11 @@ import TypeLogo from './ui/TypeLogo';
 import TopNavigationBar from './ui/TopNavigationBar';
 import UnderTriangleIcon from '../../assets/icons/triangleIcon.svg?react';
 import CloseIcon from '../../assets/icons/closeIcon.svg?react';
-// import result5 from '../../assets/images/typeResult/5.png';
-import ResultSvg from '../../assets/images/typeResult/5.svg?react';
 
 const PrintPage = () => {
     const [isWrapperVisible, setWrapperVisible] = useState(false);
     const [isPrintContainerVisible, setPrintContainerVisible] = useState(false);
+    const [ResultSvg, setResultSvg] = useState<React.FC | null>(null); // 타입 정의 추가
     const componentRef = useRef(null);
     const { type, name = '' } = useParams();
     const resultType = Number(type);
@@ -21,13 +20,23 @@ const PrintPage = () => {
         documentTitle: '결과페이지',
     });
 
-    console.log(name);
-
     useEffect(() => {
+        console.log(name);
         if (isWrapperVisible && isPrintContainerVisible) {
             handlePrint();
         }
     }, [isWrapperVisible, isPrintContainerVisible]);
+
+    // SVG 컴포넌트를 동적으로 import
+    useEffect(() => {
+        import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`)
+            .then((module) => {
+                setResultSvg(() => module.default);
+            })
+            .catch((err) => {
+                console.error('SVG 로드 에러:', err);
+            });
+    }, [resultType]);
 
     const handleOpenPrint = () => {
         setWrapperVisible(true);
@@ -64,7 +73,7 @@ const PrintPage = () => {
                             isPrintContainerVisible={isPrintContainerVisible}
                             onAnimationEnd={handleAnimationEnd}
                         >
-                            <StyledResultSvg />
+                            {ResultSvg && <ResultSvg />} {/* ResultSvg를 직접 렌더링 */}
                         </PrintContainer>
                     </PrintContainerWrapper>
                 </>
@@ -80,10 +89,6 @@ const PrintPage = () => {
 
 export default PrintPage;
 
-const StyledResultSvg = styled(ResultSvg)`
-    width: 100%;
-    height: auto;
-`;
 const PageWrapper = styled.div`
     position: relative;
     width: 100%;

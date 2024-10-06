@@ -1,31 +1,23 @@
-// import type1 from '../../../assets/images/typeStructure/1.png';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import type2 from '../../../assets/images/typeStructure/2.png';
-// import type3 from '../../../assets/images/typeStructure/3.png';
-// import type3 from '../../../assets/images/typeStructure/4.png';
-// import type3 from '../../../assets/images/typeStructure/5.png';
-// import type3 from '../../../assets/images/typeStructure/6.png';
-// import type3 from '../../../assets/images/typeStructure/7.png';
-// import type3 from '../../../assets/images/typeStructure/8.png';
-// import type3 from '../../../assets/images/typeStructure/9.png';
-// import type3 from '../../../assets/images/typeStructure/10.png';
-// import type3 from '../../../assets/images/typeStructure/11.png';
-// import type3 from '../../../assets/images/typeStructure/12.png';
-// import type3 from '../../../assets/images/typeStructure/13.png';
-// import type3 from '../../../assets/images/typeStructure/14.png';
-// import type3 from '../../../assets/images/typeStructure/15.png';
-// import type3 from '../../../assets/images/typeStructure/16.png';
 
 const TypeStructure = ({ type }: { type: number }) => {
-    // 타입에 따른 이미지 매핑
-    const structureMap: { [key: number]: string } = {
-        // 1: type1,
-        2: type2,
-        // 3: type3,
-        // ... 필요한 만큼 매핑 추가
-    };
+    const [structureUrl, setStructureUrl] = useState<string | null>(null);
 
-    const structureUrl = structureMap[type] || type2; // 기본값으로 type1 사용
+    useEffect(() => {
+        // 비동기 import로 이미지 로드
+        import(`../../../assets/images/typeStructure/type_${type}_word.png`)
+            .then((module) => setStructureUrl(module.default))
+            .catch(() => {
+                // 로드 실패 시 기본 이미지 사용
+                import('../../../assets/images/typeStructure/type_2_word.png').then((module) =>
+                    setStructureUrl(module.default),
+                );
+            });
+    }, [type]);
+
+    // 로딩 중인 경우 대체 텍스트 표시
+    if (!structureUrl) return <div>Loading...</div>;
 
     return (
         <ImageWrapper>

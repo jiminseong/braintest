@@ -63,7 +63,13 @@ const TestResultPage = () => {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
-        scrollToSection('Neuron'); // 처음 페이지 로드시 'Neuron' 섹션으로 스크롤 이동
+        // 컴포넌트가 마운트되자마자 실행
+        handleScroll();
+
+        // 약간의 딜레이 후에 스크롤 이동
+        setTimeout(() => {
+            scrollToSection('Neuron');
+        }, 100);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -93,7 +99,7 @@ const TestResultPage = () => {
                         <ContentWrapper>
                             <IndexText>'Type{resultType}'에 대하여</IndexText>
                             <TypeContentText type={resultType} />
-                        </ContentWrapper>{' '}
+                        </ContentWrapper>
                         <div ref={graphicsSectionRef} style={{ width: '100%' }}>
                             <GraphicContainer type={resultType} />
                         </div>

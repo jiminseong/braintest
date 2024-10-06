@@ -16,7 +16,7 @@ const MiddleNavigationBar = ({ scrollToSection, activeButton, name, type }: Midd
             <Wrapper>
                 <RowWrapper>
                     {/* activeButton과 일치하면 isActive */}
-                    <TypeSelectButton />
+                    <TypeSelectButton name={name} />
                     <NavigationButton isActive={activeButton === 'Neuron'} onClick={() => scrollToSection('Neuron')}>
                         Neuron
                     </NavigationButton>

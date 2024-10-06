@@ -63,7 +63,7 @@ const HomePage = () => {
             <SecondNeuron stop={animationStopState} />
             <ThirdNeuron stop={animationStopState} />
             <StyledLogo />
-            <TestNavigateButton onClick={() => navigate('/test/result/2/지민성')}>
+            <TestNavigateButton onClick={() => navigate('/test/result/1/지민성')}>
                 프린트 테스트 하러 가기
             </TestNavigateButton>
 
