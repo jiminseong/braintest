@@ -1,43 +1,75 @@
 import { useSurveyStore } from '../../../store/store';
 import { determineComplexType } from './determineComplexType';
-import typeMapping from './typeMapping';
+import questionTypeMapping from './questionMapping';
 
 const calculateResultType = (): number => {
     const { answers } = useSurveyStore.getState();
 
-    const typeScores: { [key: string]: number } = {
-        균형: 0,
-        즉흥: 0,
-        집요: 0,
-        예민: 0,
-        신중: 0,
+    // 각각 부족한 영역 점수를 수집
+    const breakScores: { [key: string]: number } = {
+        Dopamine: 0,
+        Serotonin: 0,
+        VitaminD: 0,
+        GABA: 0,
     };
 
-    // 각 답변 점수에 대해 수집된 점수 변환
-    const scoreMapping = [5, 4, 3, 2, 1];
+    // 타입 인덱스를 문자열로 매핑
+    const typeMapping = ['Dopamine', 'Serotonin', 'VitaminD', 'GABA'];
 
     // 각 답변을 기반으로 타입 점수 계산
     answers.forEach((answer, index) => {
-        const collectedScore = scoreMapping[answer - 1]; // 보여지는 점수를 수집되는 점수로 변환
-        const { typePositive, typeNegative } = typeMapping[index];
+        const breakType = questionTypeMapping.find((mapping) => mapping.questionIndex === index + 1);
 
-        // typePositive에 해당하는 타입의 점수에 더해줌
-        typePositive.forEach((type) => {
-            typeScores[type] += collectedScore;
-        });
+        if (breakType) {
+            // breakPointByHigh => answer 그대로 해당 타입에 점수 추가
+            if (breakType.breakPointByHigh) {
+                breakType.breakPointByHigh.forEach((typeIndex) => {
+                    const type = typeMapping[typeIndex];
+                    breakScores[type] += answer;
+                });
+            }
 
-        // typeNegative에 해당하는 타입의 점수에 빼줌 (0 이하로 떨어지지 않도록 함)
-        // 부정 점수 계산
-        typeNegative.forEach((type) => {
-            typeScores[type] -= collectedScore; // collectedScore만큼 감소
-            typeScores[type] = Math.max(0, typeScores[type]); // 0 이하로 떨어지지 않도록 조정
-        });
+            // breakPointByLow => (6 - answer) 해당 타입에 점수 추가
+            if (breakType.breakPointByLow) {
+                breakType.breakPointByLow.forEach((typeIndex) => {
+                    const type = typeMapping[typeIndex];
+                    breakScores[type] += 6 - answer;
+                });
+            }
+
+            // 각 점수별 추가 로직
+            const scoreMapping = [
+                { score: 5, types: breakType.five },
+                { score: 4, types: breakType.four },
+                { score: 3, types: breakType.three },
+                { score: 2, types: breakType.two }, // adjust를 통해 추가 점수
+                { score: 1, types: breakType.one },
+            ];
+
+            scoreMapping.forEach(({ score, types }) => {
+                if (answer === score && types) {
+                    types.forEach((typeIndex) => {
+                        // typeIndex가 null인 경우, 모든 점수 -1
+                        if (typeIndex === null) {
+                            Object.keys(breakScores).forEach((scoreType) => {
+                                breakScores[scoreType] -= 1;
+                            });
+                        } else {
+                            const type = typeMapping[typeIndex];
+                            breakScores[type] += answer;
+                        }
+                    });
+                }
+            });
+        }
     });
 
-    // 타입의 점수를 내림차순으로 정렬
-    const sortedScores = Object.entries(typeScores).sort((a, b) => b[1] - a[1]);
+    console.log('합계점수:', breakScores);
 
-    // 타입 조합 계산
+    // 부족한 영역의 점수를 내림차순으로 정렬
+    const sortedScores = Object.entries(breakScores).sort((a, b) => b[1] - a[1]);
+
+    // 최종 타입 결정 (숫자 형식으로 결과 값)
     const resultType = determineComplexType(sortedScores);
 
     return resultType;
