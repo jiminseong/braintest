@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import BottomLogo from '../../../assets/icons/bottomLogo.svg?react';
+import SaePoChae from './SaePoChae';
 const GraphicContainer = ({ type }: { type: number }) => {
     console.log(type);
     return (
@@ -10,6 +11,7 @@ const GraphicContainer = ({ type }: { type: number }) => {
                 <Column>
                     <Text>Emotion cell body_감정세포체</Text>
                     <Text>감정뉴런을 구성하는 한 부분으로 type{type}의 핵이 있다.</Text>
+                    <SaePoChae />
                 </Column>
 
                 <Column>
