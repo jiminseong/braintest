@@ -10,6 +10,7 @@ import { useSurveyStore } from '../../store/store';
 import PageLogo from './ui/PageLogo';
 import BacKButton from '../../component/button/BacKButton';
 import ResultLoading from './ui/ResultLoading';
+import calculateResultType from './model/calculateResultType';
 // import calculateResultType from './model/calculateResultType';
 
 const TestContentPage = () => {
@@ -87,9 +88,7 @@ const TestContentPage = () => {
 
             console.log(answers);
 
-            // 결과 타입 계산 함수 호출
-            // const resultType = calculateResultType();
-            const resultType = 2;
+            const resultType = calculateResultType();
             setResult(resultType);
             handleLoading().then(() => {
                 navigate(`/test/result/${resultType}/${name}`);
