@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import BottomLogo from '../../../assets/icons/bottomLogo.svg?react';
-import SaePoChae from './SaePoChae';
+import AnimationRow from './AnimationList';
 const GraphicContainer = ({ type }: { type: number }) => {
     console.log(type);
     return (
@@ -11,17 +11,19 @@ const GraphicContainer = ({ type }: { type: number }) => {
                 <Column>
                     <Text>Emotion cell body_감정세포체</Text>
                     <Text>감정뉴런을 구성하는 한 부분으로 type{type}의 핵이 있다.</Text>
-                    <SaePoChae />
+                    <AnimationRow type={type} category="saepo" />
                 </Column>
 
                 <Column>
                     <Text>emotion dendrite_감정가지돌기</Text>
                     <Text>감정세포에 달려 감정 자극을 중계하는 가느다란 세포질의 돌기이다.</Text>
+                    <AnimationRow type={type} category="gaji" />
                 </Column>
 
                 <Column>
                     <Text>emotion axon_감정축삭돌기</Text>
                     <Text>감정세포에 달려 감정 자극을 중계하는 가느다란 세포질의 돌기이다.</Text>
+                    <AnimationRow type={type} category="chucksack" />
                 </Column>
                 <StyledColumn>
                     <BottomLogo />

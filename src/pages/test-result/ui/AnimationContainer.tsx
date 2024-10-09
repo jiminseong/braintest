@@ -1,15 +1,27 @@
 import styled, { keyframes } from 'styled-components';
-import TestSvg from '../../../assets/images/typeGraphic/1/1.svg?react';
+import { useEffect, useState } from 'react';
 
-const AnimationContainer = () => {
-    return (
-        <StyledDiv>
-            <TestSvg />
-        </StyledDiv>
-    );
+const AnimationContainer = ({ type, count, category }: { type: number; count: number; category: string }) => {
+    const [IconSvg, setIconSvg] = useState<React.FC | null>(null); // 타입 정의 추가
+
+    useEffect(() => {
+        import(`../../../assets/images/typeGraphic/${type}/type${type}_${category}_${count}.svg?react`)
+            .then((module) => {
+                setIconSvg(() => module.default);
+            })
+            .catch((err) => {
+                console.error('SVG 로드 에러:', err);
+            });
+    }, [type]);
+
+    return <StyledDiv>{IconSvg && <StyledIconSvg as={IconSvg} />}</StyledDiv>;
 };
 
 export default AnimationContainer;
+const StyledIconSvg = styled.div`
+    width: 100%;
+    height: auto;
+`;
 
 // 반시계 방향 회전 및 크기 확대
 const rotateAndScale = keyframes`
@@ -44,8 +56,9 @@ const rotateBackAndColorChange = keyframes`
     }
 `;
 
-// div 스타일 정의
 const StyledDiv = styled.div`
+    height: 142px;
+    max-width: 338px;
     position: relative;
     padding: 1em;
     display: flex;
