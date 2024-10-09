@@ -117,7 +117,7 @@ const NeuronSection = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 5em;
-    padding-top: 10em;
+    padding-top: 5em;
 `;
 
 const PageWrapper = styled.div`
