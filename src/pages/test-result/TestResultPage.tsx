@@ -9,6 +9,7 @@ import TypeContentText from './ui/TypeContentText';
 import GraphicContainer from './ui/GraphicContainer';
 import MiddleNavigationBar from './ui/MiddleNavigationBar';
 import { useParams } from 'react-router-dom';
+import { ReactLenis } from '@studio-freight/react-lenis';
 
 const TestResultPage = () => {
     const { type, name = '' } = useParams();
@@ -74,39 +75,41 @@ const TestResultPage = () => {
     }, []);
 
     return (
-        <PageWrapper>
-            <TopNavigation />
-            <TypeLogo type={resultType} />
+        <ReactLenis root>
+            <PageWrapper>
+                <TopNavigation />
+                <TypeLogo type={resultType} />
 
-            {/* 스크롤 이동과 activeButton 전달 */}
+                {/* 스크롤 이동과 activeButton 전달 */}
 
-            {/* 각 섹션에 ref 할당 */}
-            <TypeIndexContent>
-                <MiddleNavigationBar
-                    scrollToSection={scrollToSection}
-                    activeButton={activeButton}
-                    name={name}
-                    type={resultType}
-                />
-                <NeuronSection ref={neuronSectionRef}>
-                    <TypeNeuron type={resultType} />
-                    <TypeTitle name={name} type={resultType} />
-                </NeuronSection>
-                <TypeStructure type={resultType} />
+                {/* 각 섹션에 ref 할당 */}
+                <TypeIndexContent>
+                    <MiddleNavigationBar
+                        scrollToSection={scrollToSection}
+                        activeButton={activeButton}
+                        name={name}
+                        type={resultType}
+                    />
+                    <NeuronSection ref={neuronSectionRef}>
+                        <TypeNeuron type={resultType} />
+                        <TypeTitle name={name} type={resultType} />
+                    </NeuronSection>
+                    <TypeStructure type={resultType} />
 
-                <div ref={infoSectionRef}>
-                    <TypeMainContent>
-                        <ContentWrapper>
-                            <IndexText>'Type{resultType}'에 대하여</IndexText>
-                            <TypeContentText type={resultType} />
-                        </ContentWrapper>
-                        <div ref={graphicsSectionRef} style={{ width: '100%' }}>
-                            <GraphicContainer type={resultType} />
-                        </div>
-                    </TypeMainContent>
-                </div>
-            </TypeIndexContent>
-        </PageWrapper>
+                    <div ref={infoSectionRef}>
+                        <TypeMainContent>
+                            <ContentWrapper>
+                                <IndexText>'Type{resultType}'에 대하여</IndexText>
+                                <TypeContentText type={resultType} />
+                            </ContentWrapper>
+                            <div ref={graphicsSectionRef} style={{ width: '100%' }}>
+                                <GraphicContainer type={resultType} />
+                            </div>
+                        </TypeMainContent>
+                    </div>
+                </TypeIndexContent>
+            </PageWrapper>
+        </ReactLenis>
     );
 };
 
@@ -129,6 +132,7 @@ const PageWrapper = styled.div`
     align-items: center;
     background-color: #ffffff;
     padding-top: 7em;
+    scroll-behavior: smooth;
 `;
 
 const TypeIndexContent = styled.div`

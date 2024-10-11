@@ -42,7 +42,7 @@ const calculateResultType = (): number => {
                 { score: 5, types: breakType.five },
                 { score: 4, types: breakType.four },
                 { score: 3, types: breakType.three },
-                { score: 2, types: breakType.two }, // adjust를 통해 추가 점수
+                { score: 2, types: breakType.two },
                 { score: 1, types: breakType.one },
             ];
 
