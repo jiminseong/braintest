@@ -73,6 +73,7 @@ const PrintPage = () => {
                             isPrintContainerVisible={isPrintContainerVisible}
                             onAnimationEnd={handleAnimationEnd}
                         >
+                            <Name>{name}님의 뇌유형은</Name>
                             {ResultSvg && <StyledResultSvg as={ResultSvg} />}
                         </PrintContainer>
                     </PrintContainerWrapper>
@@ -169,6 +170,7 @@ const fadeDown = keyframes`
 const PrintContainer = styled.div<{
     isPrintContainerVisible: boolean;
 }>`
+    position: relative;
     background: #fff;
     color: #070707;
     width: 523px;
@@ -190,6 +192,20 @@ const PrintContainer = styled.div<{
         @page {
             size: 79mm 297mm;
         }
+    }
+`;
+
+const Name = styled.div`
+    position: absolute;
+    font-size: 1.625rem;
+    font-weight: 800;
+    left: 50%;
+    top: 3em;
+    color: #231815;
+    transform: translate(-50%, -50%);
+    @media print {
+        top: 4em;
+        font-size: 0.8rem;
     }
 `;
 

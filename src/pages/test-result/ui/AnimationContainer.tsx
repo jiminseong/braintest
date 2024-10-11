@@ -57,8 +57,8 @@ const rotateBackAndColorChange = keyframes`
 `;
 
 const StyledDiv = styled.div`
-    height: 142px;
-    max-width: 338px;
+    min-height: 96px;
+    max-height: 142px;
     position: relative;
     padding: 1em;
     display: flex;

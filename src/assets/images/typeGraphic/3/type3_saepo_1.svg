@@ -1,24 +1,24 @@
-<svg width="304" height="234" viewBox="0 0 304 234" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M61.8901 44.0391L127.99 122.389" stroke="currentColor" stroke-width="1.75" stroke-miterlimit="10"/>
-<path d="M125.08 123.67L130.83 125.74L129.75 119.73L125.08 123.67Z" fill="currentColor"/>
-<path d="M38.9102 53.2305L114.22 118.28" stroke="currentColor" stroke-width="1.75" stroke-miterlimit="10"/>
-<path d="M111.55 119.999L117.55 121.149L115.54 115.379L111.55 119.999Z" fill="currentColor"/>
-<path d="M17.4702 133.91L117.77 143.21" stroke="currentColor" stroke-width="1.75" stroke-miterlimit="10"/>
-<path d="M116.6 146.17L122.15 143.62L117.16 140.09L116.6 146.17Z" fill="currentColor"/>
-<path d="M33.2998 151.792L128.99 146.422" stroke="currentColor" stroke-width="1.75" stroke-miterlimit="10"/>
-<path d="M128.27 149.522L133.38 146.172L127.93 143.422L128.27 149.522Z" fill="currentColor"/>
-<path d="M163.001 16.9805L155.671 113.7" stroke="currentColor" stroke-width="1.75" stroke-miterlimit="10"/>
-<path d="M152.69 112.582L155.34 118.092L158.78 113.042L152.69 112.582Z" fill="currentColor"/>
-<path d="M202.83 27.1914L165.87 106.951" stroke="currentColor" stroke-width="1.75" stroke-miterlimit="10"/>
-<path d="M163.47 104.852L164.02 110.942L169.01 107.422L163.47 104.852Z" fill="currentColor"/>
-<path d="M236.02 62.9414L169.3 124.301" stroke="currentColor" stroke-width="1.75" stroke-miterlimit="10"/>
-<path d="M167.89 121.453L166.06 127.283L172.02 125.943L167.89 121.453Z" fill="currentColor"/>
-<path d="M252.36 78.2617L177.91 126.912" stroke="currentColor" stroke-width="1.75" stroke-miterlimit="10"/>
-<path d="M176.99 123.871L174.23 129.321L180.33 128.981L176.99 123.871Z" fill="currentColor"/>
-<path d="M284.53 108.891L187.65 136.291" stroke="currentColor" stroke-width="1.75" stroke-miterlimit="10"/>
-<path d="M187.68 133.109L183.42 137.489L189.34 138.989L187.68 133.109Z" fill="currentColor"/>
-<path d="M174.521 155.922L252.87 198.262" stroke="currentColor" stroke-width="1.75" stroke-miterlimit="10"/>
-<path d="M173.86 159.03L170.66 153.83L176.76 153.66L173.86 159.03Z" fill="currentColor"/>
-<path d="M165.63 153.84L229.89 216.64" stroke="currentColor" stroke-width="1.75" stroke-miterlimit="10"/>
-<path d="M164.13 156.65L162.49 150.77L168.4 152.28L164.13 156.65Z" fill="currentColor"/>
+<svg width="121" height="94" viewBox="0 0 121 94" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M24.6885 17.7188L51.0561 49.2439" stroke="currentColor" stroke-miterlimit="10"/>
+<path d="M49.8955 49.7572L52.1892 50.5901L51.7584 48.1719L49.8955 49.7572Z" fill="currentColor"/>
+<path d="M15.5215 21.418L45.5631 47.5917" stroke="currentColor" stroke-miterlimit="10"/>
+<path d="M44.498 48.2847L46.8915 48.7474L46.0897 46.4258L44.498 48.2847Z" fill="currentColor"/>
+<path d="M6.96875 53.8789L46.979 57.6209" stroke="currentColor" stroke-miterlimit="10"/>
+<path d="M46.5127 58.8136L48.7266 57.7875L46.7361 56.3672L46.5127 58.8136Z" fill="currentColor"/>
+<path d="M13.2832 61.0747L51.4545 58.9141" stroke="currentColor" stroke-miterlimit="10"/>
+<path d="M51.1669 60.1614L53.2053 58.8135L51.0312 57.707L51.1669 60.1614Z" fill="currentColor"/>
+<path d="M65.0216 6.83203L62.0977 45.7486" stroke="currentColor" stroke-miterlimit="10"/>
+<path d="M60.9092 45.2969L61.9663 47.5139L63.3385 45.482L60.9092 45.2969Z" fill="currentColor"/>
+<path d="M80.9096 10.9414L66.166 43.0339" stroke="currentColor" stroke-miterlimit="10"/>
+<path d="M65.209 42.1875L65.4284 44.6379L67.4189 43.2216L65.209 42.1875Z" fill="currentColor"/>
+<path d="M94.1492 25.3242L67.5342 50.0132" stroke="currentColor" stroke-miterlimit="10"/>
+<path d="M66.9722 48.8672L66.2422 51.213L68.6197 50.6738L66.9722 48.8672Z" fill="currentColor"/>
+<path d="M100.667 31.4883L70.9688 51.0632" stroke="currentColor" stroke-miterlimit="10"/>
+<path d="M70.602 49.8398L69.501 52.0327L71.9343 51.8959L70.602 49.8398Z" fill="currentColor"/>
+<path d="M113.5 43.8125L74.8545 54.8372" stroke="currentColor" stroke-miterlimit="10"/>
+<path d="M74.8663 53.5586L73.167 55.3209L75.5285 55.9245L74.8663 53.5586Z" fill="currentColor"/>
+<path d="M69.6172 62.7383L100.871 79.7743" stroke="currentColor" stroke-miterlimit="10"/>
+<path d="M69.3536 63.9888L68.0771 61.8965L70.5105 61.8281L69.3536 63.9888Z" fill="currentColor"/>
+<path d="M66.0713 61.8984L91.705 87.1668" stroke="currentColor" stroke-miterlimit="10"/>
+<path d="M65.4726 63.03L64.8184 60.6641L67.1759 61.2716L65.4726 63.03Z" fill="currentColor"/>
 </svg>
