@@ -12,12 +12,14 @@ import BacKButton from '../../component/button/BacKButton';
 import ResultLoading from './ui/ResultLoading';
 import calculateResultType from './model/calculateResultType';
 import { useReactToPrint } from 'react-to-print';
+import axios from 'axios';
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
     const [currentName, setCurrentName] = useState('');
     const [nameCheck, setNameCheck] = useState(false);
     const [questionIndex, setQuestionIndex] = useState(0);
+    const [count, setCount] = useState(0);
     const [page, setPage] = useState(0); // 현재 페이지
     const [loading, setLoading] = useState(false);
     const [animate, setAnimate] = useState(false);
@@ -100,6 +102,7 @@ const TestContentPage = () => {
 
             const resultType = calculateResultType();
             setResult(resultType);
+            draw();
             handleLoading()
                 .then(() => {
                     return import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`);
@@ -118,6 +121,31 @@ const TestContentPage = () => {
         }
     };
 
+    const draw = () => {
+        console.log('추첨중..');
+        if (count >= 21) {
+            return;
+        }
+
+        // 10% 확률로 당첨 결정
+        if (Math.random() < 0.1) {
+            // 10% 확률
+            // 당첨 시 서버에 count 증가 요청
+            axios
+                .post(`${import.meta.env.VITE_SERVER_URL}/api/increase-count`)
+                .then((response) => {
+                    setCount(response.data.count); // 서버에서 최신 count 값으로 업데이트
+                    alert(response.data.message); // 성공 메시지 (당첨 or 실패)
+                })
+                .catch((error) => {
+                    console.error('Error increasing count:', error);
+                });
+        } else {
+            // 10% 확률에 당첨되지 않았을 때
+            console.log('당첨되지 않았습니다.');
+        }
+    };
+
     // SVG가 로드되면 프린트 및 네비게이션 실행
     useEffect(() => {
         if (ResultSvg) {
@@ -127,6 +155,18 @@ const TestContentPage = () => {
             navigate(`/test/result/${resultType}/${name}`); // 결과 페이지로 이동
         }
     }, [ResultSvg]); // ResultSvg가 업데이트될 때마다 실행
+
+    // 서버에서 count 값을 가져오기
+    useEffect(() => {
+        axios
+            .get(`${import.meta.env.VITE_SERVER_URL}/api/count`)
+            .then((response) => {
+                setCount(response.data.count);
+            })
+            .catch((error) => {
+                console.error('Error fetching count:', error);
+            });
+    }, []);
 
     return (
         <>
