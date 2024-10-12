@@ -132,7 +132,7 @@ const TestContentPage = () => {
             // 10% 확률
             // 당첨 시 서버에 count 증가 요청
             axios
-                .post(`${import.meta.env.VITE_SERVER_URL}/api/increase-count`)
+                .post(`${import.meta.env.VITE_SERVER_URL}/api/count`)
                 .then((response) => {
                     setCount(response.data.count); // 서버에서 최신 count 값으로 업데이트
                     alert(response.data.message); // 성공 메시지 (당첨 or 실패)
