@@ -147,6 +147,11 @@ const PrintContainerWrapper = styled.div<{ isWrapperVisible: boolean }>`
     transition: fade in;
     animation: ${({ isWrapperVisible }) => (isWrapperVisible ? fadeIn : fadeOut)} 0.15s ease-out;
     transition: visibility 0.15s ease-out;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    ::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, and Opera 스크롤바 숨기기 */
+    }
 `;
 
 const CloseButton = styled(CloseIcon)`
