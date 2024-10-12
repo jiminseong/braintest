@@ -63,15 +63,15 @@ const TestResultPage = () => {
     };
 
     useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        // 컴포넌트가 마운트되자마자 실행
-        handleScroll();
-
-        // 약간의 딜레이 후에 스크롤 이동
-        setTimeout(() => {
+        const timeoutId = setTimeout(() => {
             scrollToSection('Neuron');
-        }, 100);
-        return () => window.removeEventListener('scroll', handleScroll);
+        }, 100); // 약간의 지연을 준 후 스크롤 이동
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            clearTimeout(timeoutId);
+        };
     }, []);
 
     return (
@@ -132,7 +132,6 @@ const PageWrapper = styled.div`
     align-items: center;
     background-color: #ffffff;
     padding-top: 7em;
-    scroll-behavior: smooth;
 `;
 
 const TypeIndexContent = styled.div`
@@ -146,7 +145,6 @@ const TypeIndexContent = styled.div`
     gap: 10em;
     overflow: visible;
 `;
-
 const TypeMainContent = styled.div`
     background: #ffffff;
     width: 100%;
