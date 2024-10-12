@@ -12,17 +12,21 @@ import BacKButton from '../../component/button/BacKButton';
 import ResultLoading from './ui/ResultLoading';
 import calculateResultType from './model/calculateResultType';
 import { useReactToPrint } from 'react-to-print';
-import axios from 'axios';
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
     const [currentName, setCurrentName] = useState('');
     const [nameCheck, setNameCheck] = useState(false);
     const [questionIndex, setQuestionIndex] = useState(0);
-    const [count, setCount] = useState(0);
+
     const [page, setPage] = useState(0); // 현재 페이지
     const [loading, setLoading] = useState(false);
     const [animate, setAnimate] = useState(false);
+    const [count, setCount] = useState(() => {
+        // 로컬스토리지에서 초기 값 가져오기
+        const savedCount = localStorage.getItem('count');
+        return savedCount ? parseInt(savedCount) : 0; // 초기 값이 없으면 0으로 설정
+    });
     const navigate = useNavigate();
 
     const [ResultSvg, setResultSvg] = useState<React.FC | null>(null); // 타입 정의 추가
@@ -126,20 +130,13 @@ const TestContentPage = () => {
         if (count >= 21) {
             return;
         }
+        if (Math.random() < 0.3) {
+            // 30% 확률로 당첨 결정
 
-        // 10% 확률로 당첨 결정
-        if (Math.random() < 0.1) {
-            // 10% 확률
-            // 당첨 시 서버에 count 증가 요청
-            axios
-                .post(`${import.meta.env.VITE_SERVER_URL}/api/count`)
-                .then((response) => {
-                    setCount(response.data.count); // 서버에서 최신 count 값으로 업데이트
-                    alert(response.data.message); // 성공 메시지 (당첨 or 실패)
-                })
-                .catch((error) => {
-                    console.error('Error increasing count:', error);
-                });
+            // 당첨 시 로컬에 count 증가
+            const newCount = count + 1;
+            setCount(newCount);
+            localStorage.setItem('count', newCount.toString()); // 로컬스토리지에 새로운 값 저장
         } else {
             // 10% 확률에 당첨되지 않았을 때
             console.log('당첨되지 않았습니다.');
@@ -155,18 +152,6 @@ const TestContentPage = () => {
             navigate(`/test/result/${resultType}/${name}`); // 결과 페이지로 이동
         }
     }, [ResultSvg]); // ResultSvg가 업데이트될 때마다 실행
-
-    // 서버에서 count 값을 가져오기
-    useEffect(() => {
-        axios
-            .get(`${import.meta.env.VITE_SERVER_URL}/api/count`)
-            .then((response) => {
-                setCount(response.data.count);
-            })
-            .catch((error) => {
-                console.error('Error fetching count:', error);
-            });
-    }, []);
 
     return (
         <>
