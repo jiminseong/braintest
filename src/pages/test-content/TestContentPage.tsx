@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
 import { Input } from './ui/Input';
@@ -11,7 +11,7 @@ import PageLogo from './ui/PageLogo';
 import BacKButton from '../../component/button/BacKButton';
 import ResultLoading from './ui/ResultLoading';
 import calculateResultType from './model/calculateResultType';
-// import calculateResultType from './model/calculateResultType';
+import { useReactToPrint } from 'react-to-print';
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
@@ -22,6 +22,14 @@ const TestContentPage = () => {
     const [loading, setLoading] = useState(false);
     const [animate, setAnimate] = useState(false);
     const navigate = useNavigate();
+
+    const [ResultSvg, setResultSvg] = useState<React.FC | null>(null); // 타입 정의 추가
+    const componentRef = useRef(null);
+
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: '결과영수증',
+    });
 
     // Zustand 상태 관리 함수
     const { setName, setResult, saveAnswer, answers, name } = useSurveyStore();
@@ -49,6 +57,8 @@ const TestContentPage = () => {
     const submitName = () => {
         if (currentName === '') {
             alert('이름을 입력해주세요');
+        } else if (currentName.length > 5) {
+            alert('5글자 이하로 입력해주세요');
         } else {
             setName(currentName);
             setNameCheck(true);
@@ -90,9 +100,17 @@ const TestContentPage = () => {
 
             const resultType = calculateResultType();
             setResult(resultType);
-            handleLoading().then(() => {
-                navigate(`/test/result/${resultType}/${name}`);
-            });
+            handleLoading()
+                .then(() => {
+                    return import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`);
+                })
+                .then((module) => {
+                    setResultSvg(() => module.default);
+                })
+                .catch((err) => {
+                    console.error('SVG 로드 에러:', err);
+                    setLoading(false); // 에러가 발생해도 로딩 해제
+                });
         } else {
             handleAnimate();
             setQuestionIndex((prevIndex) => prevIndex + 1);
@@ -100,71 +118,89 @@ const TestContentPage = () => {
         }
     };
 
+    // SVG가 로드되면 프린트 및 네비게이션 실행
+    useEffect(() => {
+        if (ResultSvg) {
+            handlePrint();
+            setLoading(false); // 로딩 해제
+            const resultType = calculateResultType();
+            navigate(`/test/result/${resultType}/${name}`); // 결과 페이지로 이동
+        }
+    }, [ResultSvg]); // ResultSvg가 업데이트될 때마다 실행
+
     return (
-        <PageWrapper>
-            <StatusBar status={currentProgress} loading={loading} />
+        <>
+            <PageWrapper>
+                <StatusBar status={currentProgress} loading={loading} />
 
-            <Column>
-                {nameCheck === false && (
-                    <ContentColumn>
-                        <Column2>
-                            <Text>당신의 이름은 무엇인가요?</Text>
-                            <Input value={currentName} onChange={(e) => setCurrentName(e.target.value)} />
-                        </Column2>
-                        <TextContentButton onClick={() => submitName()}>다음</TextContentButton>
-                    </ContentColumn>
-                )}
+                <Column>
+                    {nameCheck === false && (
+                        <ContentColumn>
+                            <Column2>
+                                <Text>당신의 이름은 무엇인가요?</Text>
+                                <Input value={currentName} onChange={(e) => setCurrentName(e.target.value)} />
+                            </Column2>
+                            <TextContentButton onClick={() => submitName()}>다음</TextContentButton>
+                        </ContentColumn>
+                    )}
 
-                {nameCheck === true && loading === true && page === 0 && (
-                    <LoadingWrapper>
-                        <PageLogo rotate={true} width="16%" page={1} />
-                        <PageIndexText>당신의 특징에 대해서 알려주세요.</PageIndexText>
-                        <LoadingText>loading...</LoadingText>
-                    </LoadingWrapper>
-                )}
+                    {nameCheck === true && loading === true && page === 0 && (
+                        <LoadingWrapper>
+                            <PageLogo rotate={true} width="16%" page={1} />
+                            <PageIndexText>당신의 특징에 대해서 알려주세요.</PageIndexText>
+                            <LoadingText>loading...</LoadingText>
+                        </LoadingWrapper>
+                    )}
 
-                {loading === false && page >= 1 && (
-                    <ContentColumn>
-                        {currentProgress >= 2.5 && !loading && <BacKButton top="3.3125em" onClick={() => goBack()} />}
-                        <PageLogo width="8%" page={page} />
-                        <AnimationQuestionText animate={animate}>
-                            {questionsData.questions[questionIndex]}
-                        </AnimationQuestionText>
+                    {loading === false && page >= 1 && (
+                        <ContentColumn>
+                            {currentProgress >= 2.5 && !loading && (
+                                <BacKButton top="3.3125em" onClick={() => goBack()} />
+                            )}
+                            <PageLogo width="8%" page={page} />
+                            <AnimationQuestionText animate={animate}>
+                                {questionsData.questions[questionIndex]}
+                            </AnimationQuestionText>
 
-                        <SelectButton
-                            onClickOne={() => handleAnswer(1)}
-                            onClickTwo={() => handleAnswer(2)}
-                            onClickThree={() => handleAnswer(3)}
-                            onClickFour={() => handleAnswer(4)}
-                            onClickFive={() => handleAnswer(5)}
-                        />
-                    </ContentColumn>
-                )}
+                            <SelectButton
+                                onClickOne={() => handleAnswer(1)}
+                                onClickTwo={() => handleAnswer(2)}
+                                onClickThree={() => handleAnswer(3)}
+                                onClickFour={() => handleAnswer(4)}
+                                onClickFive={() => handleAnswer(5)}
+                            />
+                        </ContentColumn>
+                    )}
 
-                {page >= 2 && loading && questionIndex < 39 && (
-                    <LoadingWrapper>
-                        <PageLogo rotate={true} width="16%" page={page} />
-                        <PageIndexText>
-                            {page == 2 ? '당신의 생활에 대해서 알려주세요.' : '당신의 요즘 기분에 대해서 알려주세요.'}
-                        </PageIndexText>
-                        <LoadingText>loading...</LoadingText>
-                    </LoadingWrapper>
-                )}
+                    {page >= 2 && loading && questionIndex < 39 && (
+                        <LoadingWrapper>
+                            <PageLogo rotate={true} width="16%" page={page} />
+                            <PageIndexText>
+                                {page == 2
+                                    ? '당신의 생활에 대해서 알려주세요.'
+                                    : '당신의 요즘 기분에 대해서 알려주세요.'}
+                            </PageIndexText>
+                            <LoadingText>loading...</LoadingText>
+                        </LoadingWrapper>
+                    )}
 
-                {questionIndex === 39 && loading && (
-                    <SubmitLoadingWrapper>
-                        <ResultLoading />
-                        <Text>당신의 뇌 유형을 분석 중입니다...</Text>
-                    </SubmitLoadingWrapper>
-                )}
-            </Column>
-        </PageWrapper>
+                    {questionIndex === 39 && loading && (
+                        <SubmitLoadingWrapper>
+                            <ResultLoading />
+                            <Text>당신의 뇌 유형을 분석 중입니다...</Text>
+                        </SubmitLoadingWrapper>
+                    )}
+                </Column>
+            </PageWrapper>
+            <PrintContainer ref={componentRef}>
+                <Name>{name}님의 뇌유형은</Name>
+                {ResultSvg && <StyledResultSvg as={ResultSvg} />}
+            </PrintContainer>
+        </>
     );
 };
 
 export default TestContentPage;
-
-// 스타일링은 그대로 유지
 
 const PageIndexText = styled.div`
     color: #fff;
@@ -179,8 +215,6 @@ const PageWrapper = styled.div`
     overflow: hidden;
     position: relative;
 `;
-
-// 나머지 스타일 코드 유지...
 
 const fade = keyframes`
     0% {
@@ -269,4 +303,47 @@ const Text = styled.div`
 const TextContentButton = styled(Button)`
     margin-top: 10%;
     font-size: 1.125em;
+`;
+
+const PrintContainer = styled.div`
+    display: none;
+    position: relative;
+    background: #fff;
+    color: #070707;
+    width: 523px;
+    height: fit-content;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+
+    @media print {
+        width: 79mm;
+        height: 297mm;
+        box-shadow: none;
+        animation: none;
+
+        @page {
+            size: 79mm 297mm;
+        }
+    }
+`;
+
+const Name = styled.div`
+    position: absolute;
+    font-size: 1.625rem;
+    font-weight: 800;
+    left: 50%;
+    top: 3em;
+    color: #231815;
+    transform: translate(-50%, -50%);
+    @media print {
+        top: 4em;
+        font-size: 0.8rem;
+    }
+`;
+
+const StyledResultSvg = styled.div`
+    width: 100%;
+    height: auto;
 `;

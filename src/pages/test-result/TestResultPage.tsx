@@ -64,13 +64,7 @@ const TestResultPage = () => {
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
-        // 컴포넌트가 마운트되자마자 실행
-        handleScroll();
-
-        // 약간의 딜레이 후에 스크롤 이동
-        setTimeout(() => {
-            scrollToSection('Neuron');
-        }, 100);
+        scrollToSection('Neuron');
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
