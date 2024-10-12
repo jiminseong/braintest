@@ -27,17 +27,17 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
     // GreenContainer의 애니메이션 설정
     const greenContainerVariants1 = {
         animate: {
-            x: ['0vw', '1vw', '-1vw', '1vw', '0vw'],
-            y: ['0vh', '1vh', '-1vh', '1vh', '0vh'],
-            transition: { repeat: Infinity, duration: 30, ease: 'easeInOut' },
+            x: ['3vw', '5vw', '-1vw', '5vw', '3vw'],
+            y: ['0vh', '3vh', '-3vh', '3vh', '0vh'],
+            transition: { repeat: Infinity, duration: 40, ease: 'easeInOut' },
         },
     };
 
     const greenContainerVariants2 = {
         animate: {
-            x: ['2vw', '0w', '3vw', '0vw', '4vw'],
-            y: ['3vh', '4vh', '2vh', '3vh', '5vh'],
-            transition: { repeat: Infinity, duration: 30, ease: 'easeInOut' },
+            x: ['2vw', '3vw', '1vw', '3vw', '2vw'],
+            y: ['2vh', '3vh', '0vh', '3vh', '2vh'],
+            transition: { repeat: Infinity, duration: 40, ease: 'easeInOut' },
         },
     };
 
