@@ -44,7 +44,7 @@ const MiddleNavigationBarWrapper = styled.div`
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 1em 0em;
+    padding: 2.125em 0em;
     top: 0;
 `;
 
