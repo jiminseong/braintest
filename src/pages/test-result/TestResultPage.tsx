@@ -63,9 +63,15 @@ const TestResultPage = () => {
     };
 
     useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            scrollToSection('Neuron');
+        }, 100); // 약간의 지연을 준 후 스크롤 이동
+
         window.addEventListener('scroll', handleScroll);
-        scrollToSection('Neuron');
-        return () => window.removeEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            clearTimeout(timeoutId);
+        };
     }, []);
 
     return (
