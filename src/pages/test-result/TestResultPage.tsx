@@ -125,7 +125,6 @@ const PageWrapper = styled.div`
     align-items: center;
     background-color: #ffffff;
     padding-top: 7em;
-    scroll-behavior: smooth;
 `;
 
 const TypeIndexContent = styled.div`

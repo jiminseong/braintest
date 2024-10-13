@@ -17,9 +17,9 @@ const MiddleNavigationBar = ({ scrollToSection, activeButton, name, type }: Midd
                 <RowWrapper>
                     {/* activeButton과 일치하면 isActive */}
                     <TypeSelectButton name={name} />
-                    <NavigationButton isActive={activeButton === 'Neuron'} onClick={() => scrollToSection('Neuron')}>
+                    <NavigationButton2 isActive={activeButton === 'Neuron'} onClick={() => scrollToSection('Neuron')}>
                         Neuron
-                    </NavigationButton>
+                    </NavigationButton2>
                     <NavigationButton isActive={activeButton === 'Info'} onClick={() => scrollToSection('Info')}>
                         Info
                     </NavigationButton>
@@ -72,7 +72,12 @@ const NavigationButton = styled.div<Props>`
     text-align: center;
 
     cursor: pointer;
-    background: ${({ isActive }) => (isActive ? '#b3b3b3' : '#fff')}; /* 활성화된 버튼 색상 변경 */
+    background: ${({ isActive }) => (isActive ? '#000000' : '#D6D6D6')};
+    color: ${({ isActive }) => (isActive ? '#ffffff' : '#070707')};
+`;
+
+const NavigationButton2 = styled(NavigationButton)`
+    border: ${({ isActive }) => (isActive ? '#ffffff 1px solid' : '#D6D6D6')};
 `;
 
 const printButtonAnimation = keyframes`

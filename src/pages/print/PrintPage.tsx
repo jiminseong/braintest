@@ -209,7 +209,7 @@ const Name = styled.div`
     color: #231815;
     transform: translate(-50%, -50%);
     @media print {
-        top: 4em;
+        top: 3.5em;
         font-size: 0.8rem;
     }
 `;
