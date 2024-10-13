@@ -3,7 +3,8 @@ import FirstNeuron from './ui/FirstNeuron';
 import SecondNeuron from './ui/SecondNeuron';
 import ThirdNeuron from './ui/ThirdNeuron';
 import Logo from '../../assets/icons/Logo.svg?react';
-import testStartButtonUrl from '../../assets/images/TestStartButton.png';
+import TestStartButton from '../../assets/images/testStartButton.svg?react';
+import RightIcon from '../../assets/icons/rightIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -63,9 +64,10 @@ const HomePage = () => {
             <SecondNeuron stop={animationStopState} />
             <ThirdNeuron stop={animationStopState} />
             <StyledLogo />
-            <TestNavigateButton onClick={() => navigate('/test/result/1/지민성')}>
-                프린트 테스트 하러 가기
-            </TestNavigateButton>
+            <TypesNavigationButton onClick={() => navigate(`/test/result/1/%3F%3F%3F`)}>
+                TYPES
+                <RightIcon />
+            </TypesNavigationButton>
 
             <FirstGreenContainer>
                 <Title>brain type test 100%</Title>
@@ -83,7 +85,7 @@ const HomePage = () => {
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                     >
-                        <Image src={testStartButtonUrl} alt="테스트시작버튼" />
+                        <StyledTestStartButton />
                     </ButtonWrapper>
                 )}
             </FirstGreenContainer>
@@ -123,11 +125,6 @@ const Title = styled.span`
     color: #fff;
 `;
 
-const Image = styled.img`
-    width: 100%;
-    max-width: 550px;
-`;
-
 const ButtonWrapper = styled.button`
     cursor: pointer;
     margin-top: 5%;
@@ -136,7 +133,12 @@ const ButtonWrapper = styled.button`
     border: none;
     outline: none;
 `;
-
+const StyledTestStartButton = styled(TestStartButton)`
+    &:hover {
+        fill: url(<path-to-image>) lightgray -0.409px 0px / 100.112% 100% no-repeat;
+        filter: drop-shadow(0px 0px 17px #7aff77);
+    }
+`;
 const FirstGreenContainer = styled.div`
     position: absolute;
     display: flex;
@@ -152,20 +154,16 @@ const FirstGreenContainer = styled.div`
     box-shadow: 0 0 0 3px #7aff77 inset, 0px 0px 8.5px 1px #77ceff;
 `;
 
-const TestNavigateButton = styled.button`
+const TypesNavigationButton = styled.div`
     z-index: 10;
-    width: 250px;
-    height: 40px;
     position: absolute;
-    top: 1em;
-    left: 1em;
-    border-radius: 2em;
-    border: 2px solid #000;
-    background: #fff;
-    font-size: 1.125em;
-    font-weight: 700;
-    text-align: center;
-    padding: 0.25em;
-    box-sizing: border-box;
+    top: 5%;
+    left: 5%;
+    display: flex;
+    gap: 0.25em;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
     cursor: pointer;
+    font-size: 1.125em;
 `;

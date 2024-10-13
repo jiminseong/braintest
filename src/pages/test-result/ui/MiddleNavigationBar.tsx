@@ -11,6 +11,9 @@ interface MiddleNavigationBarProps {
 
 const MiddleNavigationBar = ({ scrollToSection, activeButton, name, type }: MiddleNavigationBarProps) => {
     const navigate = useNavigate();
+    if (name === '???') {
+        name = '%3F%3F%3F';
+    }
     return (
         <MiddleNavigationBarWrapper>
             <Wrapper>
