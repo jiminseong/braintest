@@ -2,67 +2,67 @@
     "title": [
         {
             "firstTitle": "뇌의 기능이 전체적으로 균등하게 활동하는",
-            "secondTitle": "‘01 균형형’입니다."
+            "secondTitle": "'굿바이 프라블럼 메이커' 유형입니다."
         },
         {
-            "firstTitle": "즉흥적으로 빠르게 반응하는",
-            "secondTitle": "‘02 즉흥형’입니다."
+            "firstTitle": "도파민의 영향을 많이 받는",
+            "secondTitle": "'즉각 만족 전문가' 유형입니다."
         },
         {
-            "firstTitle": "목표 달성에 집요한 집중력을 보이는",
-            "secondTitle": "‘03 집요형’입니다."
+            "firstTitle": "세로토닌의 영향을 많이 받는",
+            "secondTitle": "'디테일 집착러' 유형입니다."
         },
         {
-            "firstTitle": "외부 자극에 예민하게 반응하는",
-            "secondTitle": "‘04 예민형’입니다."
+            "firstTitle": "감정을 느끼는 둘레계통의 활성이 높게 나타나는",
+            "secondTitle": "'감정 스페셜리스트' 유형입니다."
         },
         {
-            "firstTitle": "신중하고 차분한 성향을 지닌",
-            "secondTitle": "‘05 신중형’입니다."
+            "firstTitle": "진정과 위험 분자의 영향을 많이 받는",
+            "secondTitle": "'리스크 매니저' 유형입니다."
         },
         {
-            "firstTitle": "즉흥적이면서도 집요한 성향을 지닌",
-            "secondTitle": "‘06 복합 즉흥+집요형’입니다."
+            "firstTitle": "유형 2와 유형 3의 특질 일부를 동시에 나타내는",
+            "secondTitle": "'혼돈 네비게이터' 유형입니다."
         },
         {
-            "firstTitle": "즉흥적이면서도 신중한 성향을 지닌",
-            "secondTitle": "‘07 복합 즉흥+신중형’입니다."
+            "firstTitle": "유형 2와 유형 3, 4의 특질 일부를 동시에 나타내는",
+            "secondTitle": "'규칙 안의 감성 플레이어' 유형입니다."
         },
         {
-            "firstTitle": "즉흥적이면서도 예민한 성향을 지닌",
-            "secondTitle": "‘08 복합 즉흥+예민형’입니다."
+            "firstTitle": "유형 2와 유형 3, 4, 5의 특질 일부를 동시에 나타내는",
+            "secondTitle": "'안정적 스릴러' 유형입니다."
         },
         {
-            "firstTitle": "즉흥적이고 집요하며 신중한 성향을 지닌",
-            "secondTitle": "‘09 복합 즉흥+집요+신중형’입니다."
+            "firstTitle": "유형 3과 유형 4, 5의 특질 일부를 동시에 나타내는",
+            "secondTitle": "'감성 밸런스 플래너' 유형입니다."
         },
         {
-            "firstTitle": "즉흥적이고 집요하며 예민한 성향을 지닌",
-            "secondTitle": "‘10 복합 즉흥+집요+예민형’입니다."
+            "firstTitle": "유형 3과 유형 4의 특질 일부를 동시에 나타내는",
+            "secondTitle": "'감성적인 완벽주의자' 유형입니다."
         },
         {
-            "firstTitle": "즉흥적이고 예민하며 신중한 성향을 지닌",
-            "secondTitle": "‘11 복합 즉흥+예민+신중형’입니다."
+            "firstTitle": "유형 3과 유형 5의 특질 일부를 동시에 나타내는",
+            "secondTitle": "'신중한 디테일러' 유형입니다."
         },
         {
-            "firstTitle": "즉흥적이고 집요하며 예민하고 신중한 성향을 지닌",
-            "secondTitle": "‘12 복합 즉흥+집요+예민+신중형’입니다."
+            "firstTitle": "유형 2와 유형 3, 5의 특질 일부를 동시에 나타내는",
+            "secondTitle": "'신중한 스릴러' 유형입니다."
         },
         {
-            "firstTitle": "집요하며 예민하고 신중한 성향을 지닌",
-            "secondTitle": "‘13 복합 집요+예민+신중형’입니다."
+            "firstTitle": "유형 2와 유형 5의 특질 일부를 동시에 나타내는",
+            "secondTitle": "'리스크 프리 모험가' 유형입니다."
         },
         {
-            "firstTitle": "집요하며 예민한 성향을 지닌",
-            "secondTitle": "‘14 복합 집요+예민형’입니다."
+            "firstTitle": "유형 2와 유형 4의 특질 일부를 동시에 나타내는",
+            "secondTitle": "'피드백 스릴러' 유형입니다."
         },
         {
-            "firstTitle": "집요하며 신중한 성향을 지닌",
-            "secondTitle": "‘15 복합 집요+신중형’입니다."
+            "firstTitle": "유형 2와 유형 4, 5의 특질 일부를 동시에 나타내는",
+            "secondTitle": "'리스크 프리 감성러' 유형입니다."
         },
         {
-            "firstTitle": "예민하며 신중한 성향을 지닌",
-            "secondTitle": "‘16 복합 예민+신중형’입니다."
+            "firstTitle": "유형 4와 유형 5의 특질 일부를 동시에 나타내는",
+            "secondTitle": "'감성적인 세이프 가드' 유형입니다."
         }
     ]
 }

@@ -3,9 +3,8 @@ import typeTitletData from '../model/title.json';
 const TypeTitle = ({ type, name }: { type: number; name: string }) => {
     return (
         <Title>
-            <Title>
-                {name}님은 {typeTitletData.title[type - 1].firstTitle}
-            </Title>
+            <Title>{name}님은</Title>
+            <Title>{typeTitletData.title[type - 1].firstTitle}</Title>
             <Title>{typeTitletData.title[type - 1].secondTitle}</Title>
         </Title>
     );
