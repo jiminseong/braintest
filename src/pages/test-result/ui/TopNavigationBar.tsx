@@ -57,6 +57,7 @@ const TopNavigationWrapper = styled.div<TopNavigationWrapperProps>`
 `;
 
 const TestStartButton = styled.div`
+    visibility: hidden;
     width: fit-content;
     text-align: center;
     font-weight: 600;

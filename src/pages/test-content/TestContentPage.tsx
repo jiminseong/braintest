@@ -8,16 +8,19 @@ import { Button } from '../../component/button/Button';
 import questionsData from './model/question.json';
 import { useSurveyStore } from '../../store/store';
 import PageLogo from './ui/PageLogo';
-import BacKButton from '../../component/button/BacKButton';
+import NavigationButton from '../../component/button/NavigationButton';
 import ResultLoading from './ui/ResultLoading';
 import calculateResultType from './model/calculateResultType';
 import { useReactToPrint } from 'react-to-print';
+import AlertModal from './ui/AlertModal';
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
     const [currentName, setCurrentName] = useState('');
     const [nameCheck, setNameCheck] = useState(false);
     const [questionIndex, setQuestionIndex] = useState(0);
+    const [modalDisplay1, setModalDsiplay1] = useState(false);
+    const [modalDisplay2, setModalDsiplay2] = useState(false);
 
     const [page, setPage] = useState(0); // 현재 페이지
     const [loading, setLoading] = useState(false);
@@ -29,7 +32,7 @@ const TestContentPage = () => {
     });
     const navigate = useNavigate();
 
-    const [ResultSvg, setResultSvg] = useState<React.FC | null>(null); // 타입 정의 추가
+    const [ResultSvg, setResultSvg] = useState<React.FC | null>(null);
     const componentRef = useRef(null);
 
     const handlePrint = useReactToPrint({
@@ -37,7 +40,6 @@ const TestContentPage = () => {
         documentTitle: '결과영수증',
     });
 
-    // Zustand 상태 관리 함수
     const { setName, setResult, saveAnswer, answers, name } = useSurveyStore();
 
     const handleLoading = () => {
@@ -62,9 +64,11 @@ const TestContentPage = () => {
 
     const submitName = () => {
         if (currentName === '') {
-            alert('이름을 입력해주세요');
+            //이름이 비어있을시
+            setModalDsiplay1(true);
         } else if (currentName.length > 5) {
-            alert('5글자 이하로 입력해주세요');
+            //이름이 5글자 이하일시
+            setModalDsiplay2(true);
         } else {
             setName(currentName);
             setNameCheck(true);
@@ -130,8 +134,8 @@ const TestContentPage = () => {
         if (count >= 21) {
             return;
         }
-        if (Math.random() < 0.3) {
-            // 30% 확률로 당첨 결정
+        if (Math.random() < 0.18) {
+            // 18% 확률로 당첨 결정
 
             // 당첨 시 로컬에 count 증가
             const newCount = count + 1;
@@ -143,24 +147,35 @@ const TestContentPage = () => {
         }
     };
 
-    // SVG가 로드되면 프린트 및 네비게이션 실행
+    // 프린트 및 네비게이션 실행
     useEffect(() => {
         if (ResultSvg) {
             handlePrint();
-            setLoading(false); // 로딩 해제
+            setLoading(false);
+            window.scrollTo({
+                top: window.innerHeight * 1.25,
+                behavior: 'smooth',
+            });
+
             const resultType = calculateResultType();
-            navigate(`/test/result/${resultType}/${name}`); // 결과 페이지로 이동
+
+            navigate(`/test/result/${resultType}/${name}`, { replace: true }); // replace: true로 페이지 스택을 덮어씁니다.
         }
     }, [ResultSvg]); // ResultSvg가 업데이트될 때마다 실행
 
     return (
         <>
+            {modalDisplay1 && <AlertModal alertText="이름을 입력해주세요." onStop={() => setModalDsiplay1(false)} />}
+            {modalDisplay2 && (
+                <AlertModal alertText="이름을 5글자 이하로 입력해주세요" onStop={() => setModalDsiplay2(false)} />
+            )}
             <PageWrapper>
                 <StatusBar status={currentProgress} loading={loading} />
 
                 <Column>
                     {nameCheck === false && (
                         <ContentColumn>
+                            <NavigationButton top="5em" onClick={() => navigate('/')} home />
                             <Column2>
                                 <Text>당신의 이름은 무엇인가요?</Text>
                                 <Input value={currentName} onChange={(e) => setCurrentName(e.target.value)} />
@@ -180,7 +195,10 @@ const TestContentPage = () => {
                     {loading === false && page >= 1 && (
                         <ContentColumn>
                             {currentProgress >= 2.5 && !loading && (
-                                <BacKButton top="3.3125em" onClick={() => goBack()} />
+                                <>
+                                    <NavigationButton top="3.3125em" right="3em" onClick={() => goBack()} />
+                                    <NavigationButton top="5em" onClick={() => navigate('/')} home />
+                                </>
                             )}
                             <PageLogo width="8%" page={page} />
                             <AnimationQuestionText animate={animate}>
@@ -212,7 +230,6 @@ const TestContentPage = () => {
                     {questionIndex === 39 && loading && (
                         <SubmitLoadingWrapper>
                             <ResultLoading />
-                            <Text>당신의 뇌 유형을 분석 중입니다...</Text>
                         </SubmitLoadingWrapper>
                     )}
                 </Column>
@@ -332,7 +349,7 @@ const TextContentButton = styled(Button)`
 
 const PrintContainer = styled.div`
     display: none;
-    position: relative;
+    position: absolute;
     background: #fff;
     color: #070707;
     width: 523px;

@@ -35,4 +35,5 @@ const ImageWrapper = styled.div`
 
 const NeuronImage = styled.img`
     width: 60%;
+    max-height: 900px;
 `;

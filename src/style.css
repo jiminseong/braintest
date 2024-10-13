@@ -21,6 +21,7 @@ body {
     background-color: #070707;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
+    scroll-behavior: smooth;
 }
 body::-webkit-scrollbar {
     display: none; /* Chrome, Safari, and Opera 스크롤바 숨기기 */
