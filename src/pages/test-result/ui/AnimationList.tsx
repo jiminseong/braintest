@@ -24,7 +24,7 @@ export default AnimationList;
 const RowWrapper = styled.div`
     display: flex;
     justify-content: center;
-    width: 70%;
+    width: 50%;
     flex-wrap: wrap;
     gap: 1em;
 `;
