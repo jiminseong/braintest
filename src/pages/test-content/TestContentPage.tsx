@@ -12,12 +12,15 @@ import BacKButton from '../../component/button/BacKButton';
 import ResultLoading from './ui/ResultLoading';
 import calculateResultType from './model/calculateResultType';
 import { useReactToPrint } from 'react-to-print';
+import AlertModal from './ui/AlertModal';
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
     const [currentName, setCurrentName] = useState('');
     const [nameCheck, setNameCheck] = useState(false);
     const [questionIndex, setQuestionIndex] = useState(0);
+    const [modalDisplay1, setModalDsiplay1] = useState(false);
+    const [modalDisplay2, setModalDsiplay2] = useState(false);
 
     const [page, setPage] = useState(0); // 현재 페이지
     const [loading, setLoading] = useState(false);
@@ -61,9 +64,11 @@ const TestContentPage = () => {
 
     const submitName = () => {
         if (currentName === '') {
-            alert('이름을 입력해주세요');
+            //이름이 비어있을시
+            setModalDsiplay1(true);
         } else if (currentName.length > 5) {
-            alert('5글자 이하로 입력해주세요');
+            //이름이 5글자 이하일시
+            setModalDsiplay2(true);
         } else {
             setName(currentName);
             setNameCheck(true);
@@ -160,6 +165,10 @@ const TestContentPage = () => {
 
     return (
         <>
+            {modalDisplay1 && <AlertModal alertText="이름을 입력해주세요." onStop={() => setModalDsiplay1(false)} />}
+            {modalDisplay2 && (
+                <AlertModal alertText="이름을 5글자 이하로 입력해주세요" onStop={() => setModalDsiplay2(false)} />
+            )}
             <PageWrapper>
                 <StatusBar status={currentProgress} loading={loading} />
 
