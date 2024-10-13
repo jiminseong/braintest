@@ -212,7 +212,6 @@ const TestContentPage = () => {
                     {questionIndex === 39 && loading && (
                         <SubmitLoadingWrapper>
                             <ResultLoading />
-                            <Text>당신의 뇌 유형을 분석 중입니다...</Text>
                         </SubmitLoadingWrapper>
                     )}
                 </Column>
