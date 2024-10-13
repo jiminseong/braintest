@@ -9,7 +9,6 @@ import TypeContentText from './ui/TypeContentText';
 import GraphicContainer from './ui/GraphicContainer';
 import MiddleNavigationBar from './ui/MiddleNavigationBar';
 import { useParams } from 'react-router-dom';
-import { ReactLenis } from '@studio-freight/react-lenis';
 
 const TestResultPage = () => {
     const { type, name = '' } = useParams();
@@ -63,53 +62,46 @@ const TestResultPage = () => {
     };
 
     useEffect(() => {
-        const timeoutId = setTimeout(() => {
-            scrollToSection('Neuron');
-        }, 100); // 약간의 지연을 준 후 스크롤 이동
-
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
-            clearTimeout(timeoutId);
         };
     }, []);
 
     return (
-        <ReactLenis root>
-            <PageWrapper>
-                <TopNavigation />
-                <TypeLogo type={resultType} />
+        <PageWrapper>
+            <TopNavigation />
+            <TypeLogo type={resultType} />
 
-                {/* 스크롤 이동과 activeButton 전달 */}
+            {/* 스크롤 이동과 activeButton 전달 */}
 
-                {/* 각 섹션에 ref 할당 */}
-                <TypeIndexContent>
-                    <MiddleNavigationBar
-                        scrollToSection={scrollToSection}
-                        activeButton={activeButton}
-                        name={name}
-                        type={resultType}
-                    />
-                    <NeuronSection ref={neuronSectionRef}>
-                        <TypeNeuron type={resultType} />
-                        <TypeTitle name={name} type={resultType} />
-                    </NeuronSection>
-                    <TypeStructure type={resultType} />
+            {/* 각 섹션에 ref 할당 */}
+            <TypeIndexContent>
+                <MiddleNavigationBar
+                    scrollToSection={scrollToSection}
+                    activeButton={activeButton}
+                    name={name}
+                    type={resultType}
+                />
+                <NeuronSection ref={neuronSectionRef}>
+                    <TypeNeuron type={resultType} />
+                    <TypeTitle name={name} type={resultType} />
+                </NeuronSection>
+                <TypeStructure type={resultType} />
 
-                    <div ref={infoSectionRef}>
-                        <TypeMainContent>
-                            <ContentWrapper>
-                                <IndexText>'Type{resultType}'에 대하여</IndexText>
-                                <TypeContentText type={resultType} />
-                            </ContentWrapper>
-                            <div ref={graphicsSectionRef} style={{ width: '100%' }}>
-                                <GraphicContainer type={resultType} />
-                            </div>
-                        </TypeMainContent>
-                    </div>
-                </TypeIndexContent>
-            </PageWrapper>
-        </ReactLenis>
+                <div ref={infoSectionRef}>
+                    <TypeMainContent>
+                        <ContentWrapper>
+                            <IndexText>'Type{resultType}'에 대하여</IndexText>
+                            <TypeContentText type={resultType} />
+                        </ContentWrapper>
+                        <div ref={graphicsSectionRef} style={{ width: '100%' }}>
+                            <GraphicContainer type={resultType} />
+                        </div>
+                    </TypeMainContent>
+                </div>
+            </TypeIndexContent>
+        </PageWrapper>
     );
 };
 
@@ -120,7 +112,8 @@ const NeuronSection = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 5em;
-    padding-top: 5em;
+    padding-top: 6em;
+    box-sizing: border-box;
 `;
 
 const PageWrapper = styled.div`
@@ -132,6 +125,7 @@ const PageWrapper = styled.div`
     align-items: center;
     background-color: #ffffff;
     padding-top: 7em;
+    scroll-behavior: smooth;
 `;
 
 const TypeIndexContent = styled.div`

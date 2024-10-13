@@ -29,7 +29,7 @@ const TestContentPage = () => {
     });
     const navigate = useNavigate();
 
-    const [ResultSvg, setResultSvg] = useState<React.FC | null>(null); // 타입 정의 추가
+    const [ResultSvg, setResultSvg] = useState<React.FC | null>(null);
     const componentRef = useRef(null);
 
     const handlePrint = useReactToPrint({
@@ -37,7 +37,6 @@ const TestContentPage = () => {
         documentTitle: '결과영수증',
     });
 
-    // Zustand 상태 관리 함수
     const { setName, setResult, saveAnswer, answers, name } = useSurveyStore();
 
     const handleLoading = () => {
@@ -130,8 +129,8 @@ const TestContentPage = () => {
         if (count >= 21) {
             return;
         }
-        if (Math.random() < 0.3) {
-            // 30% 확률로 당첨 결정
+        if (Math.random() < 0.18) {
+            // 18% 확률로 당첨 결정
 
             // 당첨 시 로컬에 count 증가
             const newCount = count + 1;
@@ -143,13 +142,19 @@ const TestContentPage = () => {
         }
     };
 
-    // SVG가 로드되면 프린트 및 네비게이션 실행
+    // 프린트 및 네비게이션 실행
     useEffect(() => {
         if (ResultSvg) {
             handlePrint();
-            setLoading(false); // 로딩 해제
+            setLoading(false);
+            window.scrollTo({
+                top: window.innerHeight * 1.25,
+                behavior: 'smooth',
+            });
+
             const resultType = calculateResultType();
-            navigate(`/test/result/${resultType}/${name}`); // 결과 페이지로 이동
+
+            navigate(`/test/result/${resultType}/${name}`, { replace: true }); // replace: true로 페이지 스택을 덮어씁니다.
         }
     }, [ResultSvg]); // ResultSvg가 업데이트될 때마다 실행
 
@@ -331,7 +336,7 @@ const TextContentButton = styled(Button)`
 
 const PrintContainer = styled.div`
     display: none;
-    position: relative;
+    position: absolute;
     background: #fff;
     color: #070707;
     width: 523px;

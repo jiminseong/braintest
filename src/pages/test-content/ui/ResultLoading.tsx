@@ -67,7 +67,7 @@ const Cursor = styled.div`
 `;
 
 const ResultLoadingWrapper = styled.div`
-    padding-top: 20em;
+    margin-top: -5em;
     display: flex;
     flex-direction: column;
     align-items: center;

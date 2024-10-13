@@ -15,6 +15,10 @@ const TypeSelectButton = ({ name }: { name: string }) => {
     // 타입 선택 시 해당 경로로 이동
     const handleTypeClick = (type: number, name: string) => {
         navigate(`/test/result/${type}/${name}`);
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
     };
 
     return (
