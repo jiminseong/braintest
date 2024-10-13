@@ -5,7 +5,7 @@ const AnimationContainer = ({ type, count, category }: { type: number; count: nu
     const [IconSvg, setIconSvg] = useState<React.FC | null>(null); // 타입 정의 추가
 
     useEffect(() => {
-        import(`../../../assets/images/typeGraphic/${type}/type${type}_${category}_${count}.svg?react`)
+        import(`../../../assets/images/typeGraphic/type${type}_${category}_${count}.svg?react`)
             .then((module) => {
                 setIconSvg(() => module.default);
             })
@@ -57,10 +57,8 @@ const rotateBackAndColorChange = keyframes`
 `;
 
 const StyledDiv = styled.div`
-    min-height: 96px;
-    max-height: 142px;
     position: relative;
-    padding: 1em;
+
     display: flex;
     align-items: center;
     justify-content: center;

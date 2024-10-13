@@ -15,6 +15,10 @@ const TypeSelectButton = ({ name }: { name: string }) => {
     // 타입 선택 시 해당 경로로 이동
     const handleTypeClick = (type: number, name: string) => {
         navigate(`/test/result/${type}/${name}`);
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
     };
 
     return (
@@ -60,11 +64,12 @@ const Button = styled.div`
     font-weight: 700;
     text-align: center;
     position: relative;
-    background: #ffffff;
+    background: #d6d6d6;
     cursor: pointer;
+    color: #070707;
     transition: background 0.3s ease;
     ${ButonWrapper}:hover {
-        background: #b3b3b3;
+        background: #ffffff;
     }
 `;
 
@@ -82,7 +87,15 @@ const ColumnWrapper = styled.div`
 
 const TypeItem = styled(ButonWrapper)`
     width: 100%;
-    background: #fff;
+    background: #d6d6d6;
+    &:hover {
+        background: #fff;
+    }
+    &:active {
+        color: #fff;
+        border: #fff 1px solid;
+        background: #000000 !important;
+    }
     text-align: center;
     cursor: pointer;
     padding: 0.25em 0em;
