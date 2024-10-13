@@ -8,7 +8,7 @@ import { Button } from '../../component/button/Button';
 import questionsData from './model/question.json';
 import { useSurveyStore } from '../../store/store';
 import PageLogo from './ui/PageLogo';
-import BacKButton from '../../component/button/BacKButton';
+import NavigationButton from '../../component/button/NavigationButton';
 import ResultLoading from './ui/ResultLoading';
 import calculateResultType from './model/calculateResultType';
 import { useReactToPrint } from 'react-to-print';
@@ -175,6 +175,7 @@ const TestContentPage = () => {
                 <Column>
                     {nameCheck === false && (
                         <ContentColumn>
+                            <NavigationButton top="5em" onClick={() => navigate('/')} home />
                             <Column2>
                                 <Text>당신의 이름은 무엇인가요?</Text>
                                 <Input value={currentName} onChange={(e) => setCurrentName(e.target.value)} />
@@ -194,7 +195,10 @@ const TestContentPage = () => {
                     {loading === false && page >= 1 && (
                         <ContentColumn>
                             {currentProgress >= 2.5 && !loading && (
-                                <BacKButton top="3.3125em" onClick={() => goBack()} />
+                                <>
+                                    <NavigationButton top="3.3125em" right="3em" onClick={() => goBack()} />
+                                    <NavigationButton top="5em" onClick={() => navigate('/')} home />
+                                </>
                             )}
                             <PageLogo width="8%" page={page} />
                             <AnimationQuestionText animate={animate}>

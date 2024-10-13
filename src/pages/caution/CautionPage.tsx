@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { BlueButton, RedButton } from '../../component/button/Button';
 import { useNavigate } from 'react-router-dom';
-import BacKButton from '../../component/button/BacKButton';
+import BacKButton from '../../component/button/NavigationButton';
 import { useState } from 'react';
 
 const CautionPage = () => {

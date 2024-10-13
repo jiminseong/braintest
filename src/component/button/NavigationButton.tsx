@@ -1,24 +1,35 @@
 import styled from 'styled-components';
 import BackIcon from '../../assets/icons/backIcon.svg?react';
+import RightIcon from '../../assets/icons/rightIcon.svg?react'; // 홈 아이콘 추가
 
 import React from 'react';
 
-interface BacKButtonProps {
+interface NavigationButtonProps {
     onClick: () => void;
     top?: string;
     right?: string;
+    home?: boolean; // home props 추가
 }
 
-const BacKButton: React.FC<BacKButtonProps> = ({ onClick, top = '-4em', right = '2em' }) => {
+const NavigationButton: React.FC<NavigationButtonProps> = ({ onClick, top = '-4em', right = '2em', home = false }) => {
     return (
         <RowWrapper onClick={onClick} top={top} right={right}>
-            <BackIcon />
-            <Text>이전</Text>
+            {home ? (
+                <>
+                    <Text>홈</Text>
+                    <RightIcon />
+                </>
+            ) : (
+                <>
+                    <BackIcon />
+                    <Text>이전</Text>
+                </>
+            )}
         </RowWrapper>
     );
 };
 
-export default BacKButton;
+export default NavigationButton;
 
 const RowWrapper = styled.div<{ top: string; right: string }>`
     cursor: pointer;
