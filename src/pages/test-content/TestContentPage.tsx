@@ -91,6 +91,7 @@ const TestContentPage = () => {
     };
 
     const goBack = () => {
+        if (nameCheck === false) navigate('/caution');
         if (loading && page === 2) {
             setLoading(false);
             setPage(1);
@@ -207,6 +208,7 @@ const TestContentPage = () => {
                 <Column>
                     {nameCheck === false && (
                         <ContentColumn>
+                            <NavigationButton top="3.3125em" right="3em" onClick={() => goBack()} />
                             <NavigationButton top="5em" onClick={() => navigate('/')} home />
                             <Column2>
                                 <Text>당신의 이름은 무엇인가요?</Text>

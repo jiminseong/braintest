@@ -15,7 +15,7 @@ const FirstNeuron: React.FC<FirstNeuronProps> = ({ stop }) => {
     const variants = {
         animate: {
             x: [0, '8vw', '-12vw', '3vw', '-5vw', '20vw', '-18vw', '6vw', '-7vw', '10vw', '-3vw', 0],
-            y: ['0vh', '10vh', '-8vh', '4vh', '-2vh', '18vh', '-15vh', '7vh', '-10vh', '12vh', '-5vh', 0],
+            y: [0, '10vh', '-8vh', '4vh', '-2vh', '18vh', '-15vh', '7vh', '-10vh', '12vh', '-5vh', 0],
 
             transition: {
                 x: { repeat: Infinity, repeatType: 'loop', duration: 80, ease: 'easeInOut' },

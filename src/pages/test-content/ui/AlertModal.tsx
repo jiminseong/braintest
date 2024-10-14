@@ -40,7 +40,7 @@ const AlertModalContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1em;
+    gap: 2em;
 `;
 const Text = styled.div`
     color: #fff;

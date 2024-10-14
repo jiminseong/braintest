@@ -114,7 +114,7 @@ const ContentText = styled.p`
 
 const StyledLogo = styled(Logo)`
     position: absolute;
-    width: 10%;
+    width: 7%;
     top: 1.5em;
     right: 2em;
 `;
@@ -135,7 +135,7 @@ const ButtonWrapper = styled.button`
 `;
 const StyledTestStartButton = styled(TestStartButton)`
     &:hover {
-        fill: url(<path-to-image>) lightgray -0.409px 0px / 100.112% 100% no-repeat;
+        fill: lightgray -0.409px 0px / 100.112% 100% no-repeat;
         filter: drop-shadow(0px 0px 17px #7aff77);
     }
 `;

@@ -32,6 +32,7 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({ onClick, top = '-4e
 export default NavigationButton;
 
 const NavigationButtonWrapper = styled.div<{ top: string; right: string }>`
+    z-index: 10;
     cursor: pointer;
     position: fixed;
     right: ${(props) => props.right};
