@@ -1,9 +1,15 @@
 import styled, { keyframes } from 'styled-components';
 import Circle from '../../../assets/icons/cricleIcon.svg?react';
 import { useEffect, useState } from 'react';
-const ResultLoading = () => {
+
+const ResultLoading = ({
+    content = '당신의 뇌 유형을 분석 중입니다...',
+    marginTop = '-5em',
+}: {
+    content?: string;
+    marginTop?: string;
+}) => {
     const [typedText, setTypedText] = useState<string | ''[]>([]);
-    const content = '당신의 뇌 유형을 분석 중입니다... ';
 
     useEffect(() => {
         let i = 0; // 글자 인덱스
@@ -35,7 +41,7 @@ const ResultLoading = () => {
     }, []);
 
     return (
-        <ResultLoadingWrapper>
+        <ResultLoadingWrapper marginTop={marginTop}>
             <LoadingCircleWrapper>
                 <CircleIcon />
                 <CircleIcon />
@@ -66,8 +72,8 @@ const Cursor = styled.div`
     }
 `;
 
-const ResultLoadingWrapper = styled.div`
-    margin-top: -5em;
+const ResultLoadingWrapper = styled.div<{ marginTop: string }>`
+    margin-top: ${(props) => props.marginTop};
     display: flex;
     flex-direction: column;
     align-items: center;

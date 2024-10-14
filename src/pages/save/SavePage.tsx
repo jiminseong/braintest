@@ -3,11 +3,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '../../component/button/Button';
 import html2canvas from 'html2canvas';
+import ResultLoading from '../test-content/ui/ResultLoading';
 
 const SavePage = () => {
     const { type, name = '' } = useParams();
     const resultType = Number(type);
     const [ResultSvg, setResultSvg] = useState<React.FC | null>(null);
+    const [loading, setLoading] = useState(true);
     const imageRef = useRef(null);
     const navigate = useNavigate();
 
@@ -29,6 +31,9 @@ const SavePage = () => {
         import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`)
             .then((module) => {
                 setResultSvg(() => module.default);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 4000);
             })
             .catch((err) => {
                 console.error('SVG 로드 에러:', err);
@@ -36,20 +41,27 @@ const SavePage = () => {
     }, [resultType]);
 
     return (
-        <PageWrapper>
-            <RowWrapper>
-                <SaveButton onClick={downLoadImage}>저장하기</SaveButton>
-                <SaveButton onClick={() => navigate('/')}>홈으로가기</SaveButton>
-            </RowWrapper>
-            <SaveContainer ref={imageRef}>
-                <Name>{name}님의 뇌유형은</Name>
-                {ResultSvg && <StyledResultSvg as={ResultSvg} />}
-            </SaveContainer>
-        </PageWrapper>
+        <>
+            {loading ? (
+                <ResultLoading content="결과를 불러오는 중입니다.." marginTop="10%" />
+            ) : (
+                <PageWrapper>
+                    <RowWrapper>
+                        <SaveButton onClick={downLoadImage}>저장하기</SaveButton>
+                        <SaveButton onClick={() => navigate('/')}>홈으로가기</SaveButton>
+                    </RowWrapper>
+                    <SaveContainer ref={imageRef}>
+                        <Name>{name}님의 뇌유형은</Name>
+                        {ResultSvg && <StyledResultSvg as={ResultSvg} />}
+                    </SaveContainer>
+                </PageWrapper>
+            )}
+        </>
     );
 };
 
 export default SavePage;
+
 const RowWrapper = styled.div`
     display: flex;
     justify-content: center;
