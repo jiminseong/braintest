@@ -6,6 +6,7 @@ import TypeLogo from './ui/TypeLogo';
 import TopNavigationBar from './ui/TopNavigationBar';
 import UnderTriangleIcon from '../../assets/icons/triangleIcon.svg?react';
 import CloseIcon from '../../assets/icons/closeIcon.svg?react';
+import QrCode from './ui/QrCode';
 
 const PrintPage = () => {
     const [isWrapperVisible, setWrapperVisible] = useState(false);
@@ -66,6 +67,9 @@ const PrintPage = () => {
 
             {isWrapperVisible && (
                 <>
+                    <QrCodeWrapper isPrintContainerVisible={isPrintContainerVisible}>
+                        <QrCode name={name} type={resultType} />
+                    </QrCodeWrapper>
                     <CloseButton onClick={handleClosePrint} />
                     <PrintContainerWrapper isWrapperVisible>
                         <PrintContainer
@@ -144,7 +148,6 @@ const PrintContainerWrapper = styled.div<{ isWrapperVisible: boolean }>`
     justify-content: center;
     padding-top: 2em;
     box-sizing: border-box;
-    transition: fade in;
     animation: ${({ isWrapperVisible }) => (isWrapperVisible ? fadeIn : fadeOut)} 0.15s ease-out;
     transition: visibility 0.15s ease-out;
     scrollbar-width: none; /* Firefox */
@@ -198,6 +201,15 @@ const PrintContainer = styled.div<{
             size: 79mm 297mm;
         }
     }
+`;
+
+const QrCodeWrapper = styled.div<{ isPrintContainerVisible: boolean }>`
+    animation: ${({ isPrintContainerVisible }) => (isPrintContainerVisible ? fadeUp : fadeDown)} 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+    position: fixed;
+    z-index: 15;
+    bottom: 2em;
+    left: 5%;
 `;
 
 const Name = styled.div`
