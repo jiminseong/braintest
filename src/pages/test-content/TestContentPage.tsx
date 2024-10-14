@@ -25,11 +25,15 @@ const TestContentPage = () => {
     const [page, setPage] = useState(0); // 현재 페이지
     const [loading, setLoading] = useState(false);
     const [animate, setAnimate] = useState(false);
-    const [count, setCount] = useState(() => {
-        // 로컬스토리지에서 초기 값 가져오기
-        const savedCount = localStorage.getItem('count');
-        return savedCount ? parseInt(savedCount) : 0; // 초기 값이 없으면 0으로 설정
-    });
+
+    const TOTAL_COUNT = 20;
+    const DAILY_LIMIT = 4;
+    const DRAW_PROBABILITY = 0.18;
+
+    const getStoredValue = (key: string, defaultValue: number): number => {
+        const savedValue = localStorage.getItem(key);
+        return savedValue ? parseInt(savedValue) : defaultValue;
+    };
     const navigate = useNavigate();
 
     const [ResultSvg, setResultSvg] = useState<React.FC | null>(null);
@@ -130,23 +134,35 @@ const TestContentPage = () => {
     };
 
     const draw = () => {
-        console.log('추첨중..');
-        if (count >= 21) {
+        const count = getStoredValue('count', 0);
+        const dailyCount = getStoredValue('dailyCount', 0);
+        const currentDate = new Date(localStorage.getItem('currentDate') || new Date());
+        const today = new Date();
+
+        // 날짜가 변경된 경우, dailyCount 초기화 및 잔여 수 이월
+        if (today.getDate() !== currentDate.getDate()) {
+            const carryOverCount = Math.max(0, DAILY_LIMIT - dailyCount);
+            localStorage.setItem('dailyCount', carryOverCount.toString());
+            localStorage.setItem('currentDate', today.toString());
+        }
+
+        if (count >= TOTAL_COUNT || dailyCount >= DAILY_LIMIT) {
+            console.log('더 이상 추첨할 수 없습니다.');
             return;
         }
-        if (Math.random() < 0.18) {
-            // 18% 확률로 당첨 결정
 
-            // 당첨 시 로컬에 count 증가
+        if (Math.random() < DRAW_PROBABILITY) {
             const newCount = count + 1;
-            setCount(newCount);
-            localStorage.setItem('count', newCount.toString()); // 로컬스토리지에 새로운 값 저장
+            const newDailyCount = dailyCount + 1;
+
+            localStorage.setItem('count', newCount.toString());
+            localStorage.setItem('dailyCount', newDailyCount.toString());
+
+            console.log('당첨되었습니다!', newCount);
         } else {
-            // 10% 확률에 당첨되지 않았을 때
             console.log('당첨되지 않았습니다.');
         }
     };
-
     // 프린트 및 네비게이션 실행
     useEffect(() => {
         if (ResultSvg) {
@@ -162,6 +178,15 @@ const TestContentPage = () => {
             navigate(`/test/result/${resultType}/${name}`, { replace: true }); // replace: true로 페이지 스택을 덮어씁니다.
         }
     }, [ResultSvg]); // ResultSvg가 업데이트될 때마다 실행
+
+    useEffect(() => {
+        const currentDate = localStorage.getItem('currentDate');
+        if (!currentDate) {
+            const today = new Date();
+            localStorage.setItem('currentDate', today.toString());
+            localStorage.setItem('dailyCount', '0'); // 새로운 날짜에 일일 당첨 횟수 초기화
+        }
+    }, []);
 
     return (
         <>
