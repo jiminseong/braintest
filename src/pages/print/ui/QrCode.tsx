@@ -10,7 +10,7 @@ interface QrCodeProps {
 const QrCode: React.FC<QrCodeProps> = ({ type, name }) => {
     if (name === '???') name = '%3F%3F%3F';
 
-    const url = `${import.meta.env.VITE_URL}/test/result/bill/${type}/${name}`;
+    const url = `${import.meta.env.VITE_URL}/save/${type}/${name}`;
 
     return (
         <QrCodeWrapper>
@@ -27,9 +27,6 @@ const QrCode: React.FC<QrCodeProps> = ({ type, name }) => {
 export default QrCode;
 
 const QrCodeWrapper = styled.div`
-    position: fixed;
-    bottom: 2em;
-    left: 5%;
     display: flex;
     flex-direction: column;
     align-items: center;

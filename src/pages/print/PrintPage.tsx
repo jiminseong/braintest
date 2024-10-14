@@ -157,12 +157,6 @@ const PrintContainerWrapper = styled.div<{ isWrapperVisible: boolean }>`
     }
 `;
 
-const QrCodeWrapper = styled.div<{ isPrintContainerVisible: boolean }>`
-    animation: ${({ isPrintContainerVisible }) => (isPrintContainerVisible ? fadeUp : fadeDown)} 0.5s ease-in-out;
-    position: fixed;
-    z-index: 15;
-`;
-
 const CloseButton = styled(CloseIcon)`
     position: fixed;
     top: 2em;
@@ -207,6 +201,15 @@ const PrintContainer = styled.div<{
             size: 79mm 297mm;
         }
     }
+`;
+
+const QrCodeWrapper = styled.div<{ isPrintContainerVisible: boolean }>`
+    animation: ${({ isPrintContainerVisible }) => (isPrintContainerVisible ? fadeUp : fadeDown)} 0.5s ease-in-out;
+    animation-fill-mode: forwards;
+    position: fixed;
+    z-index: 15;
+    bottom: 2em;
+    left: 5%;
 `;
 
 const Name = styled.div`
