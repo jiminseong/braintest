@@ -13,6 +13,7 @@ import ResultLoading from './ui/ResultLoading';
 import calculateResultType from './model/calculateResultType';
 import { useReactToPrint } from 'react-to-print';
 import AlertModal from './ui/AlertModal';
+import DrwaWinText from '../../assets/images/drawWinText.svg?react';
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
@@ -28,7 +29,7 @@ const TestContentPage = () => {
 
     const TOTAL_COUNT = 20;
     const DAILY_LIMIT = 4;
-    const DRAW_PROBABILITY = 0.18;
+    const DRAW_PROBABILITY = Number(import.meta.env.VITE_DRAW_PROBABILITY);
 
     const getStoredValue = (key: string, defaultValue: number): number => {
         const savedValue = localStorage.getItem(key);
@@ -38,10 +39,16 @@ const TestContentPage = () => {
 
     const [ResultSvg, setResultSvg] = useState<React.FC | null>(null);
     const componentRef = useRef(null);
+    const drawWinRef = useRef(null);
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
         documentTitle: '결과영수증',
+    });
+
+    const handlePrintDraw = useReactToPrint({
+        content: () => drawWinRef.current,
+        documentTitle: '당첨영수증',
     });
 
     const { setName, setResult, saveAnswer, answers, name } = useSurveyStore();
@@ -157,7 +164,7 @@ const TestContentPage = () => {
 
             localStorage.setItem('count', newCount.toString());
             localStorage.setItem('dailyCount', newDailyCount.toString());
-
+            handlePrintDraw();
             console.log('당첨되었습니다!', newCount);
         } else {
             console.log('당첨되지 않았습니다.');
@@ -259,6 +266,10 @@ const TestContentPage = () => {
                     )}
                 </Column>
             </PageWrapper>
+            <DrawWinContainer ref={drawWinRef}>
+                <DrawName>{name}님!</DrawName>
+                <DrwaWinText />
+            </DrawWinContainer>
             <PrintContainer ref={componentRef}>
                 <Name>{name}님의 뇌유형은</Name>
                 {ResultSvg && <StyledResultSvg as={ResultSvg} />}
@@ -396,6 +407,14 @@ const PrintContainer = styled.div`
     }
 `;
 
+const DrawWinContainer = styled(PrintContainer)`
+    flex-direction: row-reverse;
+    gap: 1em;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+`;
+
 const Name = styled.div`
     position: absolute;
     font-size: 1.625rem;
@@ -413,4 +432,10 @@ const Name = styled.div`
 const StyledResultSvg = styled.div`
     width: 100%;
     height: auto;
+`;
+
+const DrawName = styled.div`
+    font-size: 1.625rem;
+    font-weight: 800;
+    transform: rotate(90deg);
 `;
