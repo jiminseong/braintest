@@ -17,6 +17,7 @@ const SavePage = () => {
                 const link = document.createElement('a');
                 let urlName = '';
                 if (name === '???') urlName = 'OOO';
+                else urlName = name;
                 link.download = `${urlName}님의결과지-type${resultType}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
