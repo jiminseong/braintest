@@ -451,7 +451,7 @@ const AnimationQuestionText = styled.div<{ animate: boolean }>`
     animation: ${({ animate }) => (animate ? fadeInUp : 'none')} 0.6s ease-in-out;
     @media (max-width: 1023px) {
         position: absolute;
-        margin-top: 40%;
+        margin-top: 30%;
         font-size: 1.25em;
         width: 78%;
     }
