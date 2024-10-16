@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import TypeSelectButton from './TypeSelectButton';
 import { useNavigate } from 'react-router-dom';
-
+import cursorIcon from '/cursorIcon2.svg';
 interface MiddleNavigationBarProps {
     scrollToSection: (section: string) => void;
     activeButton: string;
@@ -74,7 +74,7 @@ const NavigationButton = styled.div<Props>`
     font-weight: 700;
     text-align: center;
 
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     background: ${({ isActive }) => (isActive ? '#000000' : '#D6D6D6')};
     color: ${({ isActive }) => (isActive ? '#ffffff' : '#070707')};
 `;
@@ -104,7 +104,7 @@ const PrintNavigationButton = styled.div`
     font-size: 1.45em;
     font-weight: 700;
     text-align: center;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     &:hover {
         animation: ${printButtonAnimation} 0.2s infinite;
     }

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import BackIcon from '../../assets/icons/backIcon.svg?react';
 import RightIcon from '../../assets/icons/backIcon2.svg?react'; // 홈 아이콘 추가
-
+import cursorIcon from '/cursorIcon2.svg';
 import React from 'react';
 
 interface NavigationButtonProps {
@@ -33,7 +33,7 @@ export default NavigationButton;
 
 const NavigationButtonWrapper = styled.div<{ top: string; right: string }>`
     z-index: 10;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     position: fixed;
     right: ${(props) => props.right};
     top: ${(props) => props.top};

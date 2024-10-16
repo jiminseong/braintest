@@ -4,7 +4,7 @@ import Two from '../../../assets/icons/2_selectIcon.svg?react';
 import Three from '../../../assets/icons/3_selectIcon.svg?react';
 import Four from '../../../assets/icons/4_selectIcon.svg?react';
 import Five from '../../../assets/icons/5_selectIcon.svg?react';
-
+import cursorIcon from '/cursorIcon2.svg';
 import React from 'react';
 
 interface SelectButtonProps {
@@ -66,7 +66,7 @@ const IconWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     gap: 2em;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
 `;
 
 const rotateScaleAnimation = keyframes`

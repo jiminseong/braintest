@@ -3,10 +3,11 @@ import styled, { keyframes } from 'styled-components';
 import { useReactToPrint } from 'react-to-print';
 import { useParams } from 'react-router-dom';
 import TypeLogo from './ui/TypeLogo';
-import TopNavigationBar from './ui/TopNavigationBar';
+import TopNavigationBar from '../test-result/ui/TopNavigationBar';
 import UnderTriangleIcon from '../../assets/icons/triangleIcon.svg?react';
 import CloseIcon from '../../assets/icons/closeIcon.svg?react';
 import QrCode from './ui/QrCode';
+import cursorIcon from '/cursorIcon2.svg';
 
 const PrintPage = () => {
     const [isWrapperVisible, setWrapperVisible] = useState(false);
@@ -161,7 +162,7 @@ const CloseButton = styled(CloseIcon)`
     position: fixed;
     top: 2em;
     right: 2em;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     z-index: 15;
 `;
 
@@ -250,7 +251,7 @@ const PrintButton = styled.div`
     font-weight: 700;
     padding: 1em 1.5em;
     box-sizing: border-box;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     &:hover {
         animation: ${printButtonAnimation} 0.2s infinite;
     }

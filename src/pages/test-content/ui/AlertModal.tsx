@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import cursorIcon from '/cursorIcon2.svg';
 const AlertModal = ({ alertText, onStop }: { alertText: string; onStop: () => void }) => {
     return (
         <AlertModalWrapper>
@@ -53,7 +53,7 @@ const Text = styled.div`
 const Buton = styled.div`
     border-radius: 20px;
     background: #fff;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     padding: 0.5em 1em;
     font-weight: 700;
     box-sizing: border-box;
