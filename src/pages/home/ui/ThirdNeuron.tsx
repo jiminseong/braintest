@@ -72,10 +72,13 @@ const MotionWrapper = styled.div`
     background: transparent;
 `;
 
-const Neuron = styled.img`
+const Neuron = styled.img`s
     position: absolute;
     top: -100%;
     right: -80%;
-    z-index: 100;
     width: 175%;
+    @media (max-width: 768px) {
+        width: 200%;
+        margin-top: 0%;
+    }
 `;

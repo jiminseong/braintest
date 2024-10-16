@@ -91,7 +91,9 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
                         top="35%"
                         left="25%"
                         borderOpacity="0.8"
-                        mobileHeight="50%;"
+                        mobileHeight="30%"
+                        mobileWidth="25%"
+                        mobileTop="15%"
                     >
                         <ContentText>brain cell 99%</ContentText>
                     </GreenContainer>
@@ -107,6 +109,8 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
                         width="12.5%"
                         height="15%"
                         mobileHeight="10%"
+                        mobileWidth="15%"
+                        mobileTop="-95%"
                         top="-75%"
                         left="45%"
                         borderOpacity="0.7"
@@ -141,6 +145,10 @@ const Neuron = styled.img`
     top: 0;
     z-index: 2;
     width: 110%;
+    @media (max-width: 768px) {
+        width: 100%;
+        margin-top: 105%;
+    }
 `;
 
 const ContentText = styled.span`

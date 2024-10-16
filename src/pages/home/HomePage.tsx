@@ -119,8 +119,9 @@ const StyledLogo = styled(Logo)`
     width: 7%;
     min-width: 100px;
     top: 1em;
-    right: 2em;
+    right: 5%;
     @midea (max-width : 768px) {
+        right: 1.25em;
     }
 `;
 

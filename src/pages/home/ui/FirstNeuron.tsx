@@ -79,15 +79,20 @@ const MotionWrapper = styled.div`
     height: 100%;
     @media (max-width: 768px) {
         margin-top: 15%;
-        z-index: 100;
     }
 `;
 
 const Neuron = styled.div`
-    position: relative;
+    position: absolute;
     width: 40%;
     height: 100%;
     background-image: url(${firstNeuronUrl});
     background-size: cover;
     display: flex;
+    @media (max-width: 768px) {
+        width: 50%;
+        height: 50%;
+        margin-top: 15%;
+        z-index: 100;
+    }
 `;
