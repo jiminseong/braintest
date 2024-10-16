@@ -87,11 +87,11 @@ const PrintPage = () => {
                 <TypeLogo type={resultType} />
                 <PrintButton onClick={handleOpenPrint}>
                     PRINT
-                    <UnderTriangleIcon />
+                    <StyledUnderTriangleIcon />
                 </PrintButton>
                 <SaveButton onClick={handleOpenPrint}>
                     SAVE
-                    <UnderTriangleIcon />
+                    <StyledUnderTriangleIcon />
                 </SaveButton>
             </RowWrapper>
 
@@ -132,7 +132,13 @@ const PrintPage = () => {
 };
 
 export default PrintPage;
-
+const StyledUnderTriangleIcon = styled(UnderTriangleIcon)`
+    @media (max-width: 1023px) {
+    }
+    @media (max-width: 768px) {
+        width: 0.8125em;
+    }
+`;
 const SaveContainer = styled.div<{
     isPrintContainerVisible: boolean;
 }>`
@@ -184,6 +190,12 @@ const RowWrapper = styled.div`
     align-items: center;
     gap: 5em;
     @media (max-width: 1023px) {
+        flex-direction: column;
+        gap: 2em;
+    }
+    @media (max-width: 768px) {
+        margin-top: 5em;
+        height: 50%;
         flex-direction: column;
         gap: 2em;
     }
@@ -311,7 +323,9 @@ const Name = styled.div`
     top: 3em;
     color: #231815;
     transform: translate(-50%, -50%);
-
+    @media (max-width: 768px) {
+        top: 2em;
+    }
     @media (max-width: 1023px) {
         font-size: 1.25em;
     }
@@ -352,6 +366,7 @@ const PrintButton = styled.div`
     &:hover {
         animation: ${printButtonAnimation} 0.2s infinite;
     }
+
     @media (max-width: 1023px) {
         display: none;
     }
@@ -362,8 +377,13 @@ const PrintButton = styled.div`
 
 const SaveButton = styled(PrintButton)`
     display: none;
+
     @media (max-width: 1023px) {
         font-size: 3em;
+        display: flex;
+    }
+    @media (max-width: 768px) {
+        font-size: 2em;
         display: flex;
     }
     @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
