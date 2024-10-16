@@ -8,6 +8,7 @@ import UnderTriangleIcon from '../../assets/icons/triangleIcon.svg?react';
 import CloseIcon from '../../assets/icons/closeIcon.svg?react';
 import QrCode from './ui/QrCode';
 import cursorIcon from '/cursorIcon2.svg';
+import MobileBr from '../../component/box/MobileBr';
 
 const PrintPage = () => {
     const [isWrapperVisible, setWrapperVisible] = useState(false);
@@ -64,6 +65,10 @@ const PrintPage = () => {
                     PRINT
                     <UnderTriangleIcon />
                 </PrintButton>
+                <SaveButton onClick={handleOpenPrint}>
+                    SAVE
+                    <UnderTriangleIcon />
+                </SaveButton>
             </RowWrapper>
 
             {isWrapperVisible && (
@@ -86,8 +91,10 @@ const PrintPage = () => {
             )}
 
             <Text>
-                결과지를 프린트해서 해당 유형에 맞는 다양한 그래픽과 특징 및 행복 찾는 방법을 간직하세요!
-                <br /> 다른 사람에게 당신의 유형을 공유하고 주변 사람들의 유형도 알아보세요!
+                결과지를 프린트해서 해당 유형에 맞는
+                <MobileBr /> 다양한 그래픽과 특징 및 행복 찾는 방법을 간직하세요!
+                <MobileBr />
+                <br /> 다른 사람에게 당신의 유형을 공유하고 <MobileBr /> 주변 사람들의 유형도 알아보세요!
             </Text>
         </PageWrapper>
     );
@@ -118,6 +125,10 @@ const RowWrapper = styled.div`
     justify-content: center;
     align-items: center;
     gap: 5em;
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 2em;
+    }
 `;
 
 const fadeIn = keyframes`
@@ -257,10 +268,23 @@ const PrintButton = styled.div`
     &:hover {
         animation: ${printButtonAnimation} 0.2s infinite;
     }
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
+const SaveButton = styled(PrintButton)`
+    display: none;
+    @media (max-width: 768px) {
+        font-size: 3em;
+        display: flex;
+    }
+`;
 const Text = styled.div`
     color: #070707;
     font-size: 1.5em;
     text-align: center;
+    @media (max-width: 768px) {
+        font-size: 0.8125em;
+    }
 `;

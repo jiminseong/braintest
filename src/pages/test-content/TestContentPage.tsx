@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
@@ -14,6 +15,11 @@ import calculateResultType from './model/calculateResultType';
 import { useReactToPrint } from 'react-to-print';
 import AlertModal from './ui/AlertModal';
 import LuckBill from '../../assets/images/luckyBill.svg?react';
+import html2canvas from 'html2canvas';
+import MobileBr from '../../component/box/MobileBr';
+
+// 모바일 여부를 감지하는 함수
+export const isMobile = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
@@ -38,8 +44,40 @@ const TestContentPage = () => {
     const navigate = useNavigate();
 
     const [ResultSvg, setResultSvg] = useState<React.FC | null>(null);
+    const [ResultPng, setResultPng] = useState<string | null>(null);
     const componentRef = useRef(null);
+    const imageRef = useRef(null);
     const drawWinRef = useRef(null);
+
+    const downloadImage = (type: number) => {
+        if (imageRef.current) {
+            html2canvas(imageRef.current, { backgroundColor: null }).then((canvas) => {
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        const url = URL.createObjectURL(blob);
+                        const urlName = name === '???' ? 'OOO' : name;
+                        const fileName = `${urlName}님의결과지-type${type}.png`;
+
+                        if (isMobile()) {
+                            // 모바일에서는 새로운 탭에서 이미지를 보여줌
+                            const newWindow = window.open(url, '_blank');
+                            if (newWindow) {
+                                newWindow.focus();
+                            }
+                        } else {
+                            // 데스크탑에서는 자동 다운로드 처리
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.download = fileName;
+                            link.click();
+                        }
+
+                        URL.revokeObjectURL(url);
+                    }
+                });
+            });
+        }
+    };
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -121,7 +159,6 @@ const TestContentPage = () => {
 
             const resultType = calculateResultType();
             setResult(resultType);
-            draw();
             handleLoading()
                 .then(() => {
                     return import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`);
@@ -170,19 +207,44 @@ const TestContentPage = () => {
             console.log('당첨되지 않았습니다.');
         }
     };
+
+    const renderQuestion = (text: string | undefined) => {
+        if (!text) {
+            console.error('Invalid question text:', text);
+            return null;
+        }
+        return text.split('{{mobileBr}}').map((part, index) => (
+            <React.Fragment key={index}>
+                {part}
+                {index < text.split('{{mobileBr}}').length - 1 && <MobileBr />}
+            </React.Fragment>
+        ));
+    };
+
     // 프린트 및 네비게이션 실행
     useEffect(() => {
         if (ResultSvg) {
-            handlePrint();
+            const resultType = calculateResultType();
             setLoading(false);
+
+            if (isMobile()) {
+                import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`)
+                    .then((module) => {
+                        setResultPng(module.default);
+                        downloadImage(resultType);
+                    })
+                    .catch((err) => console.error('PNG 로드 에러:', err));
+            } else {
+                draw();
+                handlePrint();
+            }
+
             window.scrollTo({
                 top: window.innerHeight * 1.25,
                 behavior: 'smooth',
             });
 
-            const resultType = calculateResultType();
-
-            navigate(`/test/result/${resultType}/${name}`, { replace: true }); // replace: true로 페이지 스택을 덮어씁니다.
+            navigate(`/test/result/${resultType}/${name}`, { replace: true });
         }
     }, [ResultSvg]); // ResultSvg가 업데이트될 때마다 실행
 
@@ -218,7 +280,7 @@ const TestContentPage = () => {
 
                     {nameCheck === true && loading === true && page === 0 && (
                         <LoadingWrapper>
-                            <PageLogo rotate={true} width="16%" page={1} />
+                            <PageLogo rotate={true} width="16%" mobileWidth="50%" page={1} />
                             <PageIndexText>당신의 특징에 대해서 알려주세요.</PageIndexText>
                             <LoadingText>loading...</LoadingText>
                         </LoadingWrapper>
@@ -232,9 +294,9 @@ const TestContentPage = () => {
                                     <NavigationButton top="5em" onClick={() => navigate('/')} home />
                                 </>
                             )}
-                            <PageLogo width="8%" page={page} />
+                            <PageLogo width="8%" page={page} mobileWidth="30%" />
                             <AnimationQuestionText animate={animate}>
-                                {questionsData.questions[questionIndex]}
+                                {renderQuestion(questionsData.questions[questionIndex])} {}
                             </AnimationQuestionText>
 
                             <SelectButton
@@ -249,7 +311,7 @@ const TestContentPage = () => {
 
                     {page >= 2 && loading && questionIndex < 39 && (
                         <LoadingWrapper>
-                            <PageLogo rotate={true} width="16%" page={page} />
+                            <PageLogo rotate={true} width="16%" page={page} mobileWidth="50%" />
                             <PageIndexText>
                                 {page == 2
                                     ? '당신의 생활에 대해서 알려주세요.'
@@ -274,6 +336,10 @@ const TestContentPage = () => {
                 <Name>{name}님의 뇌유형은</Name>
                 {ResultSvg && <StyledResultSvg as={ResultSvg} />}
             </PrintContainer>
+            <SaveContainer ref={imageRef}>
+                <Name>{name}님의 뇌유형은</Name>
+                {ResultPng && <StyledResultPng src={ResultPng} alt="결과 이미지" />}
+            </SaveContainer>
         </>
     );
 };
@@ -285,6 +351,9 @@ const PageIndexText = styled.div`
     text-align: center;
     font-size: 1.725em;
     font-weight: 700;
+    @media (max-width: 768px) {
+        font-size: 1.25em;
+    }
 `;
 
 const PageWrapper = styled.div`
@@ -366,9 +435,15 @@ const fadeInUp = keyframes`
 const AnimationQuestionText = styled.div<{ animate: boolean }>`
     color: #fff;
     text-align: center;
-    font-size: 1.725em;
+    font-size: 1.75em;
     font-weight: 700;
     animation: ${({ animate }) => (animate ? fadeInUp : 'none')} 0.6s ease-in-out;
+    @media (max-width: 768px) {
+        position: absolute;
+        margin-top: 50%;
+        font-size: 1.25em;
+        width: 78%;
+    }
 `;
 
 const Text = styled.div`
@@ -377,6 +452,9 @@ const Text = styled.div`
     font-size: 1.725em;
     font-weight: 700;
     margin-bottom: 2em;
+    @media (max-width: 768px) {
+        font-size: 1.5em;
+    }
 `;
 const TextContentButton = styled(Button)`
     margin-top: 10%;
@@ -441,4 +519,23 @@ const DrawName = styled.div`
     left: 40%;
     width: 100%;
     transform: translate(-50%, -50%) rotate(90deg);
+`;
+
+const SaveContainer = styled.div`
+    position: relative;
+    width: 50%;
+
+    top: 5%;
+    box-shadow: 0px 4px 12.5px 9px rgba(0, 0, 0, 0.16);
+
+    @media (max-width: 768px) {
+        width: 90%;
+
+        top: 5%;
+    }
+`;
+
+const StyledResultPng = styled.img`
+    width: 100%;
+    height: 100%;
 `;

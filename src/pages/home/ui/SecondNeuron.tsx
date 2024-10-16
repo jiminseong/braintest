@@ -90,9 +90,10 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
                         height="70%"
                         top="35%"
                         left="25%"
+                        mobileLeft="50%"
                         borderOpacity="0.8"
-                        mobileHeight="30%"
-                        mobileWidth="25%"
+                        mobileHeight="40%"
+                        mobileWidth="40%"
                         mobileTop="15%"
                     >
                         <ContentText>brain cell 99%</ContentText>
@@ -109,10 +110,11 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
                         width="12.5%"
                         height="15%"
                         mobileHeight="10%"
-                        mobileWidth="15%"
-                        mobileTop="-95%"
+                        mobileWidth="30%"
+                        mobileTop="-90%"
                         top="-75%"
                         left="45%"
+                        mobileLeft="75%"
                         borderOpacity="0.7"
                     >
                         <ContentText>dendritic spines 99%</ContentText>
@@ -138,6 +140,9 @@ const MotionWrapper = styled.div`
     top: 0;
     left: 0;
     background: transparent;
+    @media (max-width: 768px) {
+        margin-left: -30%;
+    }
 `;
 
 const Neuron = styled.img`
@@ -146,7 +151,7 @@ const Neuron = styled.img`
     z-index: 2;
     width: 110%;
     @media (max-width: 768px) {
-        width: 100%;
+        width: 200%;
         margin-top: 105%;
     }
 `;

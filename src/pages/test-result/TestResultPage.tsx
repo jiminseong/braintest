@@ -9,6 +9,7 @@ import TypeContentText from './ui/TypeContentText';
 import GraphicContainer from './ui/GraphicContainer';
 import MiddleNavigationBar from './ui/MiddleNavigationBar';
 import { useParams } from 'react-router-dom';
+import { isMobile } from '../test-content/TestContentPage';
 
 const TestResultPage = () => {
     const { type, name = '' } = useParams();
@@ -28,7 +29,9 @@ const TestResultPage = () => {
             const neuronTop = neuronSectionRef.current.offsetTop;
             const infoTop = infoSectionRef.current.offsetTop;
             const graphicsTop = graphicsSectionRef.current.offsetTop;
-            const scrollPosition = window.scrollY + window.innerHeight / 2; // 현재 스크롤 위치
+            const scrollPosition = isMobile()
+                ? window.scrollY + window.innerHeight / 4
+                : window.scrollY + window.innerHeight / 2;
 
             // 현재 스크롤 위치에 따라 activeButton 설정
             if (scrollPosition >= graphicsTop) {
@@ -112,10 +115,9 @@ const NeuronSection = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 10em;
-    c: 18em;
     box-sizing: border-box;
     @media (max-width: 768px) {
-        padding-top: 5em;
+        gap: 5em;
     }
 `;
 
@@ -163,6 +165,8 @@ const ContentWrapper = styled.div`
     padding-top: 10em;
     box-sizing: border-box;
     @media (max-width: 768px) {
+        font-size: 0.8125em;
+        width: 80%;
         gap: 5em;
     }
 `;
@@ -171,4 +175,7 @@ const IndexText = styled.div`
     color: #070707;
     font-size: 3.5em;
     font-weight: 500;
+    @media (max-width: 768px) {
+        font-size: 2em;
+    }
 `;

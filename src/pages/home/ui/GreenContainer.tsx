@@ -6,6 +6,7 @@ interface GreenContainerProps {
     height: string;
     top: string;
     left: string;
+    mobileLeft: string;
     borderOpacity?: string;
     children: React.ReactNode;
     mobileHeight: string;
@@ -19,6 +20,7 @@ const GreenContainer: React.FC<GreenContainerProps> = ({
     mobileHeight,
     top,
     left,
+    mobileLeft,
     borderOpacity = '1',
     children,
     mobileWidth,
@@ -30,6 +32,7 @@ const GreenContainer: React.FC<GreenContainerProps> = ({
             height={height}
             top={top}
             left={left}
+            mobileLeft={mobileLeft}
             borderOpacity={borderOpacity}
             mobileHeight={mobileHeight}
             mobileWidth={mobileWidth}
@@ -47,6 +50,7 @@ interface GreenWrapperProps {
     height: string;
     top: string;
     left: string;
+    mobileLeft: string;
     borderOpacity: string;
     mobileHeight: string;
     mobileWidth: string;
@@ -65,6 +69,7 @@ const GreenWrapper = styled.div<GreenWrapperProps>`
     height: ${({ height }) => height};
     box-sizing: border-box;
     @media (max-width: 768px) {
+        left: ${({ mobileLeft }) => mobileLeft};
         height: ${({ mobileHeight }) => mobileHeight};
         width: ${({ mobileWidth }) => mobileWidth};
         top: ${({ mobileTop }) => mobileTop};

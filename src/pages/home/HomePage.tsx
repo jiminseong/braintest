@@ -184,4 +184,7 @@ const TypesNavigationButton = styled.div`
     color: #fff;
     cursor: url(${cursorIcon}) 37 37, pointer;
     font-size: 1.125em;
+    @media (max-width: 768px) {
+        font-size: 1em;
+    }
 `;

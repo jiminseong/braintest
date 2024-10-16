@@ -3,29 +3,41 @@ import { BlueButton, RedButton } from '../../component/button/Button';
 import { useNavigate } from 'react-router-dom';
 import BacKButton from '../../component/button/NavigationButton';
 import { useState } from 'react';
+import MobileBr from '../../component/box/MobileBr';
 
 const CautionPage = () => {
     const navigate = useNavigate();
 
     const cautionFirst = (
         <>
-            이 검사는 다년간 쌓인 연구 결과와 임상 경험을 참고하여 만들어졌습니다.
+            이 검사는 다년간 쌓인 연구 결과와
+            <MobileBr /> 임상 경험을 참고하여 만들어졌습니다.
             <br />
-            검사 결과는 일반적 특성을 나타내며, 의료 전문가의 평가나 치료를 대체할 수 없습니다.
+            <MobileBr />
+            검사 결과는 일반적 특성을 나타내며,
+            <MobileBr /> 의료 전문가의 평가나 치료를 대체할 수 없습니다.
             <br />
             자기보고식 검사는 장점도 있지만 한계도 있습니다.
             <br />
             <br />
-            이 검사는 여러분의 건강에 대한 의료 전문가의 의학적 판단을 대체하기 위해서가 아니라,
+            이 검사는 여러분의 건강에 대한
+            <MobileBr /> 의료 전문가의 의학적 판단을 대체하기 위해서가 아니라,
             <br />
-            여러분에게 정보를 제공하고 보다 나은 삶을 위해서 만들어졌습니다.
+            <MobileBr />
+            여러분에게 정보를 제공하고 <MobileBr />
+            보다 나은 삶을 위해서 만들어졌습니다.
             <br />
             <br />
-            또한, 어떠한 의학적 상태의 진단, 치료, 치유를 위한 것도 아니며,
+            또한, 어떠한 의학적 상태의
+            <MobileBr /> 진단, 치료, 치유를 위한 것도 아니며,
             <br />
-            본인의 감정을 잘 나타내는 뇌 유형을 시각적으로 구체화하기 위해 만들어졌습니다.
+            <MobileBr />
+            본인의 감정을 잘 나타내는 뇌 유형을
+            <MobileBr /> 시각적으로 구체화하기 위해 만들어졌습니다.
             <br />
-            특정한 의학적 상태와 치료방법에 대해서는 의료 전문가와 상의하시길 바랍니다.
+            <MobileBr />
+            특정한 의학적 상태와 치료방법에 대해서는 <MobileBr />
+            의료 전문가와 상의하시길 바랍니다.
         </>
     );
 
@@ -98,7 +110,7 @@ const Column = styled.div`
     flex-direction: column;
     align-items: center;
     @media (max-width: 768px) {
-        height: 80%;
+        height: 90%;
     }
 `;
 
@@ -107,7 +119,7 @@ const ColumnWrapper = styled(Column)`
     justify-content: space-between;
     @media (max-width: 768px) {
         width: 80%;
-        height: 80%;
+        height: 85%;
     }
 `;
 
@@ -133,14 +145,13 @@ const Title = styled.div`
 
 const CautionText = styled.div`
     width: 100%;
-
     font-size: 0.8125em;
     text-align: center;
     color: #111;
     font-weight: 500;
     line-height: 2em;
     @media (max-width: 768px) {
-        font-size: 1em;
+        font-size: 0.8125em;
     }
 `;
 

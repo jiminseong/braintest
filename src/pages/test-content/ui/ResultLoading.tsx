@@ -89,6 +89,9 @@ const Text = styled.div`
     font-weight: 700;
     padding: 0;
     box-sizing: border-box;
+    @media (max-width: 768px) {
+        font-size: 1.25em;
+    }
 `;
 
 // 회전 애니메이션 정의
