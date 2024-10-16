@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import BottomLogo from '../../../assets/icons/bottomLogo.svg?react';
+import BottomLogo from '../../../assets/icons/blackLogo.svg?react';
 import AnimationRow from './AnimationList';
+import MobileBr from '../../../component/box/MobileBr';
 const GraphicContainer = ({ type }: { type: number }) => {
     console.log(type);
     return (
@@ -32,8 +33,11 @@ const GraphicContainer = ({ type }: { type: number }) => {
                     <AnimationRow type={type} category="chucksack" />
                 </Column>
                 <Column3>
-                    <BottomLogo />
-                    <BottomText>ⓒ 2024 WHY ARE YOU NERVOUS :Look Inside My Brain, All rights reserved.</BottomText>
+                    <StyledBottomLogo />
+                    <BottomText>
+                        ⓒ 2024 WHY ARE YOU NERVOUS :<MobileBr />
+                        Look Inside My Brain, All rights reserved.
+                    </BottomText>
                 </Column3>
             </Wrapper>
         </GraphicContainerWrapper>
@@ -42,6 +46,9 @@ const GraphicContainer = ({ type }: { type: number }) => {
 
 export default GraphicContainer;
 
+const StyledBottomLogo = styled(BottomLogo)`
+    width: 8em;
+`;
 const GraphicContainerWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -59,6 +66,9 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 5em;
+    @media (max-width: 768px) {
+        width: 90%;
+    }
 `;
 
 const Column = styled.div`
@@ -74,6 +84,8 @@ const Column2 = styled(Column)`
 
 const Column3 = styled(Column)`
     margin-top: 45em;
+    @media (max-width: 768px) {
+    }
 `;
 const Title = styled.div`
     color: #070707;
@@ -81,6 +93,10 @@ const Title = styled.div`
     font-size: 3.5em;
     font-weight: 500;
     margin-top: 3em;
+    @media (max-width: 768px) {
+        margin-top: 0em;
+        font-size: 2em;
+    }
 `;
 
 const Text = styled.div`
@@ -93,6 +109,5 @@ const Text = styled.div`
 const BottomText = styled.div`
     color: #070707;
     font-weight: 500;
-    letter-spacing: -0.32px;
-    text-transform: capitalize;
+    text-align: center;
 `;

@@ -53,6 +53,11 @@ const ButonWrapper = styled.div`
 `;
 
 const Button = styled.div`
+    @media (max-width: 768px) {
+        display: flex;
+        align-items: center;
+        font-size: 1em;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,6 +91,9 @@ const ColumnWrapper = styled.div`
 `;
 
 const TypeItem = styled(ButonWrapper)`
+    @media (max-width: 768px) {
+        font-size: 1em;
+    }
     width: 100%;
     background: #d6d6d6;
     &:hover {

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Logo from '../../../assets/icons/blackLogo.svg?react';
+import Logo from '../../../assets/icons/bottomLogo.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import cursorIcon from '/cursorIcon2.svg';
@@ -52,10 +52,14 @@ const TopNavigationWrapper = styled.div<TopNavigationWrapperProps>`
     z-index: 4;
     cursor: url(${cursorIcon}) 37 37, pointer;
     border-radius: 0px 0px 3.125em 3.125em;
+    @media (max-width: 768px) {
+        top: ${({ $isVisible }) => ($isVisible ? '0' : '-8em')};
+        height: 8em;
+    }
 `;
 
 const BlackLogo = styled(Logo)`
-    width: 5em;
-    height: 3em;
+    margin-top: 1em;
+    width: 10em;
     cursor: url(${cursorIcon}) 37 37, pointer;
 `;

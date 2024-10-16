@@ -63,7 +63,7 @@ const FirstNeuron: React.FC<FirstNeuronProps> = ({ stop }) => {
                 variants={variants}
                 initial={{ x: 0, y: 0 }}
                 animate={controls}
-                style={{ marginTop: '5%', height: '100%', zIndex: 0, position: 'relative' }}
+                style={{ marginTop: '5%', height: '100%', zIndex: 6, position: 'relative' }}
                 onUpdate={handleUpdate}
             >
                 <Neuron />
@@ -77,13 +77,22 @@ export default FirstNeuron;
 const MotionWrapper = styled.div`
     width: 100%;
     height: 100%;
+    @media (max-width: 768px) {
+        margin-top: 15%;
+    }
 `;
 
 const Neuron = styled.div`
-    position: relative;
+    position: absolute;
     width: 40%;
     height: 100%;
     background-image: url(${firstNeuronUrl});
     background-size: cover;
     display: flex;
+    @media (max-width: 768px) {
+        width: 100%;
+        height: 50%;
+        margin-top: 15%;
+        z-index: 100;
+    }
 `;

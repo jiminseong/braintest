@@ -7,15 +7,16 @@ import thirdUrl from '../../../assets/images/thirdLogo.png';
 interface PageLogoProps {
     page: number;
     width: string;
+    mobileWidth: string;
     rotate?: boolean; // rotate prop 추가, 기본값은 false
 }
 
-const PageLogo: React.FC<PageLogoProps> = ({ width, page, rotate = false }) => {
+const PageLogo: React.FC<PageLogoProps> = ({ width, page, mobileWidth, rotate = false }) => {
     return (
         <>
-            {page === 1 && <Logo width={width} rotate={rotate} src={firstUrl} />}
-            {page === 2 && <Logo width={width} rotate={rotate} src={secondUrl} />}
-            {page === 3 && <Logo width={width} rotate={rotate} src={thirdUrl} />}
+            {page === 1 && <Logo width={width} mobileWidth={mobileWidth} rotate={rotate} src={firstUrl} />}
+            {page === 2 && <Logo width={width} mobileWidth={mobileWidth} rotate={rotate} src={secondUrl} />}
+            {page === 3 && <Logo width={width} mobileWidth={mobileWidth} rotate={rotate} src={thirdUrl} />}
         </>
     );
 };
@@ -31,7 +32,7 @@ const rotateAnimation = keyframes`
     }
 `;
 
-const Logo = styled.img<{ width: string; rotate: boolean }>`
+const Logo = styled.img<{ width: string; rotate: boolean; mobileWidth: string }>`
     width: ${(props) => props.width};
     animation: ${(props) =>
         props.rotate
@@ -39,4 +40,7 @@ const Logo = styled.img<{ width: string; rotate: boolean }>`
                   ${rotateAnimation} 4s linear
               `
             : 'none'};
+    @media (max-width: 768px) {
+        width: ${(props) => props.mobileWidth};
+    }
 `;

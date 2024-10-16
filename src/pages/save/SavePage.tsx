@@ -8,18 +8,16 @@ import ResultLoading from '../test-content/ui/ResultLoading';
 const SavePage = () => {
     const { type, name = '' } = useParams();
     const resultType = Number(type);
-    const [ResultSvg, setResultSvg] = useState<React.FC | null>(null);
+    const [ResultPng, setResultPng] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const imageRef = useRef(null);
     const navigate = useNavigate();
 
-    const downLoadImage = () => {
+    const downloadImage = () => {
         if (imageRef.current) {
             html2canvas(imageRef.current, { backgroundColor: null }).then((canvas) => {
                 const link = document.createElement('a');
-                let urlName = '';
-                if (name === '???') urlName = 'OOO';
-                else urlName = name;
+                const urlName = name === '???' ? 'OOO' : name;
                 link.download = `${urlName}님의결과지-type${resultType}.png`;
                 link.href = canvas.toDataURL('image/png');
                 link.click();
@@ -28,16 +26,18 @@ const SavePage = () => {
     };
 
     useEffect(() => {
-        import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`)
-            .then((module) => {
-                setResultSvg(() => module.default);
-                setTimeout(() => {
-                    setLoading(false);
-                }, 4000);
-            })
-            .catch((err) => {
-                console.error('SVG 로드 에러:', err);
-            });
+        const loadImage = async () => {
+            try {
+                const module = await import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`);
+                setResultPng(module.default);
+            } catch (err) {
+                console.error('PNG 로드 에러:', err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadImage();
     }, [resultType]);
 
     return (
@@ -47,12 +47,12 @@ const SavePage = () => {
             ) : (
                 <PageWrapper>
                     <RowWrapper>
-                        <SaveButton onClick={downLoadImage}>저장하기</SaveButton>
+                        <SaveButton onClick={downloadImage}>저장하기</SaveButton>
                         <SaveButton onClick={() => navigate('/')}>홈으로가기</SaveButton>
                     </RowWrapper>
                     <SaveContainer ref={imageRef}>
                         <Name>{name}님의 뇌유형은</Name>
-                        {ResultSvg && <StyledResultSvg as={ResultSvg} />}
+                        {ResultPng && <StyledResultPng src={ResultPng} alt="결과 이미지" />}
                     </SaveContainer>
                 </PageWrapper>
             )}
@@ -130,7 +130,7 @@ const Name = styled.div`
     }
 `;
 
-const StyledResultSvg = styled.div`
+const StyledResultPng = styled.img`
     width: 100%;
     height: 100%;
 `;
