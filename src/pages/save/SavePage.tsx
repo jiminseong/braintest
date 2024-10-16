@@ -13,7 +13,7 @@ const SavePage = () => {
     const imageRef = useRef(null);
     const navigate = useNavigate();
 
-    const downLoadImage = () => {
+    const downloadImage = () => {
         if (imageRef.current) {
             html2canvas(imageRef.current, { backgroundColor: null }).then((canvas) => {
                 const link = document.createElement('a');
@@ -47,7 +47,7 @@ const SavePage = () => {
             ) : (
                 <PageWrapper>
                     <RowWrapper>
-                        <SaveButton onClick={downLoadImage}>저장하기</SaveButton>
+                        <SaveButton onClick={downloadImage}>저장하기</SaveButton>
                         <SaveButton onClick={() => navigate('/')}>홈으로가기</SaveButton>
                     </RowWrapper>
                     <SaveContainer ref={imageRef}>

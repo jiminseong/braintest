@@ -49,32 +49,14 @@ const TestContentPage = () => {
     const imageRef = useRef(null);
     const drawWinRef = useRef(null);
 
-    const downloadImage = (type: number) => {
+    const downloadImage = (resultType: number) => {
         if (imageRef.current) {
             html2canvas(imageRef.current, { backgroundColor: null }).then((canvas) => {
-                canvas.toBlob((blob) => {
-                    if (blob) {
-                        const url = URL.createObjectURL(blob);
-                        const urlName = name === '???' ? 'OOO' : name;
-                        const fileName = `${urlName}님의결과지-type${type}.png`;
-
-                        if (isMobile()) {
-                            // 모바일에서는 새로운 탭에서 이미지를 보여줌
-                            const newWindow = window.open(url, '_blank');
-                            if (newWindow) {
-                                newWindow.focus();
-                            }
-                        } else {
-                            // 데스크탑에서는 자동 다운로드 처리
-                            const link = document.createElement('a');
-                            link.href = url;
-                            link.download = fileName;
-                            link.click();
-                        }
-
-                        URL.revokeObjectURL(url);
-                    }
-                });
+                const link = document.createElement('a');
+                const urlName = name === '???' ? 'OOO' : name;
+                link.download = `${urlName}님의결과지-type${resultType}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
             });
         }
     };
@@ -87,6 +69,7 @@ const TestContentPage = () => {
     const handlePrintDraw = useReactToPrint({
         content: () => drawWinRef.current,
         documentTitle: '당첨영수증',
+        onPrintError: (error) => console.error('프린트 중 오류 발생:', error),
     });
 
     const { setName, setResult, saveAnswer, answers, name } = useSurveyStore();
@@ -159,6 +142,7 @@ const TestContentPage = () => {
 
             const resultType = calculateResultType();
             setResult(resultType);
+            if (!isMobile()) draw();
             handleLoading()
                 .then(() => {
                     return import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`);
@@ -177,31 +161,34 @@ const TestContentPage = () => {
         }
     };
 
-    const draw = () => {
-        const count = getStoredValue('count', 0);
-        const dailyCount = getStoredValue('dailyCount', 0);
+    const draw = async () => {
+        const totalWinners = getStoredValue('totalWinners', 0);
+        const dailyWinners = getStoredValue('dailyWinners', 0);
+        const totalParticipants = getStoredValue('totalParticipants', 0); // 수정된 부분
         const currentDate = new Date(localStorage.getItem('currentDate') || new Date());
         const today = new Date();
+        const totalCount = totalParticipants + 1;
+        localStorage.setItem('totalParticipants', totalCount.toString());
 
-        // 날짜가 변경된 경우, dailyCount 초기화 및 잔여 수 이월
+        // 날짜가 변경된 경우, dailyWinners 초기화 및 잔여 수 이월
         if (today.getDate() !== currentDate.getDate()) {
-            const carryOverCount = Math.max(0, DAILY_LIMIT - dailyCount);
-            localStorage.setItem('dailyCount', carryOverCount.toString());
+            const carryOverCount = Math.max(0, DAILY_LIMIT - dailyWinners);
+            localStorage.setItem('dailyWinners', carryOverCount.toString());
             localStorage.setItem('currentDate', today.toString());
         }
 
-        if (count >= TOTAL_COUNT || dailyCount >= DAILY_LIMIT) {
+        if (totalWinners >= TOTAL_COUNT || dailyWinners >= DAILY_LIMIT) {
             console.log('더 이상 추첨할 수 없습니다.');
             return;
         }
 
         if (Math.random() < DRAW_PROBABILITY) {
-            const newCount = count + 1;
-            const newDailyCount = dailyCount + 1;
-
-            localStorage.setItem('count', newCount.toString());
-            localStorage.setItem('dailyCount', newDailyCount.toString());
-            handlePrintDraw();
+            const newCount = totalWinners + 1;
+            const newDailyCount = dailyWinners + 1;
+            // 프린트를 먼저 하고 로컬 스토리지 업데이트
+            await handlePrintDraw(); // 비동기 호출 확실히 기다리기
+            localStorage.setItem('totalWinners', newCount.toString());
+            localStorage.setItem('dailyWinners', newDailyCount.toString());
             console.log('당첨되었습니다!', newCount);
         } else {
             console.log('당첨되지 않았습니다.');
@@ -221,23 +208,30 @@ const TestContentPage = () => {
         ));
     };
 
-    // 프린트 및 네비게이션 실행
-    useEffect(() => {
-        if (ResultSvg) {
+    const loadResultSvg = async () => {
+        try {
             const resultType = calculateResultType();
-            setLoading(false);
 
-            if (isMobile()) {
-                import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`)
-                    .then((module) => {
-                        setResultPng(module.default);
-                        downloadImage(resultType);
-                    })
-                    .catch((err) => console.error('PNG 로드 에러:', err));
-            } else {
-                draw();
-                handlePrint();
-            }
+            setLoading(false);
+            handlePrint();
+            window.scrollTo({
+                top: window.innerHeight * 1.25,
+                behavior: 'smooth',
+            });
+
+            navigate(`/test/result/${resultType}/${name}`, { replace: true });
+        } catch (err) {
+            console.error('에러 발생:', err);
+            setLoading(false);
+        }
+    };
+
+    const loadResultPng = async () => {
+        const resultType = calculateResultType();
+        try {
+            const module = await import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`);
+            setResultPng(module.default);
+            downloadImage(resultType);
 
             window.scrollTo({
                 top: window.innerHeight * 1.25,
@@ -245,15 +239,27 @@ const TestContentPage = () => {
             });
 
             navigate(`/test/result/${resultType}/${name}`, { replace: true });
+        } catch (err) {
+            console.error('에러 발생:', err);
+            setLoading(false);
         }
-    }, [ResultSvg]); // ResultSvg가 업데이트될 때마다 실행
+    };
+
+    // 프린트 및 네비게이션 실행
+    useEffect(() => {
+        if (ResultSvg && !isMobile()) {
+            loadResultSvg();
+        } else if (isMobile()) {
+            loadResultPng();
+        }
+    }, [ResultSvg]);
 
     useEffect(() => {
         const currentDate = localStorage.getItem('currentDate');
         if (!currentDate) {
             const today = new Date();
             localStorage.setItem('currentDate', today.toString());
-            localStorage.setItem('dailyCount', '0'); // 새로운 날짜에 일일 당첨 횟수 초기화
+            localStorage.setItem('dailyWinners', '0'); // 새로운 날짜에 일일 당첨 횟수 초기화
         }
     }, []);
 
@@ -328,14 +334,17 @@ const TestContentPage = () => {
                     )}
                 </Column>
             </PageWrapper>
+
             <DrawWinContainer ref={drawWinRef}>
                 <DrawName>{name}님 축하드립니다!</DrawName>
                 <StyledLuckyBill />
             </DrawWinContainer>
+
             <PrintContainer ref={componentRef}>
                 <Name>{name}님의 뇌유형은</Name>
                 {ResultSvg && <StyledResultSvg as={ResultSvg} />}
             </PrintContainer>
+
             <SaveContainer ref={imageRef}>
                 <Name>{name}님의 뇌유형은</Name>
                 {ResultPng && <StyledResultPng src={ResultPng} alt="결과 이미지" />}
@@ -485,7 +494,14 @@ const PrintContainer = styled.div`
     }
 `;
 
-const DrawWinContainer = styled(PrintContainer)``;
+const DrawWinContainer = styled(PrintContainer)`
+    @media print {
+        padding-top: 2em;
+    }
+    @meida (max-width:768px) {
+        display: none;
+    }
+`;
 
 const StyledLuckyBill = styled(LuckBill)`
     width: 100%;

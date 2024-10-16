@@ -9,12 +9,16 @@ import CloseIcon from '../../assets/icons/closeIcon.svg?react';
 import QrCode from './ui/QrCode';
 import cursorIcon from '/cursorIcon2.svg';
 import MobileBr from '../../component/box/MobileBr';
+import { isMobile } from '../test-content/TestContentPage';
+import html2canvas from 'html2canvas';
 
 const PrintPage = () => {
     const [isWrapperVisible, setWrapperVisible] = useState(false);
     const [isPrintContainerVisible, setPrintContainerVisible] = useState(false);
     const [ResultSvg, setResultSvg] = useState<React.FC | null>(null); // 타입 정의 추가
+    const [ResultPng, setResultPng] = useState<string | null>(null);
     const componentRef = useRef(null);
+    const imageRef = useRef(null);
     const { type, name = '' } = useParams();
     const resultType = Number(type);
 
@@ -22,23 +26,43 @@ const PrintPage = () => {
         content: () => componentRef.current,
         documentTitle: '결과페이지',
     });
-
-    useEffect(() => {
-        console.log(name);
-        if (isWrapperVisible && isPrintContainerVisible) {
-            handlePrint();
+    const downloadImage = () => {
+        if (imageRef.current) {
+            html2canvas(imageRef.current, { backgroundColor: null }).then((canvas) => {
+                const link = document.createElement('a');
+                const urlName = name === '???' ? 'OOO' : name;
+                link.download = `${urlName}님의결과지-type${resultType}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
         }
+    };
+    useEffect(() => {
+        if (isWrapperVisible && isPrintContainerVisible && isMobile() === false) {
+            handlePrint();
+        } else if (isMobile() && isWrapperVisible && isPrintContainerVisible) downloadImage();
     }, [isWrapperVisible, isPrintContainerVisible]);
 
-    // SVG 컴포넌트를 동적으로 import
     useEffect(() => {
-        import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`)
-            .then((module) => {
-                setResultSvg(() => module.default);
-            })
-            .catch((err) => {
-                console.error('SVG 로드 에러:', err);
-            });
+        const loadImage = async () => {
+            if (isMobile()) {
+                try {
+                    const module = await import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`);
+                    setResultPng(module.default);
+                } catch (err) {
+                    console.error('PNG 로드 에러:', err);
+                }
+            } else {
+                try {
+                    const module = await import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`);
+                    setResultSvg(() => module.default);
+                } catch (err) {
+                    console.error('SVG 로드 에러:', err);
+                }
+            }
+        };
+
+        loadImage();
     }, [resultType]);
 
     const handleOpenPrint = () => {
@@ -86,10 +110,17 @@ const PrintPage = () => {
                             <Name>{name}님의 뇌유형은</Name>
                             {ResultSvg && <StyledResultSvg as={ResultSvg} />}
                         </PrintContainer>
+                        <SaveContainer
+                            isPrintContainerVisible={isPrintContainerVisible}
+                            onAnimationEnd={handleAnimationEnd}
+                            ref={imageRef}
+                        >
+                            <Name>{name}님의 뇌유형은</Name>
+                            {ResultPng && <StyledResultPng src={ResultPng} alt="결과 이미지" />}
+                        </SaveContainer>
                     </PrintContainerWrapper>
                 </>
             )}
-
             <Text>
                 결과지를 프린트해서 해당 유형에 맞는
                 <MobileBr /> 다양한 그래픽과 특징 및 행복 찾는 방법을 간직하세요!
@@ -101,6 +132,25 @@ const PrintPage = () => {
 };
 
 export default PrintPage;
+
+const SaveContainer = styled.div<{
+    isPrintContainerVisible: boolean;
+}>`
+    display: none;
+    @media (max-width: 768px) {
+        display: flex;
+        position: absolute;
+        width: 80%;
+        box-shadow: 0px 4px 12.5px 9px rgba(0, 0, 0, 0.16);
+        animation: ${({ isPrintContainerVisible }) => (isPrintContainerVisible ? fadeUp : fadeDown)} 0.5s ease-in-out;
+        animation-fill-mode: forwards;
+    }
+`;
+
+const StyledResultPng = styled.img`
+    width: 100%;
+    height: 100%;
+`;
 
 const StyledResultSvg = styled.div`
     width: 100%;
@@ -176,6 +226,12 @@ const CloseButton = styled(CloseIcon)`
     right: 2em;
     cursor: url(${cursorIcon}) 46 45, pointer;
     z-index: 15;
+    @media (max-width: 768px) {
+        font-size: 1.125em;
+        top: 1em;
+        right: 1em;
+        width: 2em;
+    }
 `;
 
 const fadeUp = keyframes`
@@ -215,6 +271,10 @@ const PrintContainer = styled.div<{
             size: 79mm 297mm;
         }
     }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const QrCodeWrapper = styled.div<{ isPrintContainerVisible: boolean }>`
@@ -224,6 +284,9 @@ const QrCodeWrapper = styled.div<{ isPrintContainerVisible: boolean }>`
     z-index: 15;
     bottom: 2em;
     left: 5%;
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const Name = styled.div`
@@ -237,6 +300,9 @@ const Name = styled.div`
     @media print {
         top: 3.5em;
         font-size: 0.8rem;
+    }
+    @media (max-width: 768px) {
+        font-size: 0.8125em;
     }
 `;
 
