@@ -51,7 +51,7 @@ export const determineComplexType = (sortedScores: [string, number][]): number =
     }
 
     // 6. 예외 처리: 모든 경우에 해당되지 않으면 균형형으로 반환
-    return 0;
+    return 8;
 };
 
 // 2개 복합 유형 결과를 반환하는 함수

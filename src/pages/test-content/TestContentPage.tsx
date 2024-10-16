@@ -13,7 +13,7 @@ import ResultLoading from './ui/ResultLoading';
 import calculateResultType from './model/calculateResultType';
 import { useReactToPrint } from 'react-to-print';
 import AlertModal from './ui/AlertModal';
-import DrwaWinText from '../../assets/images/drawWinText.svg?react';
+import LuckBill from '../../assets/images/luckyBill.svg?react';
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
@@ -91,7 +91,6 @@ const TestContentPage = () => {
     };
 
     const goBack = () => {
-        if (nameCheck === false) navigate('/caution');
         if (loading && page === 2) {
             setLoading(false);
             setPage(1);
@@ -208,7 +207,6 @@ const TestContentPage = () => {
                 <Column>
                     {nameCheck === false && (
                         <ContentColumn>
-                            <NavigationButton top="3.3125em" right="3em" onClick={() => goBack()} />
                             <NavigationButton top="5em" onClick={() => navigate('/')} home />
                             <Column2>
                                 <Text>당신의 이름은 무엇인가요?</Text>
@@ -269,8 +267,8 @@ const TestContentPage = () => {
                 </Column>
             </PageWrapper>
             <DrawWinContainer ref={drawWinRef}>
-                <DrawName>{name}님!</DrawName>
-                <DrwaWinText />
+                <DrawName>{name}님 축하드립니다!</DrawName>
+                <StyledLuckyBill />
             </DrawWinContainer>
             <PrintContainer ref={componentRef}>
                 <Name>{name}님의 뇌유형은</Name>
@@ -386,18 +384,18 @@ const TextContentButton = styled(Button)`
 `;
 
 const PrintContainer = styled.div`
+    position: relative;
     display: none;
-    position: absolute;
+
     background: #fff;
     color: #070707;
     width: 523px;
     height: fit-content;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
     box-sizing: border-box;
 
     @media print {
+        display: flex;
         width: 79mm;
         height: 297mm;
         box-shadow: none;
@@ -410,10 +408,11 @@ const PrintContainer = styled.div`
 `;
 
 const DrawWinContainer = styled(PrintContainer)`
-    flex-direction: row-reverse;
-    gap: 1em;
-    justify-content: center;
-    align-items: center;
+    display: flex;
+`;
+
+const StyledLuckyBill = styled(LuckBill)`
+    width: 100%;
     height: 100%;
 `;
 
@@ -437,7 +436,11 @@ const StyledResultSvg = styled.div`
 `;
 
 const DrawName = styled.div`
-    font-size: 1.625rem;
+    position: absolute;
+    font-size: 1.25rem;
     font-weight: 800;
-    transform: rotate(90deg);
+    top: 50%;
+    left: 40%;
+    width: 100%;
+    transform: translate(-50%, -50%) rotate(90deg);
 `;
