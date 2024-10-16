@@ -114,10 +114,14 @@ const ContentText = styled.p`
 `;
 
 const StyledLogo = styled(Logo)`
+    z-index: 10;
     position: absolute;
     width: 7%;
-    top: 1.5em;
+    min-width: 100px;
+    top: 1em;
     right: 2em;
+    @midea (max-width : 768px) {
+    }
 `;
 
 const Title = styled.span`
@@ -133,11 +137,18 @@ const ButtonWrapper = styled.button`
     width: fit-content;
     border: none;
     outline: none;
+    @media (max-width: 768px) {
+        width: 90%;
+    }
 `;
 const StyledTestStartButton = styled(TestStartButton)`
     &:hover {
         fill: lightgray -0.409px 0px / 100.112% 100% no-repeat;
         filter: drop-shadow(0px 0px 17px #7aff77);
+    }
+    @media (max-width: 768px) {
+        width: 90%;
+        height: 30%;
     }
 `;
 const FirstGreenContainer = styled.div`
@@ -153,6 +164,10 @@ const FirstGreenContainer = styled.div`
     top: 35%;
     left: 5%;
     box-shadow: 0 0 0 3px #7aff77 inset, 0px 0px 8.5px 1px #77ceff;
+    @media (max-width: 768px) {
+        right: 5%;
+        top: 25%;
+    }
 `;
 
 const TypesNavigationButton = styled.div`
