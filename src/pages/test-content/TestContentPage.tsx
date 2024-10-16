@@ -517,6 +517,7 @@ const StyledLuckyBill = styled(LuckBill)`
 `;
 
 const Name = styled.div`
+    display: none;
     position: absolute;
     font-size: 1.625rem;
     font-weight: 800;
@@ -525,6 +526,7 @@ const Name = styled.div`
     color: #231815;
     transform: translate(-50%, -50%);
     @media print {
+        display: flex;
         top: 3.5em;
         font-size: 0.8rem;
     }
