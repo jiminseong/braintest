@@ -43,4 +43,8 @@ const TypeLogoImage = styled.div<TypeLogoImageProps>`
         min-width: 60%;
         min-height: 50%;
     }
+    @media (max-width: 768px) {
+        min-width: 40%;
+        min-height: 40%;
+    }
 `;

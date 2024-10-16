@@ -107,7 +107,7 @@ const RowWrapper = styled.div`
         width: 50%;
         gap: 1em;
         position: absolute;
-        top: 50%;
+        top: 30%;
     }
     @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
         gap: 3em;
