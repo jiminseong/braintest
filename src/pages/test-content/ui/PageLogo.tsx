@@ -40,7 +40,7 @@ const Logo = styled.img<{ width: string; rotate: boolean; mobileWidth: string }>
                   ${rotateAnimation} 4s linear
               `
             : 'none'};
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: ${(props) => props.mobileWidth};
     }
 `;

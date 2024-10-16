@@ -68,7 +68,7 @@ const GreenWrapper = styled.div<GreenWrapperProps>`
     width: ${({ width }) => width};
     height: ${({ height }) => height};
     box-sizing: border-box;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         left: ${({ mobileLeft }) => mobileLeft};
         height: ${({ mobileHeight }) => mobileHeight};
         width: ${({ mobileWidth }) => mobileWidth};

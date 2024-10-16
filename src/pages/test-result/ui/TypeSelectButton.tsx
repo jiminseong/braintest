@@ -24,7 +24,7 @@ const TypeSelectButton = ({ name }: { name: string }) => {
     return (
         <ButonWrapper onMouseEnter={() => handleSelect()} onMouseLeave={() => handleSelect()} onClick={handleSelect}>
             <Button>
-                <HamburgerIcon />
+                <StyledHamburgerIcon />
                 Types
                 {/* 타입 리스트 열기 */}
                 {typeListOpen && (
@@ -43,6 +43,12 @@ const TypeSelectButton = ({ name }: { name: string }) => {
 
 export default TypeSelectButton;
 
+const StyledHamburgerIcon = styled(HamburgerIcon)`
+    @media (max-width: 1023px) {
+        width: 1em;
+    }
+`;
+
 const fadeIn = keyframes`   
     from { opacity: 0; transform: translateY(-10px); }     
     to { opacity: 1; transform: translateY(0); } `;
@@ -50,13 +56,20 @@ const fadeIn = keyframes`
 const ButonWrapper = styled.div`
     box-sizing: border-box;
     height: 120%;
+    @media (max-width: 1023px) {
+        width: 100%;
+    }
 `;
 
 const Button = styled.div`
     @media (max-width: 768px) {
         display: flex;
         align-items: center;
-        font-size: 1em;
+        font-size: 0.8125em;
+    }
+
+    @media (max-width: 1023px) {
+        width: 100%;
     }
     display: flex;
     justify-content: center;
@@ -91,7 +104,7 @@ const ColumnWrapper = styled.div`
 `;
 
 const TypeItem = styled(ButonWrapper)`
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         font-size: 1em;
     }
     width: 100%;

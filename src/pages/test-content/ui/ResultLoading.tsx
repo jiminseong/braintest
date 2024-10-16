@@ -89,7 +89,7 @@ const Text = styled.div`
     font-weight: 700;
     padding: 0;
     box-sizing: border-box;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         font-size: 1.25em;
     }
 `;

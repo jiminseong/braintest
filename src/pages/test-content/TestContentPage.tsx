@@ -19,7 +19,9 @@ import html2canvas from 'html2canvas';
 import MobileBr from '../../component/box/MobileBr';
 
 // 모바일 여부를 감지하는 함수
-export const isMobile = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+export const isMobile = () => {
+    return /iPhone|iPad|iPod|Android|webOS|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+};
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
@@ -360,7 +362,7 @@ const PageIndexText = styled.div`
     text-align: center;
     font-size: 1.725em;
     font-weight: 700;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         font-size: 1.25em;
     }
 `;
@@ -447,6 +449,12 @@ const AnimationQuestionText = styled.div<{ animate: boolean }>`
     font-size: 1.75em;
     font-weight: 700;
     animation: ${({ animate }) => (animate ? fadeInUp : 'none')} 0.6s ease-in-out;
+    @media (max-width: 1023px) {
+        position: absolute;
+        margin-top: 40%;
+        font-size: 1.25em;
+        width: 78%;
+    }
     @media (max-width: 768px) {
         position: absolute;
         margin-top: 50%;
@@ -461,7 +469,7 @@ const Text = styled.div`
     font-size: 1.725em;
     font-weight: 700;
     margin-bottom: 2em;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         font-size: 1.5em;
     }
 `;
@@ -498,7 +506,7 @@ const DrawWinContainer = styled(PrintContainer)`
     @media print {
         padding-top: 2em;
     }
-    @meida (max-width:768px) {
+    @meida (max-width:1023px) {
         display: none;
     }
 `;
@@ -544,7 +552,7 @@ const SaveContainer = styled.div`
     top: 5%;
     box-shadow: 0px 4px 12.5px 9px rgba(0, 0, 0, 0.16);
 
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 90%;
 
         top: 5%;

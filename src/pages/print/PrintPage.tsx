@@ -38,27 +38,27 @@ const PrintPage = () => {
         }
     };
     useEffect(() => {
-        if (isWrapperVisible && isPrintContainerVisible && isMobile() === false) {
-            handlePrint();
-        } else if (isMobile() && isWrapperVisible && isPrintContainerVisible) downloadImage();
+        if (isWrapperVisible && isPrintContainerVisible) {
+            if (isMobile()) {
+                downloadImage();
+            } else {
+                handlePrint();
+            }
+        }
     }, [isWrapperVisible, isPrintContainerVisible]);
 
     useEffect(() => {
         const loadImage = async () => {
-            if (isMobile()) {
-                try {
-                    const module = await import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`);
-                    setResultPng(module.default);
-                } catch (err) {
-                    console.error('PNG 로드 에러:', err);
-                }
-            } else {
-                try {
-                    const module = await import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`);
-                    setResultSvg(() => module.default);
-                } catch (err) {
-                    console.error('SVG 로드 에러:', err);
-                }
+            try {
+                const module1 = await import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`);
+                setResultPng(module1.default);
+                console.log('PNG 로드됨');
+
+                const module2 = await import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`);
+                setResultSvg(() => module2.default);
+                console.log('SVG 로드됨');
+            } catch (err) {
+                console.error('이미지 로드 에러:', err);
             }
         };
 
@@ -137,7 +137,15 @@ const SaveContainer = styled.div<{
     isPrintContainerVisible: boolean;
 }>`
     display: none;
-    @media (max-width: 768px) {
+    @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+        display: flex;
+        position: absolute;
+        width: 80%;
+        box-shadow: 0px 4px 12.5px 9px rgba(0, 0, 0, 0.16);
+        animation: ${({ isPrintContainerVisible }) => (isPrintContainerVisible ? fadeUp : fadeDown)} 0.5s ease-in-out;
+        animation-fill-mode: forwards;
+    }
+    @media (max-width: 1023px) {
         display: flex;
         position: absolute;
         width: 80%;
@@ -154,7 +162,7 @@ const StyledResultPng = styled.img`
 
 const StyledResultSvg = styled.div`
     width: 100%;
-    height: auto;
+    height: 100%;
 `;
 const PageWrapper = styled.div`
     position: relative;
@@ -175,7 +183,7 @@ const RowWrapper = styled.div`
     justify-content: center;
     align-items: center;
     gap: 5em;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         flex-direction: column;
         gap: 2em;
     }
@@ -226,7 +234,7 @@ const CloseButton = styled(CloseIcon)`
     right: 2em;
     cursor: url(${cursorIcon}) 46 45, pointer;
     z-index: 15;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         font-size: 1.125em;
         top: 1em;
         right: 1em;
@@ -247,7 +255,7 @@ const fadeDown = keyframes`
 const PrintContainer = styled.div<{
     isPrintContainerVisible: boolean;
 }>`
-    margin-top: 2em;
+    margin-top: 3em;
     position: relative;
     background: #fff;
     color: #070707;
@@ -260,20 +268,23 @@ const PrintContainer = styled.div<{
     box-sizing: border-box;
     animation: ${({ isPrintContainerVisible }) => (isPrintContainerVisible ? fadeUp : fadeDown)} 0.5s ease-in-out;
     animation-fill-mode: forwards;
-
+    @media (max-width: 1023px) {
+        display: none;
+    }
+    @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+        display: none;
+    }
     @media print {
+        display: flex;
         width: 79mm;
         height: 297mm;
         box-shadow: none;
         animation: none;
-        margin-top: -2em;
+        margin-top: 0em;
+
         @page {
             size: 79mm 297mm;
         }
-    }
-
-    @media (max-width: 768px) {
-        display: none;
     }
 `;
 
@@ -284,7 +295,10 @@ const QrCodeWrapper = styled.div<{ isPrintContainerVisible: boolean }>`
     z-index: 15;
     bottom: 2em;
     left: 5%;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
+        display: none;
+    }
+    @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
         display: none;
     }
 `;
@@ -297,12 +311,16 @@ const Name = styled.div`
     top: 3em;
     color: #231815;
     transform: translate(-50%, -50%);
+
+    @media (max-width: 1023px) {
+        font-size: 1.25em;
+    }
+    @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+        font-size: 3em;
+    }
     @media print {
         top: 3.5em;
-        font-size: 0.8rem;
-    }
-    @media (max-width: 768px) {
-        font-size: 0.8125em;
+        font-size: 1em;
     }
 `;
 
@@ -334,15 +352,22 @@ const PrintButton = styled.div`
     &:hover {
         animation: ${printButtonAnimation} 0.2s infinite;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
+        display: none;
+    }
+    @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
         display: none;
     }
 `;
 
 const SaveButton = styled(PrintButton)`
     display: none;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         font-size: 3em;
+        display: flex;
+    }
+    @media only screen and (min-device-width: 1024px) and (max-device-width: 1366px) {
+        font-size: 5em;
         display: flex;
     }
 `;
@@ -350,7 +375,7 @@ const Text = styled.div`
     color: #070707;
     font-size: 1.5em;
     text-align: center;
-    @media (max-width: 768px) {
-        font-size: 0.8125em;
+    @media (max-width: 1023px) {
+        font-size: 1em;
     }
 `;

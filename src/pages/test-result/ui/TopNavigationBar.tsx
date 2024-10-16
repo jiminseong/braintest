@@ -52,7 +52,7 @@ const TopNavigationWrapper = styled.div<TopNavigationWrapperProps>`
     z-index: 4;
     cursor: url(${cursorIcon}) 37 37, pointer;
     border-radius: 0px 0px 3.125em 3.125em;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         top: ${({ $isVisible }) => ($isVisible ? '0' : '-8em')};
         height: 8em;
     }

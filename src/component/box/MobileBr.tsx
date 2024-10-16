@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const MobileBr = styled.br`
     display: none;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         display: flex;
     }
 `;
