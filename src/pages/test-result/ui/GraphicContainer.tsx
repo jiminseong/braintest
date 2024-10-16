@@ -66,7 +66,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     gap: 5em;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 90%;
     }
 `;
@@ -84,7 +84,7 @@ const Column2 = styled(Column)`
 
 const Column3 = styled(Column)`
     margin-top: 45em;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
     }
 `;
 const Title = styled.div`
@@ -93,7 +93,7 @@ const Title = styled.div`
     font-size: 3.5em;
     font-weight: 500;
     margin-top: 3em;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         margin-top: 0em;
         font-size: 2em;
     }

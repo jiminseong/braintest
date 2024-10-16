@@ -56,7 +56,8 @@ const Wrapper = styled.div`
     width: 60%;
     display: flex;
     justify-content: space-between;
-    @media (max-width: 768px) {
+    gap: 1em;
+    @media (max-width: 1023px) {
         flex-direction: column-reverse;
         width: 90%;
         gap: 1em;
@@ -68,10 +69,13 @@ const Wrapper = styled.div`
 const RowWrapper = styled.div`
     display: flex;
     gap: 1.25em;
-    @media (max-width: 768px) {
+
+    @media (max-width: 1023px) {
         width: 100%;
+    }
+    @media (max-width: 768px) {
         justify-content: space-between;
-        gap: 0em;
+        gap: 1em;
     }
 `;
 
@@ -90,10 +94,15 @@ const NavigationButton = styled.div<Props>`
     cursor: url(${cursorIcon}) 37 37, pointer;
     background: ${({ isActive }) => (isActive ? '#000000' : '#D6D6D6')};
     color: ${({ isActive }) => (isActive ? '#ffffff' : '#070707')};
+
+    @media (max-width: 1023px) {
+        width: 100%;
+    }
     @media (max-width: 768px) {
         display: flex;
+        justify-content: center;
         align-items: center;
-        font-size: 1em;
+        font-size: 0.8125em;
     }
 `;
 
@@ -126,7 +135,7 @@ const PrintNavigationButton = styled.div`
     &:hover {
         animation: ${printButtonAnimation} 0.2s infinite;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         display: none;
     }
 `;
@@ -134,9 +143,15 @@ const PrintNavigationButton = styled.div`
 const SaveNavigationButton = styled(PrintNavigationButton)`
     display: none;
 
+    @media (max-width: 1023px) {
+        width: 100%;
+        font-size: 1.5em;
+        display: flex;
+        justify-content: center;
+    }
     @media (max-width: 768px) {
         width: 100%;
-        font-size: 1em;
+        font-size: 0.8125em;
         display: flex;
         justify-content: center;
     }

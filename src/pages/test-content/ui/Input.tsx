@@ -11,7 +11,7 @@ export const Input = styled.input`
     background: transparent;
     border: 2px solid;
 
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 80%;
     }
 

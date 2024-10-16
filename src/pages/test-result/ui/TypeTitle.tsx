@@ -19,7 +19,7 @@ const Title = styled.div`
     font-size: 3.5rem;
     font-style: normal;
     font-weight: 600;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 100%;
         font-size: 1em;
     }

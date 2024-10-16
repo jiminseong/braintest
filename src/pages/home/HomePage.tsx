@@ -121,7 +121,7 @@ const StyledLogo = styled(Logo)`
     min-width: 100px;
 
     right: 5%;
-    @midea (max-width : 768px) {
+    @midea (max-width : 1023px) {
         right: 1.25em;
     }
 `;
@@ -139,16 +139,17 @@ const ButtonWrapper = styled.button`
     width: fit-content;
     border: none;
     outline: none;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 90%;
     }
 `;
 const StyledTestStartButton = styled(TestStartButton)`
+    transition: filter 0.5s ease, transform 0.5s ease;
     &:hover {
-        fill: lightgray -0.409px 0px / 100.112% 100% no-repeat;
-        filter: drop-shadow(0px 0px 17px #7aff77);
+        filter: invert(1) brightness(2) contrast(1.1) drop-shadow(0px 0px 17px #7aff77);
+        transform: scale(1.005);
     }
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 90%;
         height: 30%;
     }
@@ -166,7 +167,7 @@ const FirstGreenContainer = styled.div`
     top: 35%;
     left: 5%;
     box-shadow: 0 0 0 3px #7aff77 inset, 0px 0px 8.5px 1px #77ceff;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         right: 5%;
         top: 25%;
     }
@@ -184,7 +185,7 @@ const TypesNavigationButton = styled.div`
     color: #fff;
     cursor: url(${cursorIcon}) 37 37, pointer;
     font-size: 1.125em;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         font-size: 1em;
     }
 `;

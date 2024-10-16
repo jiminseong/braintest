@@ -90,7 +90,7 @@ const AnimatedIcon = styled.div`
     ${IconWrapper}:hover & {
         animation: ${rotateScaleAnimation} 3s linear infinite;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         display: none;
     }
 `;
@@ -102,7 +102,7 @@ const RowWrapper = styled.div`
     gap: 5em;
     justify-content: center;
 
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         flex-direction: column;
         width: 50%;
         gap: 1em;

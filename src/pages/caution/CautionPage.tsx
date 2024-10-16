@@ -109,7 +109,7 @@ const Column = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         height: 90%;
     }
 `;
@@ -117,7 +117,7 @@ const Column = styled.div`
 const ColumnWrapper = styled(Column)`
     height: 60%;
     justify-content: space-between;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 80%;
         height: 85%;
     }
@@ -138,7 +138,7 @@ const Title = styled.div`
     font-size: 2em;
     font-weight: 700;
     margin-bottom: 2em;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         margin-bottom: 1em;
     }
 `;
@@ -150,7 +150,7 @@ const CautionText = styled.div`
     color: #111;
     font-weight: 500;
     line-height: 2em;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         font-size: 0.8125em;
     }
 `;
@@ -161,7 +161,7 @@ const RowWrapper = styled.div`
     gap: 8em;
     justify-content: center;
 
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 100%;
         gap: 1em;
         justify-content: space-between;
