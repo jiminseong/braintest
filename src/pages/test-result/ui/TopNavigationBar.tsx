@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import Logo from '../../../assets/icons/blackLogo.svg?react';
+import Logo from '../../../assets/icons/bottomLogo.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-
+import cursorIcon from '/cursorIcon2.svg';
 interface TopNavigationWrapperProps {
     $isVisible: boolean;
 }
 
-const TopNavigationBar = () => {
+export const TopNavigationBar = () => {
     const navigate = useNavigate();
     const [isVisible, setIsVisible] = useState(true); // 상단바의 보임 여부
     const lastScrollY = useRef(0);
@@ -31,9 +31,7 @@ const TopNavigationBar = () => {
 
     return (
         <TopNavigationWrapper $isVisible={isVisible}>
-            <TestStartButton onClick={() => navigate('/test/content')}>TestStart</TestStartButton>
             <BlackLogo onClick={() => navigate('/')} />
-            <div style={{ width: '5em' }} />
         </TopNavigationWrapper>
     );
 };
@@ -46,26 +44,22 @@ const TopNavigationWrapper = styled.div<TopNavigationWrapperProps>`
     background: #fff;
     box-sizing: border-box;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
     top: ${({ $isVisible }) => ($isVisible ? '0' : '-5em')};
     height: 5em;
     z-index: 4;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     border-radius: 0px 0px 3.125em 3.125em;
+    @media (max-width: 768px) {
+        top: ${({ $isVisible }) => ($isVisible ? '0' : '-8em')};
+        height: 8em;
+    }
 `;
 
-const TestStartButton = styled.div`
-    visibility: hidden;
-    width: fit-content;
-    text-align: center;
-    font-weight: 600;
-    width: 5em;
-    height: 2em;
-`;
 const BlackLogo = styled(Logo)`
-    width: 5em;
-    height: 3em;
-    cursor: pointer;
+    margin-top: 1em;
+    width: 10em;
+    cursor: url(${cursorIcon}) 37 37, pointer;
 `;

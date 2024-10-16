@@ -11,6 +11,10 @@ export const Input = styled.input`
     background: transparent;
     border: 2px solid;
 
+    @media (max-width: 768px) {
+        width: 80%;
+    }
+
     // border-image-source: linear-gradient(90deg, #f9f3ff 0%, #959299 100%);
     &:focus {
         outline: none;

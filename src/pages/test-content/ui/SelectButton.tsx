@@ -4,7 +4,7 @@ import Two from '../../../assets/icons/2_selectIcon.svg?react';
 import Three from '../../../assets/icons/3_selectIcon.svg?react';
 import Four from '../../../assets/icons/4_selectIcon.svg?react';
 import Five from '../../../assets/icons/5_selectIcon.svg?react';
-
+import cursorIcon from '/cursorIcon2.svg';
 import React from 'react';
 
 interface SelectButtonProps {
@@ -66,7 +66,7 @@ const IconWrapper = styled.div`
     align-items: center;
     justify-content: space-between;
     gap: 2em;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
 `;
 
 const rotateScaleAnimation = keyframes`
@@ -90,6 +90,9 @@ const AnimatedIcon = styled.div`
     ${IconWrapper}:hover & {
         animation: ${rotateScaleAnimation} 3s linear infinite;
     }
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const RowWrapper = styled.div`
@@ -98,6 +101,14 @@ const RowWrapper = styled.div`
     display: flex;
     gap: 5em;
     justify-content: center;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        width: 50%;
+        gap: 1em;
+        position: absolute;
+        top: 50%;
+    }
 `;
 
 const Text = styled.div`

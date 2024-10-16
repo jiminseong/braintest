@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 import HamburgerIcon from '../../../assets/icons/hamburger.svg?react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import cursorIcon from '/cursorIcon2.svg';
 const TypeSelectButton = ({ name }: { name: string }) => {
     const [typeListOpen, setTypeListOpen] = useState(false);
     const navigate = useNavigate();
@@ -53,6 +53,11 @@ const ButonWrapper = styled.div`
 `;
 
 const Button = styled.div`
+    @media (max-width: 768px) {
+        display: flex;
+        align-items: center;
+        font-size: 1em;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,7 +70,7 @@ const Button = styled.div`
     text-align: center;
     position: relative;
     background: #d6d6d6;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     color: #070707;
     transition: background 0.3s ease;
     ${ButonWrapper}:hover {
@@ -86,6 +91,9 @@ const ColumnWrapper = styled.div`
 `;
 
 const TypeItem = styled(ButonWrapper)`
+    @media (max-width: 768px) {
+        font-size: 1em;
+    }
     width: 100%;
     background: #d6d6d6;
     &:hover {
@@ -97,7 +105,7 @@ const TypeItem = styled(ButonWrapper)`
         background: #000000 !important;
     }
     text-align: center;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     padding: 0.25em 0em;
     border-radius: 53px;
     box-sizing: border-box;

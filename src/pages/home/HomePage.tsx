@@ -7,6 +7,7 @@ import TestStartButton from '../../assets/images/testStartButton.svg?react';
 import RightIcon from '../../assets/icons/rightIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import cursorIcon from '/cursorIcon2.svg';
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -113,10 +114,16 @@ const ContentText = styled.p`
 `;
 
 const StyledLogo = styled(Logo)`
+    z-index: 10;
     position: absolute;
-    width: 10%;
-    top: 1.5em;
-    right: 2em;
+    width: 7%;
+    top: 1em;
+    min-width: 100px;
+
+    right: 5%;
+    @midea (max-width : 768px) {
+        right: 1.25em;
+    }
 `;
 
 const Title = styled.span`
@@ -126,17 +133,24 @@ const Title = styled.span`
 `;
 
 const ButtonWrapper = styled.button`
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     margin-top: 5%;
     background: #070707;
     width: fit-content;
     border: none;
     outline: none;
+    @media (max-width: 768px) {
+        width: 90%;
+    }
 `;
 const StyledTestStartButton = styled(TestStartButton)`
     &:hover {
-        fill: url(<path-to-image>) lightgray -0.409px 0px / 100.112% 100% no-repeat;
+        fill: lightgray -0.409px 0px / 100.112% 100% no-repeat;
         filter: drop-shadow(0px 0px 17px #7aff77);
+    }
+    @media (max-width: 768px) {
+        width: 90%;
+        height: 30%;
     }
 `;
 const FirstGreenContainer = styled.div`
@@ -152,6 +166,10 @@ const FirstGreenContainer = styled.div`
     top: 35%;
     left: 5%;
     box-shadow: 0 0 0 3px #7aff77 inset, 0px 0px 8.5px 1px #77ceff;
+    @media (max-width: 768px) {
+        right: 5%;
+        top: 25%;
+    }
 `;
 
 const TypesNavigationButton = styled.div`
@@ -164,6 +182,9 @@ const TypesNavigationButton = styled.div`
     justify-content: center;
     align-items: center;
     color: #fff;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     font-size: 1.125em;
+    @media (max-width: 768px) {
+        font-size: 1em;
+    }
 `;

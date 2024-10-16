@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
@@ -13,7 +14,12 @@ import ResultLoading from './ui/ResultLoading';
 import calculateResultType from './model/calculateResultType';
 import { useReactToPrint } from 'react-to-print';
 import AlertModal from './ui/AlertModal';
-import DrwaWinText from '../../assets/images/drawWinText.svg?react';
+import LuckBill from '../../assets/images/luckyBill.svg?react';
+import html2canvas from 'html2canvas';
+import MobileBr from '../../component/box/MobileBr';
+
+// 모바일 여부를 감지하는 함수
+export const isMobile = () => /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 const TestContentPage = () => {
     const [currentProgress, setCurrentProgress] = useState(0); // 퍼센티지
@@ -38,8 +44,22 @@ const TestContentPage = () => {
     const navigate = useNavigate();
 
     const [ResultSvg, setResultSvg] = useState<React.FC | null>(null);
+    const [ResultPng, setResultPng] = useState<string | null>(null);
     const componentRef = useRef(null);
+    const imageRef = useRef(null);
     const drawWinRef = useRef(null);
+
+    const downloadImage = (resultType: number) => {
+        if (imageRef.current) {
+            html2canvas(imageRef.current, { backgroundColor: null }).then((canvas) => {
+                const link = document.createElement('a');
+                const urlName = name === '???' ? 'OOO' : name;
+                link.download = `${urlName}님의결과지-type${resultType}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+    };
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -49,6 +69,7 @@ const TestContentPage = () => {
     const handlePrintDraw = useReactToPrint({
         content: () => drawWinRef.current,
         documentTitle: '당첨영수증',
+        onPrintError: (error) => console.error('프린트 중 오류 발생:', error),
     });
 
     const { setName, setResult, saveAnswer, answers, name } = useSurveyStore();
@@ -121,7 +142,7 @@ const TestContentPage = () => {
 
             const resultType = calculateResultType();
             setResult(resultType);
-            draw();
+            if (!isMobile()) draw();
             handleLoading()
                 .then(() => {
                     return import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`);
@@ -140,58 +161,105 @@ const TestContentPage = () => {
         }
     };
 
-    const draw = () => {
-        const count = getStoredValue('count', 0);
-        const dailyCount = getStoredValue('dailyCount', 0);
+    const draw = async () => {
+        const totalWinners = getStoredValue('totalWinners', 0);
+        const dailyWinners = getStoredValue('dailyWinners', 0);
+        const totalParticipants = getStoredValue('totalParticipants', 0); // 수정된 부분
         const currentDate = new Date(localStorage.getItem('currentDate') || new Date());
         const today = new Date();
+        const totalCount = totalParticipants + 1;
+        localStorage.setItem('totalParticipants', totalCount.toString());
 
-        // 날짜가 변경된 경우, dailyCount 초기화 및 잔여 수 이월
+        // 날짜가 변경된 경우, dailyWinners 초기화 및 잔여 수 이월
         if (today.getDate() !== currentDate.getDate()) {
-            const carryOverCount = Math.max(0, DAILY_LIMIT - dailyCount);
-            localStorage.setItem('dailyCount', carryOverCount.toString());
+            const carryOverCount = Math.max(0, DAILY_LIMIT - dailyWinners);
+            localStorage.setItem('dailyWinners', carryOverCount.toString());
             localStorage.setItem('currentDate', today.toString());
         }
 
-        if (count >= TOTAL_COUNT || dailyCount >= DAILY_LIMIT) {
+        if (totalWinners >= TOTAL_COUNT || dailyWinners >= DAILY_LIMIT) {
             console.log('더 이상 추첨할 수 없습니다.');
             return;
         }
 
         if (Math.random() < DRAW_PROBABILITY) {
-            const newCount = count + 1;
-            const newDailyCount = dailyCount + 1;
-
-            localStorage.setItem('count', newCount.toString());
-            localStorage.setItem('dailyCount', newDailyCount.toString());
-            handlePrintDraw();
+            const newCount = totalWinners + 1;
+            const newDailyCount = dailyWinners + 1;
+            // 프린트를 먼저 하고 로컬 스토리지 업데이트
+            await handlePrintDraw(); // 비동기 호출 확실히 기다리기
+            localStorage.setItem('totalWinners', newCount.toString());
+            localStorage.setItem('dailyWinners', newDailyCount.toString());
             console.log('당첨되었습니다!', newCount);
         } else {
             console.log('당첨되지 않았습니다.');
         }
     };
-    // 프린트 및 네비게이션 실행
-    useEffect(() => {
-        if (ResultSvg) {
-            handlePrint();
+
+    const renderQuestion = (text: string | undefined) => {
+        if (!text) {
+            console.error('Invalid question text:', text);
+            return null;
+        }
+        return text.split('{{mobileBr}}').map((part, index) => (
+            <React.Fragment key={index}>
+                {part}
+                {index < text.split('{{mobileBr}}').length - 1 && <MobileBr />}
+            </React.Fragment>
+        ));
+    };
+
+    const loadResultSvg = async () => {
+        try {
+            const resultType = calculateResultType();
+
             setLoading(false);
+            handlePrint();
             window.scrollTo({
                 top: window.innerHeight * 1.25,
                 behavior: 'smooth',
             });
 
-            const resultType = calculateResultType();
-
-            navigate(`/test/result/${resultType}/${name}`, { replace: true }); // replace: true로 페이지 스택을 덮어씁니다.
+            navigate(`/test/result/${resultType}/${name}`, { replace: true });
+        } catch (err) {
+            console.error('에러 발생:', err);
+            setLoading(false);
         }
-    }, [ResultSvg]); // ResultSvg가 업데이트될 때마다 실행
+    };
+
+    const loadResultPng = async () => {
+        const resultType = calculateResultType();
+        try {
+            const module = await import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`);
+            setResultPng(module.default);
+            downloadImage(resultType);
+
+            window.scrollTo({
+                top: window.innerHeight * 1.25,
+                behavior: 'smooth',
+            });
+
+            navigate(`/test/result/${resultType}/${name}`, { replace: true });
+        } catch (err) {
+            console.error('에러 발생:', err);
+            setLoading(false);
+        }
+    };
+
+    // 프린트 및 네비게이션 실행
+    useEffect(() => {
+        if (ResultSvg && !isMobile()) {
+            loadResultSvg();
+        } else if (isMobile()) {
+            loadResultPng();
+        }
+    }, [ResultSvg]);
 
     useEffect(() => {
         const currentDate = localStorage.getItem('currentDate');
         if (!currentDate) {
             const today = new Date();
             localStorage.setItem('currentDate', today.toString());
-            localStorage.setItem('dailyCount', '0'); // 새로운 날짜에 일일 당첨 횟수 초기화
+            localStorage.setItem('dailyWinners', '0'); // 새로운 날짜에 일일 당첨 횟수 초기화
         }
     }, []);
 
@@ -218,7 +286,7 @@ const TestContentPage = () => {
 
                     {nameCheck === true && loading === true && page === 0 && (
                         <LoadingWrapper>
-                            <PageLogo rotate={true} width="16%" page={1} />
+                            <PageLogo rotate={true} width="16%" mobileWidth="50%" page={1} />
                             <PageIndexText>당신의 특징에 대해서 알려주세요.</PageIndexText>
                             <LoadingText>loading...</LoadingText>
                         </LoadingWrapper>
@@ -232,9 +300,9 @@ const TestContentPage = () => {
                                     <NavigationButton top="5em" onClick={() => navigate('/')} home />
                                 </>
                             )}
-                            <PageLogo width="8%" page={page} />
+                            <PageLogo width="8%" page={page} mobileWidth="30%" />
                             <AnimationQuestionText animate={animate}>
-                                {questionsData.questions[questionIndex]}
+                                {renderQuestion(questionsData.questions[questionIndex])} {}
                             </AnimationQuestionText>
 
                             <SelectButton
@@ -249,7 +317,7 @@ const TestContentPage = () => {
 
                     {page >= 2 && loading && questionIndex < 39 && (
                         <LoadingWrapper>
-                            <PageLogo rotate={true} width="16%" page={page} />
+                            <PageLogo rotate={true} width="16%" page={page} mobileWidth="50%" />
                             <PageIndexText>
                                 {page == 2
                                     ? '당신의 생활에 대해서 알려주세요.'
@@ -266,14 +334,21 @@ const TestContentPage = () => {
                     )}
                 </Column>
             </PageWrapper>
+
             <DrawWinContainer ref={drawWinRef}>
-                <DrawName>{name}님!</DrawName>
-                <DrwaWinText />
+                <DrawName>{name}님 축하드립니다!</DrawName>
+                <StyledLuckyBill />
             </DrawWinContainer>
+
             <PrintContainer ref={componentRef}>
                 <Name>{name}님의 뇌유형은</Name>
                 {ResultSvg && <StyledResultSvg as={ResultSvg} />}
             </PrintContainer>
+
+            <SaveContainer ref={imageRef}>
+                <Name>{name}님의 뇌유형은</Name>
+                {ResultPng && <StyledResultPng src={ResultPng} alt="결과 이미지" />}
+            </SaveContainer>
         </>
     );
 };
@@ -285,6 +360,9 @@ const PageIndexText = styled.div`
     text-align: center;
     font-size: 1.725em;
     font-weight: 700;
+    @media (max-width: 768px) {
+        font-size: 1.25em;
+    }
 `;
 
 const PageWrapper = styled.div`
@@ -366,9 +444,15 @@ const fadeInUp = keyframes`
 const AnimationQuestionText = styled.div<{ animate: boolean }>`
     color: #fff;
     text-align: center;
-    font-size: 1.725em;
+    font-size: 1.75em;
     font-weight: 700;
     animation: ${({ animate }) => (animate ? fadeInUp : 'none')} 0.6s ease-in-out;
+    @media (max-width: 768px) {
+        position: absolute;
+        margin-top: 50%;
+        font-size: 1.25em;
+        width: 78%;
+    }
 `;
 
 const Text = styled.div`
@@ -377,6 +461,9 @@ const Text = styled.div`
     font-size: 1.725em;
     font-weight: 700;
     margin-bottom: 2em;
+    @media (max-width: 768px) {
+        font-size: 1.5em;
+    }
 `;
 const TextContentButton = styled(Button)`
     margin-top: 10%;
@@ -384,18 +471,18 @@ const TextContentButton = styled(Button)`
 `;
 
 const PrintContainer = styled.div`
+    position: relative;
     display: none;
-    position: absolute;
+
     background: #fff;
     color: #070707;
     width: 523px;
     height: fit-content;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
     box-sizing: border-box;
 
     @media print {
+        display: flex;
         width: 79mm;
         height: 297mm;
         box-shadow: none;
@@ -408,10 +495,16 @@ const PrintContainer = styled.div`
 `;
 
 const DrawWinContainer = styled(PrintContainer)`
-    flex-direction: row-reverse;
-    gap: 1em;
-    justify-content: center;
-    align-items: center;
+    @media print {
+        padding-top: 2em;
+    }
+    @meida (max-width:768px) {
+        display: none;
+    }
+`;
+
+const StyledLuckyBill = styled(LuckBill)`
+    width: 100%;
     height: 100%;
 `;
 
@@ -435,7 +528,30 @@ const StyledResultSvg = styled.div`
 `;
 
 const DrawName = styled.div`
-    font-size: 1.625rem;
+    position: absolute;
+    font-size: 1.25rem;
     font-weight: 800;
-    transform: rotate(90deg);
+    top: 50%;
+    left: 40%;
+    width: 100%;
+    transform: translate(-50%, -50%) rotate(90deg);
+`;
+
+const SaveContainer = styled.div`
+    position: relative;
+    width: 50%;
+
+    top: 5%;
+    box-shadow: 0px 4px 12.5px 9px rgba(0, 0, 0, 0.16);
+
+    @media (max-width: 768px) {
+        width: 90%;
+
+        top: 5%;
+    }
+`;
+
+const StyledResultPng = styled.img`
+    width: 100%;
+    height: 100%;
 `;

@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import TypeSelectButton from './TypeSelectButton';
 import { useNavigate } from 'react-router-dom';
-
+import cursorIcon from '/cursorIcon2.svg';
 interface MiddleNavigationBarProps {
     scrollToSection: (section: string) => void;
     activeButton: string;
@@ -34,6 +34,7 @@ const MiddleNavigationBar = ({ scrollToSection, activeButton, name, type }: Midd
                     </NavigationButton>
                 </RowWrapper>
                 <PrintNavigationButton onClick={() => navigate(`/print/${type}/${name}`)}>Print</PrintNavigationButton>
+                <SaveNavigationButton onClick={() => navigate(`/print/${type}/${name}`)}>Save</SaveNavigationButton>
             </Wrapper>
         </MiddleNavigationBarWrapper>
     );
@@ -55,11 +56,23 @@ const Wrapper = styled.div`
     width: 60%;
     display: flex;
     justify-content: space-between;
+    @media (max-width: 768px) {
+        flex-direction: column-reverse;
+        width: 90%;
+        gap: 1em;
+        justify-content: center;
+        align-items: center;
+    }
 `;
 
 const RowWrapper = styled.div`
     display: flex;
     gap: 1.25em;
+    @media (max-width: 768px) {
+        width: 100%;
+        justify-content: space-between;
+        gap: 0em;
+    }
 `;
 
 interface Props {
@@ -74,9 +87,14 @@ const NavigationButton = styled.div<Props>`
     font-weight: 700;
     text-align: center;
 
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     background: ${({ isActive }) => (isActive ? '#000000' : '#D6D6D6')};
     color: ${({ isActive }) => (isActive ? '#ffffff' : '#070707')};
+    @media (max-width: 768px) {
+        display: flex;
+        align-items: center;
+        font-size: 1em;
+    }
 `;
 
 const NavigationButton2 = styled(NavigationButton)`
@@ -104,8 +122,22 @@ const PrintNavigationButton = styled.div`
     font-size: 1.45em;
     font-weight: 700;
     text-align: center;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     &:hover {
         animation: ${printButtonAnimation} 0.2s infinite;
+    }
+    @media (max-width: 768px) {
+        display: none;
+    }
+`;
+
+const SaveNavigationButton = styled(PrintNavigationButton)`
+    display: none;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        font-size: 1em;
+        display: flex;
+        justify-content: center;
     }
 `;

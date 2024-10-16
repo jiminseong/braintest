@@ -15,8 +15,9 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
 
     const variants = {
         animate: {
-            x: [0, '2.5vw', '15vw', '-7.5vw', '-15vw', '-2.5vw', '10vw', '-5vw', '-10vw', '2.5vw', '5vw', 0],
-            y: ['0vh', '17.5vh', '25vh', '-2.5vh', '-5vh', '12.5vh', '15vh', '-7.5vh', '-15vh', '2.5vh', '5vh', 0],
+            x: [0, '-10vw', '5vw', '-7.5vw', '10vw', '2.5vw', '-5vw', '-15vw', '5vw', '-2.5vw', '2.5vw', 0],
+            y: [0, '-15vh', '-2.5vh', '-10vh', '0vh', '-5vh', '0vh', '-10vh', '-5vh', '-15vh', '-5vh', 0],
+
             transition: {
                 x: { repeat: Infinity, repeatType: 'loop', duration: 120, ease: 'easeInOut' },
                 y: { repeat: Infinity, repeatType: 'loop', duration: 100, ease: 'easeInOut' },
@@ -47,7 +48,8 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
         } else {
             controls.start({
                 x: [currentX, '-10vw', '5vw', '-7.5vw', '10vw', '2.5vw', '-5vw', '-15vw', '5vw', '-2.5vw', '2.5vw', 0],
-                y: [currentY, '25vh', '-2.5vh', '7.5vh', '-7.5vh', '5vh', '-15vh', '2.5vh', '-5vh', '7.5vh', '15vh', 0],
+                y: [currentY, '-15vh', '-2.5vh', '-10vh', '0vh', '-5vh', '0vh', '-10vh', '-5vh', '-15vh', '-5vh', 0],
+
                 transition: {
                     x: { repeat: Infinity, repeatType: 'loop', duration: 90, ease: 'easeInOut' },
                     y: { repeat: Infinity, repeatType: 'loop', duration: 80, ease: 'easeInOut' },
@@ -83,7 +85,17 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
                     animate="animate"
                     style={{ position: 'relative', width: '100%', height: '100%', zIndex: 5 }}
                 >
-                    <GreenContainer width="22.5%" height="70%" top="35%" left="25%" borderOpacity="0.8">
+                    <GreenContainer
+                        width="22.5%"
+                        height="70%"
+                        top="35%"
+                        left="25%"
+                        mobileLeft="50%"
+                        borderOpacity="0.8"
+                        mobileHeight="40%"
+                        mobileWidth="40%"
+                        mobileTop="15%"
+                    >
                         <ContentText>brain cell 99%</ContentText>
                     </GreenContainer>
                 </motion.div>
@@ -94,7 +106,17 @@ const SecondNeuron: React.FC<SecondNeuronProps> = ({ stop }) => {
                     animate="animate"
                     style={{ position: 'relative', width: '100%', height: '100%', zIndex: 4 }}
                 >
-                    <GreenContainer width="12.5%" height="15%" top="-75%" left="45%" borderOpacity="0.7">
+                    <GreenContainer
+                        width="12.5%"
+                        height="15%"
+                        mobileHeight="10%"
+                        mobileWidth="30%"
+                        mobileTop="-90%"
+                        top="-75%"
+                        left="45%"
+                        mobileLeft="75%"
+                        borderOpacity="0.7"
+                    >
                         <ContentText>dendritic spines 99%</ContentText>
                     </GreenContainer>
                 </motion.div>
@@ -118,6 +140,9 @@ const MotionWrapper = styled.div`
     top: 0;
     left: 0;
     background: transparent;
+    @media (max-width: 768px) {
+        margin-left: -30%;
+    }
 `;
 
 const Neuron = styled.img`
@@ -125,6 +150,10 @@ const Neuron = styled.img`
     top: 0;
     z-index: 2;
     width: 110%;
+    @media (max-width: 768px) {
+        width: 200%;
+        margin-top: 105%;
+    }
 `;
 
 const ContentText = styled.span`

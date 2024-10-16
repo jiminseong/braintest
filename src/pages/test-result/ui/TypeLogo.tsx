@@ -39,4 +39,8 @@ const TypeLogoImage = styled.div<TypeLogoImageProps>`
     align-items: center;
     justify-content: center;
     font-weight: 600;
+    @media (max-width: 768px) {
+        min-width: 60%;
+        min-height: 50%;
+    }
 `;

@@ -3,16 +3,22 @@ import styled, { keyframes } from 'styled-components';
 import { useReactToPrint } from 'react-to-print';
 import { useParams } from 'react-router-dom';
 import TypeLogo from './ui/TypeLogo';
-import TopNavigationBar from './ui/TopNavigationBar';
+import TopNavigationBar from '../test-result/ui/TopNavigationBar';
 import UnderTriangleIcon from '../../assets/icons/triangleIcon.svg?react';
 import CloseIcon from '../../assets/icons/closeIcon.svg?react';
 import QrCode from './ui/QrCode';
+import cursorIcon from '/cursorIcon2.svg';
+import MobileBr from '../../component/box/MobileBr';
+import { isMobile } from '../test-content/TestContentPage';
+import html2canvas from 'html2canvas';
 
 const PrintPage = () => {
     const [isWrapperVisible, setWrapperVisible] = useState(false);
     const [isPrintContainerVisible, setPrintContainerVisible] = useState(false);
     const [ResultSvg, setResultSvg] = useState<React.FC | null>(null); // 타입 정의 추가
+    const [ResultPng, setResultPng] = useState<string | null>(null);
     const componentRef = useRef(null);
+    const imageRef = useRef(null);
     const { type, name = '' } = useParams();
     const resultType = Number(type);
 
@@ -20,23 +26,43 @@ const PrintPage = () => {
         content: () => componentRef.current,
         documentTitle: '결과페이지',
     });
-
-    useEffect(() => {
-        console.log(name);
-        if (isWrapperVisible && isPrintContainerVisible) {
-            handlePrint();
+    const downloadImage = () => {
+        if (imageRef.current) {
+            html2canvas(imageRef.current, { backgroundColor: null }).then((canvas) => {
+                const link = document.createElement('a');
+                const urlName = name === '???' ? 'OOO' : name;
+                link.download = `${urlName}님의결과지-type${resultType}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
         }
+    };
+    useEffect(() => {
+        if (isWrapperVisible && isPrintContainerVisible && isMobile() === false) {
+            handlePrint();
+        } else if (isMobile() && isWrapperVisible && isPrintContainerVisible) downloadImage();
     }, [isWrapperVisible, isPrintContainerVisible]);
 
-    // SVG 컴포넌트를 동적으로 import
     useEffect(() => {
-        import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`)
-            .then((module) => {
-                setResultSvg(() => module.default);
-            })
-            .catch((err) => {
-                console.error('SVG 로드 에러:', err);
-            });
+        const loadImage = async () => {
+            if (isMobile()) {
+                try {
+                    const module = await import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`);
+                    setResultPng(module.default);
+                } catch (err) {
+                    console.error('PNG 로드 에러:', err);
+                }
+            } else {
+                try {
+                    const module = await import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`);
+                    setResultSvg(() => module.default);
+                } catch (err) {
+                    console.error('SVG 로드 에러:', err);
+                }
+            }
+        };
+
+        loadImage();
     }, [resultType]);
 
     const handleOpenPrint = () => {
@@ -63,6 +89,10 @@ const PrintPage = () => {
                     PRINT
                     <UnderTriangleIcon />
                 </PrintButton>
+                <SaveButton onClick={handleOpenPrint}>
+                    SAVE
+                    <UnderTriangleIcon />
+                </SaveButton>
             </RowWrapper>
 
             {isWrapperVisible && (
@@ -80,19 +110,48 @@ const PrintPage = () => {
                             <Name>{name}님의 뇌유형은</Name>
                             {ResultSvg && <StyledResultSvg as={ResultSvg} />}
                         </PrintContainer>
+                        <SaveContainer
+                            isPrintContainerVisible={isPrintContainerVisible}
+                            onAnimationEnd={handleAnimationEnd}
+                            ref={imageRef}
+                        >
+                            <Name>{name}님의 뇌유형은</Name>
+                            {ResultPng && <StyledResultPng src={ResultPng} alt="결과 이미지" />}
+                        </SaveContainer>
                     </PrintContainerWrapper>
                 </>
             )}
-
             <Text>
-                결과지를 프린트해서 해당 유형에 맞는 다양한 그래픽과 특징 및 행복 찾는 방법을 간직하세요!
-                <br /> 다른 사람에게 당신의 유형을 공유하고 주변 사람들의 유형도 알아보세요!
+                결과지를 프린트해서 해당 유형에 맞는
+                <MobileBr /> 다양한 그래픽과 특징 및 행복 찾는 방법을 간직하세요!
+                <MobileBr />
+                <br /> 다른 사람에게 당신의 유형을 공유하고 <MobileBr /> 주변 사람들의 유형도 알아보세요!
             </Text>
         </PageWrapper>
     );
 };
 
 export default PrintPage;
+
+const SaveContainer = styled.div<{
+    isPrintContainerVisible: boolean;
+}>`
+    display: none;
+    @media (max-width: 768px) {
+        display: flex;
+        position: absolute;
+        width: 80%;
+        box-shadow: 0px 4px 12.5px 9px rgba(0, 0, 0, 0.16);
+        animation: ${({ isPrintContainerVisible }) => (isPrintContainerVisible ? fadeUp : fadeDown)} 0.5s ease-in-out;
+        animation-fill-mode: forwards;
+    }
+`;
+
+const StyledResultPng = styled.img`
+    width: 100%;
+    height: 100%;
+`;
+
 const StyledResultSvg = styled.div`
     width: 100%;
     height: auto;
@@ -116,6 +175,10 @@ const RowWrapper = styled.div`
     justify-content: center;
     align-items: center;
     gap: 5em;
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 2em;
+    }
 `;
 
 const fadeIn = keyframes`
@@ -161,8 +224,14 @@ const CloseButton = styled(CloseIcon)`
     position: fixed;
     top: 2em;
     right: 2em;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 46 45, pointer;
     z-index: 15;
+    @media (max-width: 768px) {
+        font-size: 1.125em;
+        top: 1em;
+        right: 1em;
+        width: 2em;
+    }
 `;
 
 const fadeUp = keyframes`
@@ -178,6 +247,7 @@ const fadeDown = keyframes`
 const PrintContainer = styled.div<{
     isPrintContainerVisible: boolean;
 }>`
+    margin-top: 2em;
     position: relative;
     background: #fff;
     color: #070707;
@@ -196,10 +266,14 @@ const PrintContainer = styled.div<{
         height: 297mm;
         box-shadow: none;
         animation: none;
-
+        margin-top: -2em;
         @page {
             size: 79mm 297mm;
         }
+    }
+
+    @media (max-width: 768px) {
+        display: none;
     }
 `;
 
@@ -210,6 +284,9 @@ const QrCodeWrapper = styled.div<{ isPrintContainerVisible: boolean }>`
     z-index: 15;
     bottom: 2em;
     left: 5%;
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 const Name = styled.div`
@@ -223,6 +300,9 @@ const Name = styled.div`
     @media print {
         top: 3.5em;
         font-size: 0.8rem;
+    }
+    @media (max-width: 768px) {
+        font-size: 0.8125em;
     }
 `;
 
@@ -250,14 +330,27 @@ const PrintButton = styled.div`
     font-weight: 700;
     padding: 1em 1.5em;
     box-sizing: border-box;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 46 45, pointer;
     &:hover {
         animation: ${printButtonAnimation} 0.2s infinite;
     }
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
+const SaveButton = styled(PrintButton)`
+    display: none;
+    @media (max-width: 768px) {
+        font-size: 3em;
+        display: flex;
+    }
+`;
 const Text = styled.div`
     color: #070707;
     font-size: 1.5em;
     text-align: center;
+    @media (max-width: 768px) {
+        font-size: 0.8125em;
+    }
 `;
