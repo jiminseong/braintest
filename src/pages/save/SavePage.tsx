@@ -8,7 +8,7 @@ import ResultLoading from '../test-content/ui/ResultLoading';
 const SavePage = () => {
     const { type, name = '' } = useParams();
     const resultType = Number(type);
-    const [ResultSvg, setResultSvg] = useState<React.FC | null>(null);
+    const [ResultPng, setResultPng] = useState<React.FC | null>(null);
     const [loading, setLoading] = useState(true);
     const imageRef = useRef(null);
     const navigate = useNavigate();
@@ -28,15 +28,15 @@ const SavePage = () => {
     };
 
     useEffect(() => {
-        import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`)
+        import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`)
             .then((module) => {
-                setResultSvg(() => module.default);
+                setResultPng(() => module.default);
                 setTimeout(() => {
                     setLoading(false);
                 }, 4000);
             })
             .catch((err) => {
-                console.error('SVG 로드 에러:', err);
+                console.error('PNG 로드 에러:', err);
             });
     }, [resultType]);
 
@@ -52,7 +52,7 @@ const SavePage = () => {
                     </RowWrapper>
                     <SaveContainer ref={imageRef}>
                         <Name>{name}님의 뇌유형은</Name>
-                        {ResultSvg && <StyledResultSvg as={ResultSvg} />}
+                        {ResultPng && <StyledResultPng as={ResultPng} />}
                     </SaveContainer>
                 </PageWrapper>
             )}
@@ -130,7 +130,7 @@ const Name = styled.div`
     }
 `;
 
-const StyledResultSvg = styled.div`
+const StyledResultPng = styled.div`
     width: 100%;
     height: 100%;
 `;

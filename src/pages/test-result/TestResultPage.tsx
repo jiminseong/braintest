@@ -111,9 +111,12 @@ const NeuronSection = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5em;
-    padding-top: 6em;
+    gap: 10em;
+    c: 18em;
     box-sizing: border-box;
+    @media (max-width: 768px) {
+        padding-top: 5em;
+    }
 `;
 
 const PageWrapper = styled.div`
@@ -135,8 +138,11 @@ const TypeIndexContent = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10em;
+    gap: 15em;
     overflow: visible;
+    @media (max-width: 768px) {
+        gap: 5em;
+    }
 `;
 const TypeMainContent = styled.div`
     background: #ffffff;
@@ -156,6 +162,9 @@ const ContentWrapper = styled.div`
     position: relative;
     padding-top: 10em;
     box-sizing: border-box;
+    @media (max-width: 768px) {
+        gap: 5em;
+    }
 `;
 
 const IndexText = styled.div`

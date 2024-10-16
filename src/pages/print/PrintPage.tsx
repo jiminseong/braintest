@@ -94,6 +94,7 @@ const PrintPage = () => {
 };
 
 export default PrintPage;
+
 const StyledResultSvg = styled.div`
     width: 100%;
     height: auto;
@@ -162,7 +163,7 @@ const CloseButton = styled(CloseIcon)`
     position: fixed;
     top: 2em;
     right: 2em;
-    cursor: url(${cursorIcon}) 37 37, pointer;
+    cursor: url(${cursorIcon}) 46 45, pointer;
     z-index: 15;
 `;
 
@@ -179,6 +180,7 @@ const fadeDown = keyframes`
 const PrintContainer = styled.div<{
     isPrintContainerVisible: boolean;
 }>`
+    margin-top: 2em;
     position: relative;
     background: #fff;
     color: #070707;
@@ -197,7 +199,7 @@ const PrintContainer = styled.div<{
         height: 297mm;
         box-shadow: none;
         animation: none;
-
+        margin-top: -2em;
         @page {
             size: 79mm 297mm;
         }
@@ -251,7 +253,7 @@ const PrintButton = styled.div`
     font-weight: 700;
     padding: 1em 1.5em;
     box-sizing: border-box;
-    cursor: url(${cursorIcon}) 37 37, pointer;
+    cursor: url(${cursorIcon}) 46 45, pointer;
     &:hover {
         animation: ${printButtonAnimation} 0.2s infinite;
     }

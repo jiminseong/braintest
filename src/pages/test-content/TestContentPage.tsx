@@ -407,9 +407,7 @@ const PrintContainer = styled.div`
     }
 `;
 
-const DrawWinContainer = styled(PrintContainer)`
-    display: flex;
-`;
+const DrawWinContainer = styled(PrintContainer)``;
 
 const StyledLuckyBill = styled(LuckBill)`
     width: 100%;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import BottomLogo from '../../../assets/icons/bottomLogo.svg?react';
+import BottomLogo from '../../../assets/icons/blackLogo.svg?react';
 import AnimationRow from './AnimationList';
 const GraphicContainer = ({ type }: { type: number }) => {
     console.log(type);
@@ -32,7 +32,7 @@ const GraphicContainer = ({ type }: { type: number }) => {
                     <AnimationRow type={type} category="chucksack" />
                 </Column>
                 <Column3>
-                    <BottomLogo />
+                    <StyledBottomLogo />
                     <BottomText>ⓒ 2024 WHY ARE YOU NERVOUS :Look Inside My Brain, All rights reserved.</BottomText>
                 </Column3>
             </Wrapper>
@@ -42,6 +42,9 @@ const GraphicContainer = ({ type }: { type: number }) => {
 
 export default GraphicContainer;
 
+const StyledBottomLogo = styled(BottomLogo)`
+    width: 8em;
+`;
 const GraphicContainerWrapper = styled.div`
     display: flex;
     flex-direction: column;

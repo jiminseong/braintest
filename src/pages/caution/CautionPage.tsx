@@ -97,11 +97,18 @@ const Column = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    @media (max-width: 768px) {
+        height: 80%;
+    }
 `;
 
 const ColumnWrapper = styled(Column)`
     height: 60%;
     justify-content: space-between;
+    @media (max-width: 768px) {
+        width: 80%;
+        height: 80%;
+    }
 `;
 
 const PageWrapper = styled.div`
@@ -119,15 +126,22 @@ const Title = styled.div`
     font-size: 2em;
     font-weight: 700;
     margin-bottom: 2em;
+    @media (max-width: 768px) {
+        margin-bottom: 1em;
+    }
 `;
 
 const CautionText = styled.div`
     width: 100%;
+
     font-size: 0.8125em;
     text-align: center;
     color: #111;
     font-weight: 500;
     line-height: 2em;
+    @media (max-width: 768px) {
+        font-size: 1em;
+    }
 `;
 
 const RowWrapper = styled.div`
@@ -135,4 +149,10 @@ const RowWrapper = styled.div`
     display: flex;
     gap: 8em;
     justify-content: center;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        gap: 1em;
+        justify-content: space-between;
+    }
 `;
