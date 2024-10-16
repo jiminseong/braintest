@@ -33,8 +33,8 @@ const ThirdNeuron: React.FC<ThirdNeuronProps> = ({ stop }) => {
             controls.stop();
         } else {
             controls.start({
-                x: [currentX, '5vw', '-15vw', '5vw', '-25vw', '2vw', 0],
-                y: [currentY, '15vh', '25vh', '-5vh', '15vh', '5vh', 0],
+                x: [currentX, '5vw', '-5vw', '5vw', '-10vw', '3vw', 0],
+                y: [currentY, '15vh', '0vh', '-5vh', '-15vh', '5vh', 0],
                 transition: {
                     x: { repeat: Infinity, repeatType: 'loop', duration: 50, ease: 'easeInOut' },
                     y: { repeat: Infinity, repeatType: 'loop', duration: 50, ease: 'easeInOut' },

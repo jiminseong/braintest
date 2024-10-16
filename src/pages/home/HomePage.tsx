@@ -7,6 +7,7 @@ import TestStartButton from '../../assets/images/testStartButton.svg?react';
 import RightIcon from '../../assets/icons/rightIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import cursorIcon from '/cursorIcon2.svg';
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -114,7 +115,7 @@ const ContentText = styled.p`
 
 const StyledLogo = styled(Logo)`
     position: absolute;
-    width: 10%;
+    width: 7%;
     top: 1.5em;
     right: 2em;
 `;
@@ -126,7 +127,7 @@ const Title = styled.span`
 `;
 
 const ButtonWrapper = styled.button`
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     margin-top: 5%;
     background: #070707;
     width: fit-content;
@@ -135,7 +136,7 @@ const ButtonWrapper = styled.button`
 `;
 const StyledTestStartButton = styled(TestStartButton)`
     &:hover {
-        fill: url(<path-to-image>) lightgray -0.409px 0px / 100.112% 100% no-repeat;
+        fill: lightgray -0.409px 0px / 100.112% 100% no-repeat;
         filter: drop-shadow(0px 0px 17px #7aff77);
     }
 `;
@@ -164,6 +165,6 @@ const TypesNavigationButton = styled.div`
     justify-content: center;
     align-items: center;
     color: #fff;
-    cursor: pointer;
+    cursor: url(${cursorIcon}) 37 37, pointer;
     font-size: 1.125em;
 `;

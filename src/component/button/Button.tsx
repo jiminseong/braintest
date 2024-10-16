@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+import cursorIcon2 from '/cursorIcon2.svg';
 
 export const Button = styled.button`
-    cursor: pointer;
+    cursor: url(${cursorIcon2}) 37 37, pointer;
     width: 303px;
     height: 58px;
     width: 20%;

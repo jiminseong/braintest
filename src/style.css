@@ -22,9 +22,13 @@ body {
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
     scroll-behavior: smooth;
+    cursor: url('/cursorIcon.svg') 10 20, auto;
 }
 body::-webkit-scrollbar {
     display: none; /* Chrome, Safari, and Opera 스크롤바 숨기기 */
+}
+.button:hover {
+    cursor: url('/cursorIcon2.svg') 37 37, pointer;
 }
 #root {
     width: 100%;
