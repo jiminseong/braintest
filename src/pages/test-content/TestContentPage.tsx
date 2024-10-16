@@ -144,23 +144,50 @@ const TestContentPage = () => {
 
             const resultType = calculateResultType();
             setResult(resultType);
-            if (!isMobile()) draw();
-            handleLoading()
-                .then(() => {
-                    return import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`);
-                })
-                .then((module) => {
-                    setResultSvg(() => module.default);
-                })
-                .catch((err) => {
-                    console.error('SVG 로드 에러:', err);
-                    setLoading(false); // 에러가 발생해도 로딩 해제
+
+            if (!isMobile()) {
+                handleResult(resultType).then(() => {
+                    handleLoading().then(() => {
+                        loadResultSvg();
+                    });
                 });
+            } else {
+                handleMobileResult(resultType).then(() => {
+                    handleLoading().then(() => {
+                        loadResultPng();
+                    });
+                });
+            }
         } else {
             handleAnimate();
             setQuestionIndex((prevIndex) => prevIndex + 1);
             setCurrentProgress((prev) => prev + 2.5);
         }
+    };
+
+    const handleResult = (resultType: number): Promise<void> => {
+        return draw()
+            .then(() => {
+                return import(`../../assets/images/typeResult/type_${resultType}_bill.svg?react`);
+            })
+            .then((module) => {
+                setResultSvg(() => module.default);
+            })
+            .catch((err) => {
+                console.error('SVG 로드 에러:', err);
+                setLoading(false); // 에러가 발생해도 로딩 해제
+            });
+    };
+
+    const handleMobileResult = (resultType: number): Promise<void> => {
+        return import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`)
+            .then((module) => {
+                setResultPng(module.default);
+            })
+            .catch((err) => {
+                console.error('PNG 로드 에러:', err);
+                setLoading(false); // 에러가 발생해도 로딩 해제
+            });
     };
 
     const draw = async () => {
@@ -216,12 +243,14 @@ const TestContentPage = () => {
 
             setLoading(false);
             handlePrint();
-            window.scrollTo({
-                top: window.innerHeight * 1.25,
-                behavior: 'smooth',
-            });
 
             navigate(`/test/result/${resultType}/${name}`, { replace: true });
+            setTimeout(() => {
+                window.scrollTo({
+                    top: window.innerHeight * 1.25,
+                    behavior: 'smooth',
+                });
+            }, 100);
         } catch (err) {
             console.error('에러 발생:', err);
             setLoading(false);
@@ -229,32 +258,24 @@ const TestContentPage = () => {
     };
 
     const loadResultPng = async () => {
-        const resultType = calculateResultType();
         try {
-            const module = await import(`../../assets/images/typeResultPng/type_${resultType}_bill.png`);
-            setResultPng(module.default);
-            downloadImage(resultType);
+            const resultType = calculateResultType();
 
-            window.scrollTo({
-                top: window.innerHeight * 1.25,
-                behavior: 'smooth',
-            });
+            downloadImage(resultType);
+            // navigate 후에 setTimeout을 사용하여 스크롤 동작을 지연시킵니다.
 
             navigate(`/test/result/${resultType}/${name}`, { replace: true });
+            setTimeout(() => {
+                window.scrollTo({
+                    top: window.innerHeight * 1.25,
+                    behavior: 'smooth',
+                });
+            }, 100);
         } catch (err) {
             console.error('에러 발생:', err);
             setLoading(false);
         }
     };
-
-    // 프린트 및 네비게이션 실행
-    useEffect(() => {
-        if (ResultSvg && !isMobile()) {
-            loadResultSvg();
-        } else if (isMobile()) {
-            loadResultPng();
-        }
-    }, [ResultSvg]);
 
     useEffect(() => {
         const currentDate = localStorage.getItem('currentDate');
@@ -457,7 +478,7 @@ const AnimationQuestionText = styled.div<{ animate: boolean }>`
     }
     @media (max-width: 768px) {
         position: absolute;
-        margin-top: 50%;
+        margin-top: 40%;
         font-size: 1.25em;
         width: 78%;
     }

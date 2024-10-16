@@ -119,7 +119,7 @@ const ColumnWrapper = styled(Column)`
     justify-content: space-between;
     @media (max-width: 1023px) {
         width: 80%;
-        height: 85%;
+        height: 80%;
     }
 `;
 
@@ -150,8 +150,9 @@ const CautionText = styled.div`
     color: #111;
     font-weight: 500;
     line-height: 2em;
-    @media (max-width: 1023px) {
+    @media (max-width: 768px) {
         font-size: 0.8125em;
+        line-height: 1.25em;
     }
 `;
 
