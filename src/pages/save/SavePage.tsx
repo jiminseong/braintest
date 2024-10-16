@@ -67,7 +67,7 @@ const RowWrapper = styled.div`
     justify-content: center;
     gap: 2em;
     width: 50%;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 90%;
     }
 `;
@@ -75,7 +75,7 @@ const RowWrapper = styled.div`
 const SaveButton = styled(Button)`
     padding: 1em 1em;
     width: 100%;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         font-size: 1em;
     }
 `;
@@ -105,7 +105,7 @@ const SaveContainer = styled.div`
     top: 5%;
     box-shadow: 0px 4px 12.5px 9px rgba(0, 0, 0, 0.16);
 
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 90%;
 
         top: 5%;

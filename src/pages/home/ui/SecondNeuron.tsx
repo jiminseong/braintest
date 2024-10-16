@@ -140,7 +140,7 @@ const MotionWrapper = styled.div`
     top: 0;
     left: 0;
     background: transparent;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         margin-left: -30%;
     }
 `;
@@ -150,7 +150,7 @@ const Neuron = styled.img`
     top: 0;
     z-index: 2;
     width: 110%;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 200%;
         margin-top: 105%;
     }

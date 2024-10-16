@@ -77,7 +77,7 @@ const Neuron = styled.img`s
     top: -100%;
     right: -80%;
     width: 175%;
-    @media (max-width: 768px) {
+    @media (max-width: 1023px) {
         width: 200%;
         margin-top: 0%;
     }
