@@ -83,7 +83,7 @@ const CautionPage = () => {
     };
     return (
         <PageWrapper>
-            <BacKButton top="3em" onClick={() => handleBackButton()} />
+            <BacKButton top="3em" mobileLeft="1em" left="3em" mobileTop="1.125em" onClick={() => handleBackButton()} />
             <ColumnWrapper>
                 <Column>
                     <Title>{cautionTitle}</Title>
