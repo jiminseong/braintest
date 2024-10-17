@@ -8,6 +8,7 @@ interface NavigationButtonProps {
     onClick: () => void;
     top?: string;
     right?: string;
+    left?: string;
     home?: boolean; // home props 추가
     mobileTop?: string;
     mobileLeft?: string;
@@ -18,6 +19,7 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
     onClick,
     top = '-4em',
     right = '2em',
+    left,
     home = false,
     mobileTop = '3em',
     mobileLeft,
@@ -27,6 +29,7 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
         <NavigationButtonWrapper
             onClick={onClick}
             top={top}
+            left={left}
             right={right}
             mobileTop={mobileTop}
             mobileLeft={mobileLeft}
@@ -51,6 +54,7 @@ export default NavigationButton;
 
 const NavigationButtonWrapper = styled.div<{
     top: string;
+    left?: string;
     right: string;
     mobileRight?: string;
     mobileLeft?: string;
@@ -61,6 +65,7 @@ const NavigationButtonWrapper = styled.div<{
     position: fixed;
     right: ${(props) => props.right};
     top: ${(props) => props.top};
+    left: ${(props) => props.left};
     @media (max-width: 768px) {
         right: ${(props) => props.mobileRight};
         left: ${(props) => props.mobileLeft};
