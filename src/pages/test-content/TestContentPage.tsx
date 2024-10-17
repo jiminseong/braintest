@@ -247,7 +247,7 @@ const TestContentPage = () => {
             navigate(`/test/result/${resultType}/${name}`, { replace: true });
             setTimeout(() => {
                 window.scrollTo({
-                    top: window.innerHeight * 1.25,
+                    top: window.innerHeight * 0.86,
                     behavior: 'smooth',
                 });
             }, 100);
@@ -267,10 +267,13 @@ const TestContentPage = () => {
             navigate(`/test/result/${resultType}/${name}`, { replace: true });
             setTimeout(() => {
                 window.scrollTo({
-                    top: window.innerHeight * 1.25,
+                    top: window.innerHeight * 0.5,
                     behavior: 'smooth',
                 });
             }, 100);
+            setTimeout(() => {
+                location.reload();
+            }, 500);
         } catch (err) {
             console.error('에러 발생:', err);
             setLoading(false);
@@ -319,8 +322,18 @@ const TestContentPage = () => {
                         <ContentColumn>
                             {currentProgress >= 2.5 && !loading && (
                                 <>
-                                    <NavigationButton top="3.3125em" right="3em" onClick={() => goBack()} />
-                                    <NavigationButton top="5em" onClick={() => navigate('/')} home />
+                                    <NavigationButton
+                                        top="3.3125em"
+                                        right="3em"
+                                        mobileLeft="1.125em"
+                                        onClick={() => goBack()}
+                                    />
+                                    <NavigationButton
+                                        top="5em"
+                                        mobileRight="1.125em"
+                                        onClick={() => navigate('/')}
+                                        home
+                                    />
                                 </>
                             )}
                             <PageLogo width="8%" page={page} mobileWidth="30%" />
@@ -369,7 +382,7 @@ const TestContentPage = () => {
             </PrintContainer>
 
             <SaveContainer ref={imageRef}>
-                <Name>{name}님의 뇌유형은</Name>
+                <MobileName>{name}님의 뇌유형은</MobileName>
                 {ResultPng && <StyledResultPng src={ResultPng} alt="결과 이미지" />}
             </SaveContainer>
         </>
@@ -451,6 +464,9 @@ const ContentColumn = styled(Column)`
     width: 100%;
     height: 60%;
     justify-content: space-between;
+    @media (max-width: 768px) {
+        height: 80%;
+    }
 `;
 
 const fadeInUp = keyframes`
@@ -497,6 +513,9 @@ const Text = styled.div`
 const TextContentButton = styled(Button)`
     margin-top: 10%;
     font-size: 1.125em;
+    @meida (max-width : 768px) {
+        font-sizne: 0.8125em;
+    }
 `;
 
 const PrintContainer = styled.div`
@@ -553,6 +572,15 @@ const Name = styled.div`
     }
 `;
 
+const MobileName = styled.div`
+    position: absolute;
+    font-size: 1rem;
+    font-weight: 800;
+    left: 50%;
+    top: 3em;
+    color: #231815;
+    transform: translate(-50%, -50%);
+`;
 const StyledResultSvg = styled.div`
     width: 100%;
     height: auto;
