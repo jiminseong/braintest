@@ -10,6 +10,7 @@ import { useState, useEffect } from 'react';
 import cursorIcon from '/cursorIcon2.svg';
 
 const HomePage = () => {
+    localStorage.setItem('currentPossibility', `${import.meta.env.VITE_DRAW_PROBABILITY * 100}% `);
     const navigate = useNavigate();
     const [buttonDisplay, setButtonDisplay] = useState(false);
     const [animationStopState, setAnimationStop] = useState(false);
