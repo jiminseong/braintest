@@ -41,6 +41,11 @@ const AlertModalContainer = styled.div`
     align-items: center;
     justify-content: center;
     gap: 2em;
+
+    @media (max-width: 768px) {
+        max-width: 90%;
+        margin-top: 35%;
+    }
 `;
 const Text = styled.div`
     color: #fff;
@@ -48,6 +53,10 @@ const Text = styled.div`
     font-family: SUIT;
     font-size: 2em;
     font-weight: 800;
+    margin-top: 5%;
+    @media (max-width: 768px) {
+        font-size: 1.25em;
+    }
 `;
 
 const Buton = styled.div`

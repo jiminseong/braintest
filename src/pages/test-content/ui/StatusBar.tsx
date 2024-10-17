@@ -35,6 +35,13 @@ const CurrentPercentage = styled.div`
     font-size: 0.875rem;
     font-weight: 700;
     margin-left: 1.8125em;
+    @media (max-width: 768px) {
+        position: fixed;
+        top: 1.125em;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-left: 0em;
+    }
 `;
 
 const StatusBarWrapper = styled.div`

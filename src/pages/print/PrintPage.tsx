@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { useReactToPrint } from 'react-to-print';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import TypeLogo from './ui/TypeLogo';
 import TopNavigationBar from '../test-result/ui/TopNavigationBar';
 import UnderTriangleIcon from '../../assets/icons/triangleIcon.svg?react';
@@ -11,8 +11,10 @@ import cursorIcon from '/cursorIcon2.svg';
 import MobileBr from '../../component/box/MobileBr';
 import { isMobile } from '../test-content/TestContentPage';
 import html2canvas from 'html2canvas';
+import RightIcon from '../../assets/icons/rightIcon.svg?react';
 
 const PrintPage = () => {
+    const navigate = useNavigate();
     const [isWrapperVisible, setWrapperVisible] = useState(false);
     const [isPrintContainerVisible, setPrintContainerVisible] = useState(false);
     const [ResultSvg, setResultSvg] = useState<React.FC | null>(null); // 타입 정의 추가
@@ -21,6 +23,7 @@ const PrintPage = () => {
     const imageRef = useRef(null);
     const { type, name = '' } = useParams();
     const resultType = Number(type);
+    const urlName = name === '???' ? '%3f%3f%3f' : name;
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -83,6 +86,10 @@ const PrintPage = () => {
     return (
         <PageWrapper>
             <TopNavigationBar />
+            <TypesNavigationButton onClick={() => navigate(`/test/result/${resultType}/${urlName}`)}>
+                TYPES
+                <RightIcon />
+            </TypesNavigationButton>
             <RowWrapper>
                 <TypeLogo type={resultType} />
                 <PrintButton onClick={handleOpenPrint}>
@@ -115,7 +122,7 @@ const PrintPage = () => {
                             onAnimationEnd={handleAnimationEnd}
                             ref={imageRef}
                         >
-                            <Name>{name}님의 뇌유형은</Name>
+                            <MobileName>{name}님의 뇌유형은</MobileName>
                             {ResultPng && <StyledResultPng src={ResultPng} alt="결과 이미지" />}
                         </SaveContainer>
                     </PrintContainerWrapper>
@@ -132,6 +139,24 @@ const PrintPage = () => {
 };
 
 export default PrintPage;
+
+const TypesNavigationButton = styled.div`
+    z-index: 20;
+    position: absolute;
+    top: 2em;
+    left: 5%;
+    display: flex;
+    gap: 0.25em;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    cursor: url(${cursorIcon}) 37 37, pointer;
+    font-size: 1.125em;
+    @media (max-width: 1023px) {
+        font-size: 1em;
+    }
+`;
+
 const StyledUnderTriangleIcon = styled(UnderTriangleIcon)`
     @media (max-width: 1023px) {
     }
@@ -323,9 +348,7 @@ const Name = styled.div`
     top: 3em;
     color: #231815;
     transform: translate(-50%, -50%);
-    @media (max-width: 768px) {
-        top: 2em;
-    }
+
     @media (max-width: 1023px) {
         font-size: 1.25em;
     }
@@ -336,6 +359,16 @@ const Name = styled.div`
         top: 3.5em;
         font-size: 1em;
     }
+`;
+
+const MobileName = styled.div`
+    position: absolute;
+    font-size: 1em;
+    font-weight: 800;
+    left: 50%;
+    top: 2.25em;
+    color: #231815;
+    transform: translate(-50%, -50%);
 `;
 
 const printButtonAnimation = keyframes`
