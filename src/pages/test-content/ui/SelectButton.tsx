@@ -34,7 +34,7 @@ const SelectButton: React.FC<SelectButtonProps> = ({
                 <AnimatedIcon>
                     <Two />
                 </AnimatedIcon>
-                <Text>가끔 그렇다</Text>
+                <Text>약간 아니다</Text>
             </IconWrapper>
             <IconWrapper onClick={onClickThree}>
                 <AnimatedIcon>
