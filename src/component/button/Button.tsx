@@ -20,6 +20,9 @@ export const Button = styled.button`
         background: #7795ff;
         box-shadow: 0px 0px 11.8px 2px rgba(255, 255, 255, 0.27);
     }
+    @media (max-width: 768px) {
+        font-size: 0.8125em;
+    }
     @media (max-width: 1023px) {
         min-width: 13px;
     }

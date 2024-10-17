@@ -9,11 +9,29 @@ interface NavigationButtonProps {
     top?: string;
     right?: string;
     home?: boolean; // home props 추가
+    mobileTop?: string;
+    mobileLeft?: string;
+    mobileRight?: string;
 }
 
-const NavigationButton: React.FC<NavigationButtonProps> = ({ onClick, top = '-4em', right = '2em', home = false }) => {
+const NavigationButton: React.FC<NavigationButtonProps> = ({
+    onClick,
+    top = '-4em',
+    right = '2em',
+    home = false,
+    mobileTop = '3em',
+    mobileLeft,
+    mobileRight,
+}) => {
     return (
-        <NavigationButtonWrapper onClick={onClick} top={top} right={right}>
+        <NavigationButtonWrapper
+            onClick={onClick}
+            top={top}
+            right={right}
+            mobileTop={mobileTop}
+            mobileLeft={mobileLeft}
+            mobileRight={mobileRight}
+        >
             {home ? (
                 <RowWrapper2>
                     <Text>홈</Text>
@@ -31,12 +49,23 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({ onClick, top = '-4e
 
 export default NavigationButton;
 
-const NavigationButtonWrapper = styled.div<{ top: string; right: string }>`
+const NavigationButtonWrapper = styled.div<{
+    top: string;
+    right: string;
+    mobileRight?: string;
+    mobileLeft?: string;
+    mobileTop?: string;
+}>`
     z-index: 10;
     cursor: url(${cursorIcon}) 37 37, pointer;
     position: fixed;
     right: ${(props) => props.right};
     top: ${(props) => props.top};
+    @media (max-width: 768px) {
+        right: ${(props) => props.mobileRight};
+        left: ${(props) => props.mobileLeft};
+        top: ${(props) => props.mobileTop};
+    }
 `;
 
 const RowWrapper2 = styled.div`

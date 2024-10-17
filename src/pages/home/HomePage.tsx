@@ -8,6 +8,7 @@ import RightIcon from '../../assets/icons/rightIcon.svg?react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import cursorIcon from '/cursorIcon2.svg';
+import { isMobile } from '../test-content/TestContentPage';
 
 const HomePage = () => {
     localStorage.setItem('currentPossibility', `${import.meta.env.VITE_DRAW_PROBABILITY * 100}% `);
@@ -26,16 +27,25 @@ const HomePage = () => {
         '언제나 더 좋은 ‘나’와 마주할 수 있는 방법이 있습니다.',
         '망설이지 마세요.',
     ];
+    const mobileContent = [
+        '당신의 뇌 유형은 무엇입니까? 뇌 유형 테스트를 통해 또 다른 ‘나’를 발견하고 ‘나’의 감정을 마주해보세요.',
+        '테스트 결과로 제공되는 16가지의 유형 중, 당신의 뇌가 어느 유형에 속하는지 확인해보세요.',
+        '1단계 | 뇌 유형 검사를 받습니다.',
+        '2단계 | 뇌 유형을 확인합니다.',
+        '3단계 | 개별화된 결과지를 받습니다.',
+        '4단계 | 건강을 개선합니다.',
+        '망설이지 마세요.',
+    ];
 
     useEffect(() => {
         let i = 0; // 문장 인덱스
         let j = 0; // 글자 인덱스
         let currentText = ''; // 현재 타이핑 중인 문장
-
+        const contentToUse = isMobile() ? mobileContent : content; // 모바일 여부에 따라 사용할 텍스트 결정
         const intervalId = setInterval(() => {
-            if (i < content.length) {
-                if (j < content[i].length) {
-                    currentText += content[i][j]; // 한 글자씩 추가
+            if (i < contentToUse.length) {
+                if (j < contentToUse[i].length) {
+                    currentText += contentToUse[i][j]; // 한 글자씩 추가
                     setTypedText((prev) => {
                         const updatedText = [...prev];
                         updatedText[i] = currentText; // 현재 문장 업데이트
@@ -46,7 +56,7 @@ const HomePage = () => {
                     i++;
                     j = 0;
                     currentText = '';
-                    if (i === content.length) {
+                    if (i === contentToUse.length) {
                         clearInterval(intervalId); // 모든 문장이 출력되면 인터벌 종료
                         setButtonDisplay(true);
                     }
