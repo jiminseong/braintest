@@ -3,7 +3,6 @@
 ![Personal Brain Test](/public/favicon.svg)
 
 #### https://personalbraintest.netlify.app/
-현재 제공된 파일을 바탕으로, React와 React Router를 활용한 프로젝트로 보입니다. 다음은 프로젝트 README 파일을 업데이트할 기본 구조입니다. 추가적인 정보나 요청 사항이 있으면 말씀해주세요!
 
 ---
 
@@ -105,8 +104,8 @@ BrainTest는 심리 검사에 호르몬 데이터를 매핑하여 결과를 제�
 
 ---
 
-## 사용자 데이터
+## 사용자 데이터 및 구현 화면
 
 - **실제 사용 사례**: BrainTest는 250명의 사용자로부터 데이터를 수집하였으며, 사용자 인터랙션을 기반으로 개선되었습니다.
 
-> 추가할 GIF 이미지는 프로젝트 루트 또는 `public` 폴더 내 `/assets` 디렉토리에 저장 후 README의 적절한 섹션에 삽입 가능합니다. `![GIF 설명](경로)` 형식으로 추가하세요.
+![WHY ARE YOU NERVOUS?](https://i.ibb.co/3TPG8vY/WHY-ARE-YOU-NERVOUS-Look-Inside-My-Brain.png)
