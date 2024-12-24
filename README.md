@@ -92,4 +92,4 @@ BrainTest는 심리 검사에 호르몬 데이터를 매핑하여 결과를 제�
 
 - **실제 사용 사례**: BrainTest는 250명의 사용자로부터 데이터를 수집하였으며, 사용자 인터랙션을 기반으로 개선되었습니다.
 
-![WHY ARE YOU NERVOUS?](https://i.ibb.co/3TPG8vY/WHY-ARE-YOU-NERVOUS-Look-Inside-My-Brain.png)
+![WHY ARE YOU NERVOUS?](https://private-user-images.githubusercontent.com/132000885/398384507-7f8d37e1-2930-40cd-bd9f-352d2b04bcef.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MzUwMzQzOTMsIm5iZiI6MTczNTAzNDA5MywicGF0aCI6Ii8xMzIwMDA4ODUvMzk4Mzg0NTA3LTdmOGQzN2UxLTI5MzAtNDBjZC1iZDlmLTM1MmQyYjA0YmNlZi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjQxMjI0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI0MTIyNFQwOTU0NTNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT02MDM0Y2E5MzVlOWY5NTdiZjFkZDJjMjc5YjAyYjVhNTA5YjlmZTY0ODdlMjM5NGI3NTI1ZjliYjExNTk4YmNlJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.tDHMlCWyUAgKv8UW7KhXchq7ZTUPg1h_vvgDPBCPx9Q)
