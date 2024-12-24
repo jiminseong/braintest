@@ -34,22 +34,6 @@ src/
 └── main.tsx                 # 애플리케이션 진입점
 ```
 
-## 설치 및 실행 방법
-
-1. **프로젝트 클론**:
-   ```bash
-   git clone https://github.com/jiminseong/BrainTest.git
-   ```
-2. **의존성 설치**:
-   ```bash
-   npm install
-   ```
-3. **개발 서버 실행**:
-   ```bash
-   npm start
-   ```
-4. 브라우저에서 [http://localhost:3000](http://localhost:3000)으로 접속.
-
 ## 기술 스택
 
 - **React**: UI 컴포넌트 기반 프레임워크
